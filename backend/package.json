@@ -13,6 +13,7 @@
   },
   "author": "",
   "license": "ISC",
-  "description": "",
-  "type": "module"
+  "type": "module",
+  "devDependencies": {},
+  "description": ""
 }
