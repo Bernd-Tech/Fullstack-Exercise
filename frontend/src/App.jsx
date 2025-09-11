@@ -1,11 +1,11 @@
 import React from "react";
-import { Button } from "./components/navBar";
+import { LandingPage } from "./pages/LandingPage";
 
 const App = () => {
 
   return (
     <>
-      <Button text="Sign up"/>
+      <LandingPage />
     </>
   )
 }
