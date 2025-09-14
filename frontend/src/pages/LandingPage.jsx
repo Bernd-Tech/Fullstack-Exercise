@@ -4,8 +4,8 @@ import { Hero } from '../components/Hero';
 export const LandingPage = () => {
     return (
         <>
-            <NavBar />
             <Hero />
+            <section className="h-screen"></section>
         </>
     )
 }
