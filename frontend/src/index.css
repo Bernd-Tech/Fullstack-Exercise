@@ -11,16 +11,31 @@
 
 body {
   font-family: "Figtree", sans-serif;
-  width: 100vw;
+  width: 100%;
   background-color: black;
-  color: white;
+  color: rgb(198, 197, 197);
   scroll-behavior: smooth;
   overflow-x: hidden;
 }
 
+@theme {
+    --color-light: rgb(198, 197, 197);
+    --color-dark: rgb(45, 45, 45);
+}
+
 @utility glass-effect {
   backdrop-filter: blur(10px);
-  background-color: rgba(0, 0, 0, 0, 0.4);
+  background-color: rgba(0, 0, 0, 0);
+}
+
+@utility glass-effect2 {
+  backdrop-filter: blur(40px);
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+@utility glass-effect3 {
+  backdrop-filter: blur(40px);
+  background-color: rgba(255, 255, 255, 0.4);
 }
 
 @utility linear-gradient {
@@ -30,13 +45,12 @@ body {
   color: transparent;
 }
 
-/* @utility linear-gradient {
-  background: linear-gradient(to bottom, #898989 30%, #ffffff);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-} */
+@utility radial-gradient {
+  background:
+  radial-gradient(ellipse at top, #000000, transparent),
+  radial-gradient(ellipse at bottom, #ffffff, transparent);
+}
 
 @utility white-shadow {
-  text-shadow: 0 0 20px 10px rgba(255, 255, 255, 0.3);
+  box-shadow: 0 0 20px 3px rgba(255, 255, 255, 0.3);
 }
