@@ -28,6 +28,12 @@ body {
   background-color: rgba(0, 0, 0, 0);
 }
 
+@utility input-style {
+  border-radius: 10px;
+  border: solid 1px var(--color-light) !important;
+  padding: 8px;
+}
+
 @utility glass-effect2 {
   backdrop-filter: blur(40px);
   background-color: rgba(0, 0, 0, 0.1);

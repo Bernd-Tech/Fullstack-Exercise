@@ -11,7 +11,7 @@ export const Hero = () => {
         timeline.to('#title', {
             y: 0,
             opacity: 1,
-            duration: 1,
+            duration: 1.2,
             ease: "expo.out",
             delay: 0.3,
         })
@@ -19,7 +19,7 @@ export const Hero = () => {
         timeline.to('.subtitle', {
             y: 0,
         opacity: 1,
-        duration: 1,
+        duration: 1.8,
         ease: "expo.out",
         stagger: 0.1
         }, "-=0.6")
@@ -29,7 +29,7 @@ export const Hero = () => {
         opacity: 1,
         duration: 1,
         ease: "expo.out",
-        }, "-=0.7")
+        }, "-=1.3")
 
         timeline.to('#spline-model', {
         opacity: 1,
