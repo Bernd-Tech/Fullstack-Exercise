@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { Button } from "../components/Button";
+import { Button } from "./ui/Button";
 
-export const Form = () => {
-    const [formData, setFormData] = useState({
+export const ContactForm = () => {
+    const [contactFormData, setContactFormData] = useState({
     firstName: "",
     lastName: "",
     email: "",
@@ -12,7 +12,7 @@ export const Form = () => {
     const handleFormData = (e) => {
     e.preventDefault();
     const { name, value } = e.target;
-    setFormData((prevData) => ({
+    setContactFormData((prevData) => ({
       ...prevData,
       [name]: value,
     }));
@@ -31,7 +31,7 @@ export const Form = () => {
                     id="firstName"
                     name="firstName"
                     type="text"
-                    value={formData.firstName}
+                    value={contactFormData.firstName}
                     required
                   />
                 </div>
@@ -42,7 +42,7 @@ export const Form = () => {
                     id="lastName"
                     name="lastName"
                     type="text"
-                    value={formData.lastName}
+                    value={contactFormData.lastName}
                     required
                   />
                 </div>
@@ -53,7 +53,7 @@ export const Form = () => {
                     id="email"
                     name="email"
                     type="email"
-                    value={formData.email}
+                    value={contactFormData.email}
                     required
                   />
                 </div>
@@ -64,7 +64,7 @@ export const Form = () => {
                     className="input-style"
                     name="message"
                     id="message"
-                    value={formData.message}
+                    value={contactFormData.message}
                     required
                   ></textarea>
                 </div>

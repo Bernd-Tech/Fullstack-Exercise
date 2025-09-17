@@ -1,7 +1,8 @@
+import { Link } from 'react-router-dom';
 import Spline from "@splinetool/react-spline";
 import { useGSAP } from "@gsap/react";
 import { gsap } from "gsap/gsap-core";
-import { Button } from "./Button";
+import { Button } from "./ui/Button";
 
 export const Hero = () => {
 
@@ -106,7 +107,7 @@ export const Hero = () => {
               </p>
             </div>
             <div className="flex gap-4 pl-1.5 opacity-0 cta-container">
-            <Button text="Get started" className="cta-btn" />
+            <Link to="/sign-up"><Button text="Get started" className="cta-btn" /></Link>
             <Button text="Read more" className="cta-btn" />
             </div>
           </div>

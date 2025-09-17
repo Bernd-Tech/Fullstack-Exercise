@@ -2,8 +2,8 @@
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { Confirmation } from "../components/Confirmation";
-import { Button } from "../components/Button";
-import { Form } from "../components/Form";
+import { Button } from "../components/ui/Button";
+import { ContactForm } from "../components/ContactForm";
 
 export const ContactPage = () => {
   useGSAP(() => {
@@ -82,7 +82,7 @@ export const ContactPage = () => {
               </div>
             </div>
             <div className="flex flex-col flex-1">
-              <Form />
+              <ContactForm />
             </div>
           </div>
         </div>

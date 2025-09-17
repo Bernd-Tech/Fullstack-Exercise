@@ -1,6 +1,6 @@
 import Spline from "@splinetool/react-spline";
 import { Link } from 'react-router-dom';
-import { Button } from "./Button";
+import { Button } from "./ui/Button";
 
 export const NavBar = () => {
   return (
@@ -19,7 +19,7 @@ export const NavBar = () => {
             </ul>
             <ul className="flex items-center gap-8 justify-self-end">
                 <li><Link to="/login">Log in</Link></li>
-                <li><Link to="/signup"><Button text="Get started"/></Link></li>
+                <li><Link to="/sign-up"><Button text="Get started"/></Link></li>
             </ul>
         </nav>
       </header>
