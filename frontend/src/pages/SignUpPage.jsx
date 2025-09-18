@@ -16,11 +16,12 @@ export const SignUpPage = () => {
 
   const onSubmit = (data) => {
     console.log(data);
+
     reset();
   };
 
   //   const [signUpData, setSignUpData] = useState({});
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(2);
 
   //   const updateSignUpData = (e) => {
   //     e.preventDefault();

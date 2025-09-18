@@ -84,10 +84,10 @@ export const Hero = () => {
     <>
       <section
         id="hero-section"
-        className="flex items-center w-full h-screen pt-30 p-20 radial-gradient rounded-b-[60px]"
+        className="flex items-center w-full h-screen p-20 px-20 radial-gradient rounded-b-[60px]"
       >
-        <div className="flex w-full h-full glass-effect2 rounded-b-[60px]">
-          <div className="flex flex-col flex-1 gap-8 pl-20 pt-20 text-left">
+        <div className="flex w-full h-full glass-effect2 rounded-b-[60px] overflow-visible">
+          <div className="flex flex-col flex-1 gap-8 pl-20 pt-25 text-left">
             <h1
               id="title"
               className="text-7xl tracking-wide font-semibold opacity-0 linear-gradient"
@@ -106,12 +106,12 @@ export const Hero = () => {
                 time starts here.
               </p>
             </div>
-            <div className="flex gap-4 pl-1.5 opacity-0 cta-container">
+            <div className="flex gap-4 pl-1.5 opacity-0 cta-container mt-4">
             <Link to="/sign-up"><Button text="Get started" className="cta-btn" /></Link>
             <Button text="Read more" className="cta-btn" />
             </div>
           </div>
-          <div className="rounded-3xl flex-2">
+          <div className="flex justify-center items-center h-[110%] flex-2">
             <Spline
             id="spline-model" className="opacity-0"
               scene="https://prod.spline.design/OJ0TLV4hDBLNlB3y/scene.splinecode"

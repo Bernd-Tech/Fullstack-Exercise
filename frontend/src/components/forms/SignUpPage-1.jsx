@@ -31,12 +31,16 @@ export const SignUpPage1 = ({ register, errors, getValues }) => {
           <label htmlFor="age">Age*</label>
           <input
             {...register("age", {
-              required: "Please enter your age." ,
-              min: 18,
-              validate: (value) => value >= 18 || "You must be at least 18 years old.",
+              required: "Please enter your age.",
+              validateAsNumber: true,
+              min: {
+                value: 18,
+                message: "You must be at least 18 years old."
+              }
             })}
             id="age"
             type="number"
+            min={18}
           />
           {errors.age && <p className="text-red-500">{errors.age.message}</p>}
         </div>

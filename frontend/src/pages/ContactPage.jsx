@@ -49,8 +49,8 @@ export const ContactPage = () => {
             Get in Touch
           </h1>
           <div className="flex gap-12">
-            <div className="flex flex-col flex-1 text-lg gap-18">
-              <div className="flex flex-col gap-2 leading-6.2">
+            <div className="flex flex-col justify-around flex-1 text-lg gap-18">
+              <div className="flex flex-col gap-2 leading-6.2 pr-6">
                 <p className="subtitle">
                   At Essentia AI, we believe everyone deserves access to
                   compassionate, judgementfree conversations.
@@ -60,9 +60,11 @@ export const ContactPage = () => {
                   stigmafree.
                 </p>
                 <p className="subtitle">
-                  If you have anything to point out or ideas you would like to
+                Please feel free to contact us if you have anything to point out or ideas you would like to
+                  share with us. We will get back to you as soon as we can.
+                  {/* If you have anything to point out or ideas you would like to
                   share with - please feel free to contact us and we will get
-                  back to you as soon as we can.
+                  back to you as soon as we can. */}
                 </p>
                 <p className="subtitle">
                   We are looking forward to hear from you!
