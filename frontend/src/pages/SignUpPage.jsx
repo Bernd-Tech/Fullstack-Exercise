@@ -32,12 +32,10 @@ export const SignUpPage = () => {
   //     }));
   //   };
 
-  const nextPage = () => {
-    trigger();
-    if (errors) {
-        return 
-    } else {
-    setCurrentPage((prevPage) => prevPage + 1);
+  const nextPage = async () => {
+    const isValid = await trigger();
+    if (isValid) {
+        setCurrentPage((prevPage) => prevPage + 1);
     }
   };
 
@@ -48,14 +46,18 @@ export const SignUpPage = () => {
   return (
     <>
       <div className="flex flex-col items-center justify-center p-35 gap-12">
-        <h1 className="text-5xl">Welcome to Essentia AI</h1>
+        {currentPage === 1 && (<h1 className="text-5xl">Create an account</h1>)}
+        {currentPage > 1 && (<>
+        <h1 className="text-5xl">Welcome to Essentia AI, {getValues("preferredName")}.</h1>
+        <p>To assure you have an enriching experience with Essentia, we kindly ask of you to fill out the following form as accurate as possible. This will help Essentia in assessing your needs pre-appointment and make the most of your valuable time.<br /> All information given will be kept confidential.</p>
+        </>)}
         <div className="bg-(--color-dark) w-[50%] rounded-[40px] p-8">
           <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-8">
             {currentPage === 1 && (
               <>
                 <SignUpPage1 register={register} errors={errors} getValues={getValues}/>
                 <div className="flex justify-end">
-                <Button text="Next" onClick={nextPage} />
+                <Button text="Continue" type="button" onClick={nextPage} />
                 </div>
               </>
             )}
