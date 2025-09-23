@@ -20,21 +20,13 @@ export const SignUpPage = () => {
     reset();
   };
 
-  //   const [signUpData, setSignUpData] = useState({});
   const [currentPage, setCurrentPage] = useState(2);
-
-  //   const updateSignUpData = (e) => {
-  //     e.preventDefault();
-  //     const { name, value } = e.target;
-  //     setSignUpData((prev) => ({
-  //       ...prev,
-  //       [name]: value,
-  //     }));
-  //   };
 
   const nextPage = async () => {
     const isValid = await trigger();
     if (isValid) {
+        // getValues() for entire form data without re-rendering the page
+        console.log(getValues())
         setCurrentPage((prevPage) => prevPage + 1);
     }
   };
@@ -65,12 +57,15 @@ export const SignUpPage = () => {
             {currentPage === 2 && (
               <>
                 <SignUpPage2 register={register} errors={errors} getValues={getValues}/>
-                <div className="flex justify-between">
-                <Button text="Back" onClick={prevPage} />
-                <Button text="Next" onClick={nextPage} />
-                </div>
               </>
             )}
+
+        {(currentPage > 1 && currentPage < 4) && (
+            <div className="flex justify-between">
+            <Button type="button" onClick={prevPage} text="Back" />
+            <Button type="button" onClick={nextPage} text="Next" />
+            </div>
+        )}
           </form>
           {/* {currentPage === 1 &&
         ( <>

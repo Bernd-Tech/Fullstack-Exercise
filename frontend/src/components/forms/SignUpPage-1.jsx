@@ -6,29 +6,29 @@ export const SignUpPage1 = ({ register, errors, getValues }) => {
           <div>
             <label htmlFor="firstName">First Name*</label>
             <input
-              {...register("firstName", {
+              {...register("user.firstName", {
                 required: "Please enter your first name.",
               })}
               id="firstName"
               type="text"
             />
-
-            {errors.firstName && (
-              <p className="text-red-500">{errors.firstName.message}</p>
+            {/* Need to add optional chaining, because checking for firstName if errors.user doesn't exist yet will crash render*/}
+            {errors.user?.firstName && (
+              <p className="text-red-500">{errors.user.firstName.message}</p>
             )}
           </div>
 
           <div>
             <label htmlFor="lastName">Last Name*</label>
             <input
-              {...register("lastName", {
+              {...register("user.lastName", {
                 required: "Please enter your last name.",
               })}
               id="lastName"
               type="text"
             />
-            {errors.lastName && (
-              <p className="text-red-500">{errors.lastName.message}</p>
+            {errors.user?.lastName && (
+              <p className="text-red-500">{errors.user.lastName.message}</p>
             )}
           </div>
         </div>
@@ -37,22 +37,22 @@ export const SignUpPage1 = ({ register, errors, getValues }) => {
           <div>
             <label htmlFor="preferredName">Preferred Name*</label>
             <input
-              {...register("preferredName", {
+              {...register("user.preferredName", {
                 required: "Please enter your preferred name.",
               })}
               id="preferredName"
               type="text"
             />
 
-            {errors.preferredName && (
-              <p className="text-red-500">{errors.preferredName.message}</p>
+            {errors.user?.preferredName && (
+              <p className="text-red-500">{errors.user.preferredName.message}</p>
             )}
           </div>
 
           <div>
             <label htmlFor="age">Age*</label>
             <input
-              {...register("age", {
+              {...register("user.age", {
                 required: "Please enter your age.",
                 validateAsNumber: true,
                 min: {
@@ -64,7 +64,7 @@ export const SignUpPage1 = ({ register, errors, getValues }) => {
               type="number"
               min={18}
             />
-            {errors.age && <p className="text-red-500">{errors.age.message}</p>}
+            {errors.user?.age && <p className="text-red-500">{errors.user.age.message}</p>}
           </div>
         </div>
 
@@ -72,7 +72,7 @@ export const SignUpPage1 = ({ register, errors, getValues }) => {
           <label htmlFor="pronouns">Pronouns</label>
           <select
             className="input-style"
-            {...register("pronouns", { required: false })}
+            {...register("user.pronouns", { required: false })}
             id="pronouns"
           >
             <option>Select Pronouns</option>
@@ -86,7 +86,7 @@ export const SignUpPage1 = ({ register, errors, getValues }) => {
           {getValues("pronouns") === "Other" && (
             <input
               className="mt-2"
-              {...register("specificPrononuns", {
+              {...register("user.specificPrononuns", {
                 required: "Please enter your specific pronouns.",
               })}
               id="specificPronouns"
@@ -95,8 +95,8 @@ export const SignUpPage1 = ({ register, errors, getValues }) => {
             />
           )}
 
-          {errors.specificPrononuns && (
-            <p className="text-red-500">{errors.specificPrononuns.message}</p>
+          {errors.user?.specificPrononuns && (
+            <p className="text-red-500">{errors.user.specificPrononuns.message}</p>
           )}
         </div>
 
@@ -104,28 +104,28 @@ export const SignUpPage1 = ({ register, errors, getValues }) => {
           <div>
             <label htmlFor="country">Country*</label>
             <input
-              {...register("country", {
+              {...register("user.country", {
                 required: "Please enter the country you live in.",
               })}
               id="country"
               type="text"
             />
-            {errors.age && (
-              <p className="text-red-500">{errors.country.message}</p>
+            {errors.user?.country && (
+              <p className="text-red-500">{errors.user.country.message}</p>
             )}
           </div>
 
           <div>
             <label htmlFor="city">City*</label>
             <input
-              {...register("city", {
+              {...register("user.city", {
                 required: "Please enter the city you live in.",
               })}
               id="city"
               type="text"
             />
-            {errors.city && (
-              <p className="text-red-500">{errors.city.message}</p>
+            {errors.user?.city && (
+              <p className="text-red-500">{errors.user.city.message}</p>
             )}
           </div>
         </div>
@@ -133,57 +133,63 @@ export const SignUpPage1 = ({ register, errors, getValues }) => {
         <div className="flex flex-col">
           <label htmlFor="email">E-Mail*</label>
           <input
-            {...register("email", {
+            {...register("user.email", {
               required: "Please enter your email address.",
             })}
             id="email"
             type="email"
           />
-          {errors.email && (
-            <p className="text-red-500">{errors.email.message}</p>
+          {errors.user?.email && (
+            <p className="text-red-500">{errors.user.email.message}</p>
           )}
         </div>
 
         <div className="flex flex-col">
           <label htmlFor="password">Password*</label>
           <input
-            {...register("password", {
+            {...register("user.password", {
               required: "Please create a password.",
               minLength: 8,
             })}
             id="password"
             type="password"
           />
-          {errors.password && (
-            <p className="text-red-500">{errors.password.message}</p>
+          {errors.user?.password && (
+            <p className="text-red-500">{errors.user.password.message}</p>
           )}
         </div>
 
         <div className="flex flex-col">
           <label htmlFor="confirmPassword">Confirm Password*</label>
           <input
-            {...register("confirmPassword", {
+            {...register("user.confirmPassword", {
               required: "Please confirm your password.",
               minLength: 8,
               validate: (value) =>
-                value === getValues("password") || "Password must match.",
+                value === getValues("user.password") || "Password must match.",
             })}
             id="password"
             type="password"
           />
-          {errors.confirmPassword && (
-            <p className="text-red-500">{errors.confirmPassword.message}</p>
+          {errors.user?.confirmPassword && (
+            <p className="text-red-500">{errors.user.confirmPassword.message}</p>
           )}
         </div>
 
+        <div className="flex flex-col">
         <div className="flex items-center !gap-2">
           <input
-            {...register("serviceUnderstanding", {
-              required: true,
+            {...register("consent.serviceUnderstanding", {
+              required: "This checkbox is required",
             })}
             type="checkbox"
+            id="serviceUnderstanding"
           />
-          <p>I understand this is an AI-powered service, not human therapy.</p>
+          <label htmlFor="serviceUnderstanding">I understand this is an AI-powered service, not human therapy.</label>
+            </div>
+          {errors.consent?.serviceUnderstanding && (
+            <p className="text-red-500 indent-5.5">{errors.consent.serviceUnderstanding.message}</p>
+          )}
         </div>
       </div>
     </>
