@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { SignUpPage1 } from "../components/forms/SignUpPage-1";
-import { SignUpPage2 } from "../components/forms/SignUpPage-2";
+import { CreateAccountPage } from "../components/forms/SignUp/CreateAccountPage";
+import { ConsentPage } from "../components/forms/SignUp/ConsentPage";
+import { InitialAssessmentPage } from "../components/forms/SignUp/InitialAssessmentPage";
 import { Button } from "../components/ui/Button";
 
 export const SignUpPage = () => {
@@ -47,7 +48,7 @@ export const SignUpPage = () => {
           <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-8">
             {currentPage === 1 && (
               <>
-                <SignUpPage1 register={register} errors={errors} getValues={getValues}/>
+                <CreateAccountPage register={register} errors={errors} getValues={getValues}/>
                 <div className="flex justify-end">
                 <Button text="Continue" type="button" onClick={nextPage} />
                 </div>
@@ -56,7 +57,13 @@ export const SignUpPage = () => {
 
             {currentPage === 2 && (
               <>
-                <SignUpPage2 register={register} errors={errors} getValues={getValues}/>
+                <ConsentPage register={register} errors={errors} getValues={getValues}/>
+              </>
+            )}
+
+            {currentPage === 3 && (
+              <>
+                <InitialAssessmentPage register={register} getValues={getValues}/>
               </>
             )}
 

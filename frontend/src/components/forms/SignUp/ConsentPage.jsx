@@ -1,4 +1,4 @@
-export const SignUpPage2 = ({ register, errors}) => {
+export const ConsentPage = ({ register, errors}) => {
   return (
     <>
       <div className="flex flex-col gap-9 [&>div]:flex [&>div>input]:h-12 [&>div>input]:input-style">

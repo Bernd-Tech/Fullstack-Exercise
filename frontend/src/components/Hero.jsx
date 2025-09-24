@@ -40,46 +40,6 @@ export const Hero = () => {
         }, "-=2")
     }, [])
 
-//   useGSAP(() => {
-//     gsap.to("#title", {
-//       y: 0,
-//       opacity: 1,
-//       duration: 1,
-//       ease: "expo.out",
-//       delay: 0.3,
-//     });
-
-//     gsap.fromTo(
-//       "#subtitle",
-//       {
-//         y: 20,
-//         opacity: 0,
-//       },
-//       {
-//         y: 0,
-//         opacity: 1,
-//         duration: 1,
-//         ease: "expo.out",
-//         delay: 0.5,
-//         stagger: 0.1
-//       }
-//     );
-
-//     gsap.fromTo(
-//       "#spline-model",
-//       {
-//         opacity: 0,
-//       },
-//       {
-//         opacity: 1,
-//         z: 20,
-//         duration: 4,
-//         ease: "expo.out",
-//         delay: 0.3,
-//       }
-//     );
-//   }, []);
-
   return (
     <>
       <section
@@ -111,11 +71,11 @@ export const Hero = () => {
             <Button text="Read more" className="cta-btn" />
             </div>
           </div>
-          <div className="flex justify-center items-center h-[110%] flex-2">
-            <Spline
-            id="spline-model" className="opacity-0"
-              scene="https://prod.spline.design/OJ0TLV4hDBLNlB3y/scene.splinecode"
-            />
+          <div className="flex justify-center items-center h-[110%] flex-2 overflow-hidden overscroll-contain">
+            <Spline 
+            id="spline-model" 
+            className="opacity-0" 
+            scene="https://prod.spline.design/OJ0TLV4hDBLNlB3y/scene.splinecode" />
             </div>
         </div>
       </section>

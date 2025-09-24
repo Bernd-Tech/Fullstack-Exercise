@@ -1,4 +1,4 @@
-export const SignUpPage1 = ({ register, errors, getValues }) => {
+export const CreateAccountPage = ({ register, errors, getValues }) => {
   return (
     <>
       <div className="flex flex-col gap-6 [&>div]:gap-1 [&>div>input]:h-10 [&>div>input]:outline-0 [&>div>input]:input-style">
