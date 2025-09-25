@@ -71,11 +71,11 @@ export const Hero = () => {
             <Button text="Read more" className="cta-btn" />
             </div>
           </div>
-          <div className="flex justify-center items-center h-[110%] flex-2 overflow-hidden overscroll-contain">
+          <div className="flex justify-center items-center h-[110%] flex-2">
             <Spline 
             id="spline-model" 
             className="opacity-0" 
-            scene="https://prod.spline.design/OJ0TLV4hDBLNlB3y/scene.splinecode" />
+            scene="https://draft.spline.design/rSvpnf5yeiW6r8Tz/scene.splinecode" />
             </div>
         </div>
       </section>

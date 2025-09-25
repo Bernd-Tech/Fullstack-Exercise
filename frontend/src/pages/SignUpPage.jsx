@@ -12,8 +12,17 @@ export const SignUpPage = () => {
     formState: { errors, isSubmitting },
     reset,
     getValues,
-    trigger
-  } = useForm();
+    trigger,
+    watch
+  } = useForm({
+    defaultValues: {
+        initialAssessment: {
+            concerns: {
+                stressLevel: 0
+            }
+        }
+    }
+  });
 
   const onSubmit = (data) => {
     console.log(data);
@@ -21,7 +30,7 @@ export const SignUpPage = () => {
     reset();
   };
 
-  const [currentPage, setCurrentPage] = useState(2);
+  const [currentPage, setCurrentPage] = useState(3);
 
   const nextPage = async () => {
     const isValid = await trigger();
@@ -63,7 +72,7 @@ export const SignUpPage = () => {
 
             {currentPage === 3 && (
               <>
-                <InitialAssessmentPage register={register} getValues={getValues}/>
+                <InitialAssessmentPage register={register} getValues={getValues} watch={watch}/>
               </>
             )}
 
