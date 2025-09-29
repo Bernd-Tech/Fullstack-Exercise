@@ -17,9 +17,7 @@ export const SignUpPage = () => {
   } = useForm({
     defaultValues: {
         initialAssessment: {
-            concerns: {
-                stressLevel: 0
-            }
+            stressLevel: 0 
         }
     }
   });

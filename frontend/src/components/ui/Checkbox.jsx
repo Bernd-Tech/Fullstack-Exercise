@@ -1,4 +1,4 @@
-export const Checkbox = ({id, name, label, register}) => {
+export const Checkbox = ({id, name, label, register, value}) => {
     return (
         <>
         {/* <div className="flex flex-col gap-1"> */}
@@ -9,6 +9,7 @@ export const Checkbox = ({id, name, label, register}) => {
               required: false,
             })}
             type="checkbox"
+            value={value}
           />
           <label htmlFor={id}>{label}</label>
         </div>

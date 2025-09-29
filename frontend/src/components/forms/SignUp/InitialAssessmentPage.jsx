@@ -1,4 +1,5 @@
 import { Checkbox } from "../../ui/Checkbox";
+import { RadioButtonGroup } from "../../ui/RadioButton";
 
 export const InitialAssessmentPage = ({ register, watch }) => {
   const concernsOptions = [
@@ -9,10 +10,18 @@ export const InitialAssessmentPage = ({ register, watch }) => {
     { value: "work", label: "Work/Career Issues" },
     { value: "trauma", label: "Trauma/PTSD" },
     { value: "grief", label: "Grief/Loss" },
-    { value: "selfesteem", label: "Self-Esteem" },
+    { value: "self-esteem", label: "Self-Esteem" },
     { value: "sleep", label: "Sleep Issues" },
     { value: "other", label: "Other" },
   ];
+
+  const durationOptions = [
+    {value: "less than 1 month", label: "Less than 1 month"},
+    {value: "1 - 6 months", label: "1 - 6 months"},
+    {value: "6 months to 1 year", label: "6 months to 1 year"},
+    {value: "1 to 2 years", label: "1 to 2 years"},
+    {value: "more than 2 years", label: "More than 2 years"}
+  ]
 
   return (
     <>
@@ -44,7 +53,8 @@ export const InitialAssessmentPage = ({ register, watch }) => {
                 id={`concern-${value}`}
                 label={label}
                 register={register}
-                name={`initialAssessment.concerns.${value}`}
+                value={value}
+                name="initialAssessment.concerns"
               />
             ))}
           </div>
@@ -61,15 +71,27 @@ export const InitialAssessmentPage = ({ register, watch }) => {
             max={10}
             id="stress-level"
             step={1}
-            {...register("initialAssessment.concerns.stressLevel", { 
+            {...register("initialAssessment.stressLevel", { 
                 required: false,
                 default: 0
             })}
           />
           <div className="flex justify-between">
         <p>None (0)</p>
-          <output>{watch("initialAssessment.concerns.stressLevel")}</output>
+          <output>{watch("initialAssessment.stressLevel")}</output>
           <p>High (10)</p>
+          </div>
+          </div>
+          <div className="flex flex-col w-full pb-6 border-b border-b-(--color-light)/50">
+          <label className="block font-medium mb-4">
+            For how long have you been experiencing these concerns?
+          </label>
+          <div>
+              <RadioButtonGroup
+                register={register}
+                options={durationOptions}
+                name="initialAssessment.concern-duration"
+              />
           </div>
           </div>
           </div>
