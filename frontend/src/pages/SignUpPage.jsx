@@ -17,7 +17,9 @@ export const SignUpPage = () => {
   } = useForm({
     defaultValues: {
         initialAssessment: {
-            stressLevel: 0 
+            concerns: {
+                stress_level: 0 
+            }
         }
     }
   });
@@ -55,7 +57,7 @@ export const SignUpPage = () => {
           <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-8">
             {currentPage === 1 && (
               <>
-                <CreateAccountPage register={register} errors={errors} getValues={getValues}/>
+                <CreateAccountPage register={register} errors={errors} getValues={getValues} watch={watch}/>
                 <div className="flex justify-end">
                 <Button text="Continue" type="button" onClick={nextPage} />
                 </div>

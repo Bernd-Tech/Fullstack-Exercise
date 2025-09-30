@@ -1,4 +1,4 @@
-export const CreateAccountPage = ({ register, errors, getValues }) => {
+export const CreateAccountPage = ({ register, errors, getValues, watch }) => {
   return (
     <>
       <div className="flex flex-col gap-6 [&>div]:gap-1 [&>div>input]:h-10 [&>div>input]:outline-0 [&>div>input]:input-style">
@@ -6,29 +6,29 @@ export const CreateAccountPage = ({ register, errors, getValues }) => {
           <div>
             <label htmlFor="firstName">First Name*</label>
             <input
-              {...register("user.firstName", {
+              {...register("user.first_name", {
                 required: "Please enter your first name.",
               })}
               id="firstName"
               type="text"
             />
             {/* Need to add optional chaining, because checking for firstName if errors.user doesn't exist yet will crash render*/}
-            {errors.user?.firstName && (
-              <p className="text-red-500">{errors.user.firstName.message}</p>
+            {errors.user?.first_name && (
+              <p className="text-red-500">{errors.user.first_name.message}</p>
             )}
           </div>
 
           <div>
             <label htmlFor="lastName">Last Name*</label>
             <input
-              {...register("user.lastName", {
+              {...register("user.last_name", {
                 required: "Please enter your last name.",
               })}
               id="lastName"
               type="text"
             />
-            {errors.user?.lastName && (
-              <p className="text-red-500">{errors.user.lastName.message}</p>
+            {errors.user?.last_name && (
+              <p className="text-red-500">{errors.user.last_name.message}</p>
             )}
           </div>
         </div>
@@ -37,15 +37,15 @@ export const CreateAccountPage = ({ register, errors, getValues }) => {
           <div>
             <label htmlFor="preferredName">Preferred Name*</label>
             <input
-              {...register("user.preferredName", {
+              {...register("user.preferred_name", {
                 required: "Please enter your preferred name.",
               })}
               id="preferredName"
               type="text"
             />
 
-            {errors.user?.preferredName && (
-              <p className="text-red-500">{errors.user.preferredName.message}</p>
+            {errors.user?.preferred_name && (
+              <p className="text-red-500">{errors.user.preferred_name.message}</p>
             )}
           </div>
 
@@ -86,7 +86,7 @@ export const CreateAccountPage = ({ register, errors, getValues }) => {
           {getValues("pronouns") === "Other" && (
             <input
               className="mt-2"
-              {...register("user.specificPrononuns", {
+              {...register("user.specific_prononuns", {
                 required: "Please enter your specific pronouns.",
               })}
               id="specificPronouns"
@@ -95,8 +95,8 @@ export const CreateAccountPage = ({ register, errors, getValues }) => {
             />
           )}
 
-          {errors.user?.specificPrononuns && (
-            <p className="text-red-500">{errors.user.specificPrononuns.message}</p>
+          {errors.user?.specific_prononuns && (
+            <p className="text-red-500">{errors.user.specific_prononuns.message}</p>
           )}
         </div>
 
@@ -160,26 +160,25 @@ export const CreateAccountPage = ({ register, errors, getValues }) => {
         </div>
 
         <div className="flex flex-col">
-          <label htmlFor="confirmPassword">Confirm Password*</label>
+          <label htmlFor="confirmedPassword">Confirm Password*</label>
           <input
-            {...register("user.confirmPassword", {
+            {...register("user.confirmed_password", {
               required: "Please confirm your password.",
-              minLength: 8,
               validate: (value) =>
-                value === getValues("user.password") || "Password must match.",
+                value === watch("user.password") || "Password must match.",
             })}
-            id="password"
+            id="confirmedPassword"
             type="password"
           />
-          {errors.user?.confirmPassword && (
-            <p className="text-red-500">{errors.user.confirmPassword.message}</p>
+          {errors.user?.confirmed_password && (
+            <p className="text-red-500">{errors.user.confirmed_password.message}</p>
           )}
         </div>
 
         <div className="flex flex-col">
         <div className="flex items-center !gap-2">
           <input
-            {...register("consent.serviceUnderstanding", {
+            {...register("consent.service_understanding", {
               required: "This checkbox is required",
             })}
             type="checkbox"
@@ -187,8 +186,8 @@ export const CreateAccountPage = ({ register, errors, getValues }) => {
           />
           <label htmlFor="serviceUnderstanding">I understand this is an AI-powered service, not human therapy.</label>
             </div>
-          {errors.consent?.serviceUnderstanding && (
-            <p className="text-red-500 indent-5.5">{errors.consent.serviceUnderstanding.message}</p>
+          {errors.consent?.service_understanding && (
+            <p className="text-red-500 indent-5.5">{errors.consent.service_understanding.message}</p>
           )}
         </div>
       </div>
