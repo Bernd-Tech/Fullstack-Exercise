@@ -50,6 +50,28 @@ export const InitialAssessmentPage = ({ register, watch }) => {
     { value: "user prefers not to answer", label: "Prefer not to answer" },
   ];
 
+  const skillGoals = [
+    {value: "coping-strategies", label: "Coping strategies"},
+    {value: "problem-solving", label: "Problem-solving"},
+    {value: "emotional-regulation", label: "Emotional regulation"},
+    {value: "stress-management", label: "Stress management"},
+    {value: "communication-skills", label: "Communication skills"},
+    {value: "mindfullness-techniques", label: "Mindfullness techniques"}
+  ];
+
+  const supportSystem = [
+    {value: "user has a strong support system", label: "Strong support system"},
+    {value: "user has some support available", label: "Some support available"},
+    {value: "user only has limited support", label: "Limited support system"},
+    {value: "user prefers not to answer", label: "Prefer not to answer"}
+  ];
+
+  const standardRadioOptions = [
+    {value: "yes", label: "Yes"},
+    {value: "no", label: "No"},
+    {value: "user prefers not to say", label: "Prefer not to say"},
+  ];
+
   return (
     <>
       <div className="space-y-8">
@@ -119,6 +141,7 @@ export const InitialAssessmentPage = ({ register, watch }) => {
               <RadioButtonGroup
                 register={register}
                 options={durationOptions}
+                context="duration"
                 name="initialAssessment.concerns.concerns_duration"
               />
             </div>
@@ -147,21 +170,77 @@ export const InitialAssessmentPage = ({ register, watch }) => {
             Your Goals
           </h3>
           <div className="flex flex-col w-full pb-6 space-y-6">
-            <label htmlFor="use-goals" className="block font-medium mb-4">
+            <label htmlFor="user-goals" className="block font-medium mb-4">
               What do you hope to achieve through these conversations?
             </label>
             <textarea
               className="outline-1 rounded-xl p-2"
               id="user-goals"
+                {...register("initialAssessment.goals.conversation_goals", {
+                    required: false
+                })}
               placeholder="Share your goals, hopes, or what you would like to work on..."
             ></textarea>
 
-            <RadioButtonGroup
-              register={register}
-              options={previousExperience}
-              name="initialAssessment.previous_experience"
-            />
+            <label htmlFor="user-goals" className="block font-medium mb-4">
+              What do you hope to achieve through these conversations?
+            </label>
+            <div className="grid grid-cols-2 gap-3">
+                {skillGoals.map(({value, label}) => 
+                    <Checkbox
+                    key={`goal-${value}`}
+                    id={`skill-${value}`}
+                    label={label}
+                    value={value}
+                    register={register}
+                    name="initialAssessment.goals.skills"
+                    />
+                )}
+            </div>
           </div>
+        </section>
+        <section className="space-y-6">
+          <h3 className="text-lg font-semibold border-b border-b-(--color-light)/50 pb-2">
+            Current Support & Well-being
+          </h3>
+          <div className="flex flex-col w-full pb-6 space-y-6">
+            <label htmlFor="user-support-system" className="block font-medium mb-4">
+              How would you describe your current support system?
+            </label>
+
+            <RadioButtonGroup
+                register={register}
+                options={supportSystem}
+                context="current-support"
+                name="initialAssessment.support_system.current_support"
+              />
+            </div>
+
+            <div className="flex flex-col w-full pb-6 space-y-6">
+            <label htmlFor="user-support-system" className="block font-medium mb-4">
+              Are you currently seeing a mental health professional?
+            </label>
+
+            <RadioButtonGroup
+                register={register}
+                options={standardRadioOptions}
+                context="professional-care"
+                name="initialAssessment.support_system.in_professional_care"
+              />
+            </div>
+
+            <div className="flex flex-col w-full pb-6 space-y-6">
+            <label htmlFor="user-support-system" className="block font-medium mb-4">
+              Are you currently taking any psychiatric medications?
+            </label>
+
+            <RadioButtonGroup
+                register={register}
+                options={standardRadioOptions}
+                context="on-medication"
+                name="initialAssessment.support_system.on_medication"
+              />
+            </div>
         </section>
       </div>
     </>

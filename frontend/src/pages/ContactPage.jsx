@@ -62,9 +62,6 @@ export const ContactPage = () => {
                 <p className="subtitle">
                 Please feel free to contact us if you have anything to point out or ideas you would like to
                   share with us. We will get back to you as soon as we can.
-                  {/* If you have anything to point out or ideas you would like to
-                  share with - please feel free to contact us and we will get
-                  back to you as soon as we can. */}
                 </p>
                 <p className="subtitle">
                   We are looking forward to hear from you!
