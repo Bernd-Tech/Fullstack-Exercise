@@ -83,37 +83,7 @@ export const SignUpPage = () => {
             </div>
         )}
           </form>
-          {/* {currentPage === 1 &&
-        ( <>
-        <SignUpPage1 signUpData={signUpData} updateSignUpData={updateSignUpData}/>
-        <div>
-            <Button onClick={nextPage} text="Next" />
-        </div>
-        </>)}
 
-         {currentPage === 2 &&
-        ( <>
-        <SignUpPage2 signUpData={signUpData} updateSignUpData={updateSignUpData}/>
-        <div>
-            <Button onClick={nextPage} text="Next" />
-        </div>
-        </>)}
-
-        </div>
-
-        {(currentPage > 1 && currentPage < 4) && (
-            <div>
-            <Button onClick={prevPage} text="Back" />
-            <Button onClick={nextPage} text="Next" />
-            </div>
-        )}
-
-        {(currentPage === 4) && (
-            <div>
-            <Button onClick={prevPage} text="Back" />
-            <Button onClick={submit} text="Submit" />
-            </div>
-        )} */}
         </div>
       </div>
     </>

@@ -169,19 +169,22 @@ export const InitialAssessmentPage = ({ register, watch }) => {
           <h3 className="text-lg font-semibold border-b border-b-(--color-light)/50 pb-2">
             Your Goals
           </h3>
-          <div className="flex flex-col w-full pb-6 space-y-6">
+          <div className="space-y-6">
+            <div className="flex flex-col w-full pb-6">
             <label htmlFor="user-goals" className="block font-medium mb-4">
               What do you hope to achieve through these conversations?
             </label>
             <textarea
-              className="outline-1 rounded-xl p-2"
+              className="outline-1 rounded-xl p-2 min-h-26 max-h-46"
               id="user-goals"
                 {...register("initialAssessment.goals.conversation_goals", {
                     required: false
                 })}
               placeholder="Share your goals, hopes, or what you would like to work on..."
             ></textarea>
+            </div>
 
+            <div className="flex flex-col w-full pb-6">
             <label htmlFor="user-goals" className="block font-medium mb-4">
               What do you hope to achieve through these conversations?
             </label>
@@ -197,13 +200,15 @@ export const InitialAssessmentPage = ({ register, watch }) => {
                     />
                 )}
             </div>
+            </div>
           </div>
         </section>
+
         <section className="space-y-6">
           <h3 className="text-lg font-semibold border-b border-b-(--color-light)/50 pb-2">
             Current Support & Well-being
           </h3>
-          <div className="flex flex-col w-full pb-6 space-y-6">
+          <div className="flex flex-col w-full pb-6">
             <label htmlFor="user-support-system" className="block font-medium mb-4">
               How would you describe your current support system?
             </label>
@@ -216,7 +221,7 @@ export const InitialAssessmentPage = ({ register, watch }) => {
               />
             </div>
 
-            <div className="flex flex-col w-full pb-6 space-y-6">
+            <div className="flex flex-col w-full pb-6">
             <label htmlFor="user-support-system" className="block font-medium mb-4">
               Are you currently seeing a mental health professional?
             </label>
@@ -229,7 +234,7 @@ export const InitialAssessmentPage = ({ register, watch }) => {
               />
             </div>
 
-            <div className="flex flex-col w-full pb-6 space-y-6">
+            <div className="flex flex-col w-full pb-6">
             <label htmlFor="user-support-system" className="block font-medium mb-4">
               Are you currently taking any psychiatric medications?
             </label>

@@ -48,7 +48,7 @@ export const ContactPage = () => {
           <h1 id="title" className="linear-gradient text-5xl">
             Get in Touch
           </h1>
-          <div className="flex gap-12">
+          <div className="flex gap-12 xl:min-h-[520px]">
             <div className="flex flex-col justify-around flex-1 text-lg gap-18">
               <div className="flex flex-col gap-2 leading-6.2 pr-6">
                 <p className="subtitle">

@@ -1,27 +1,55 @@
 import { useState } from "react";
 import { Button } from "./ui/Button";
 
-export const ContactForm = () => {
-    const [contactFormData, setContactFormData] = useState({
-    firstName: "",
+
+const initialFormState = {
+  firstName: "",
     lastName: "",
     email: "",
-    message: "",
-  });
+    message: ""
+}
 
-    const handleFormData = (e) => {
-    e.preventDefault();
+export const ContactForm = () => {
+
+  const [contactFormData, setContactFormData] = useState(initialFormState);
+  const [submitted, setSubmitted] = useState(true);
+  console.log(contactFormData);
+
+  const handleFormData = (e) => {
     const { name, value } = e.target;
     setContactFormData((prevData) => ({
       ...prevData,
       [name]: value,
     }));
+    console.log(contactFormData)
   };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setSubmitted(true);
+    console.log(contactFormData);
+  }
+
+  const resetForm = () => {
+    setContactFormData(initialFormState);
+    console.log(contactFormData);
+    setSubmitted(false);
+  }
 
     return (
         <>
+        {submitted ? (
+          <>
+          <div className="h-full flex justify-center pt-24">
+          <div className="flex flex-col items-center rounded-xl p-6 space-y-8">
+          <h1 className="text-2xl">Thank you, we have received your message!</h1>
+          <Button type="button" onClick={resetForm} text="Confirm"/>
+          </div>
+          </div>
+          </>
+        ) : (<>
         <form
-                onChange={handleFormData}
+                onSubmit={handleSubmit}
                 action=""
                 className="flex flex-col gap-8 [&>div]:flex [&>div]:flex-col [&>div]:gap-1 [&>div>input]:h-12 [&>div>input]:input-style"
               >
@@ -32,6 +60,7 @@ export const ContactForm = () => {
                     name="firstName"
                     type="text"
                     value={contactFormData.firstName}
+                    onChange={handleFormData}
                     required
                   />
                 </div>
@@ -43,6 +72,7 @@ export const ContactForm = () => {
                     name="lastName"
                     type="text"
                     value={contactFormData.lastName}
+                    onChange={handleFormData}
                     required
                   />
                 </div>
@@ -54,6 +84,7 @@ export const ContactForm = () => {
                     name="email"
                     type="email"
                     value={contactFormData.email}
+                    onChange={handleFormData}
                     required
                   />
                 </div>
@@ -61,10 +92,11 @@ export const ContactForm = () => {
                 <div>
                   <label htmlFor="message">Message</label>
                   <textarea
-                    className="input-style"
+                    className="input-style h-24 resize-none"  
                     name="message"
                     id="message"
                     value={contactFormData.message}
+                    onChange={handleFormData}
                     required
                   ></textarea>
                 </div>
@@ -72,6 +104,7 @@ export const ContactForm = () => {
                   <Button text="Submit" />
                 </div>
               </form>
+        </>)}
         </>
     )
 }
