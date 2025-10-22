@@ -6,6 +6,7 @@ import { InitialAssessmentPage } from "../components/forms/SignUp/InitialAssessm
 import { Button } from "../components/ui/Button";
 
 export const SignUpPage = () => {
+  const [currentPage, setCurrentPage] = useState(3);
   const {
     register,
     handleSubmit,
@@ -26,11 +27,8 @@ export const SignUpPage = () => {
 
   const onSubmit = (data) => {
     console.log(data);
-
     reset();
   };
-
-  const [currentPage, setCurrentPage] = useState(3);
 
   const nextPage = async () => {
     const isValid = await trigger();

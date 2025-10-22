@@ -1,7 +1,19 @@
 import { Checkbox } from "../../ui/Checkbox";
 import { RadioButtonGroup } from "../../ui/RadioButton";
+import { Button } from "../../ui/Button";
+import { useRef } from "react";
 
 export const InitialAssessmentPage = ({ register, watch }) => {
+  const dialogRef = useRef();
+
+  const showDialog = () => {
+    dialogRef.current.showModal();
+  };
+
+  const closeDialog = () => {
+    dialogRef.current.close();
+  };
+
   const concernsOptions = [
     { value: "anxiety", label: "Anxiety" },
     { value: "depression", label: "Depression" },
@@ -51,29 +63,53 @@ export const InitialAssessmentPage = ({ register, watch }) => {
   ];
 
   const skillGoals = [
-    {value: "coping-strategies", label: "Coping strategies"},
-    {value: "problem-solving", label: "Problem-solving"},
-    {value: "emotional-regulation", label: "Emotional regulation"},
-    {value: "stress-management", label: "Stress management"},
-    {value: "communication-skills", label: "Communication skills"},
-    {value: "mindfullness-techniques", label: "Mindfullness techniques"}
+    { value: "coping-strategies", label: "Coping strategies" },
+    { value: "problem-solving", label: "Problem-solving" },
+    { value: "emotional-regulation", label: "Emotional regulation" },
+    { value: "stress-management", label: "Stress management" },
+    { value: "communication-skills", label: "Communication skills" },
+    { value: "mindfullness-techniques", label: "Mindfullness techniques" },
   ];
 
   const supportSystem = [
-    {value: "user has a strong support system", label: "Strong support system"},
-    {value: "user has some support available", label: "Some support available"},
-    {value: "user only has limited support", label: "Limited support system"},
-    {value: "user prefers not to answer", label: "Prefer not to answer"}
+    {
+      value: "user has a strong support system",
+      label: "Strong support system",
+    },
+    {
+      value: "user has some support available",
+      label: "Some support available",
+    },
+    { value: "user only has limited support", label: "Limited support system" },
+    { value: "user prefers not to answer", label: "Prefer not to answer" },
   ];
 
   const standardRadioOptions = [
-    {value: "yes", label: "Yes"},
-    {value: "no", label: "No"},
-    {value: "user prefers not to say", label: "Prefer not to say"},
+    { value: "yes", label: "Yes" },
+    { value: "no", label: "No" },
+    { value: "user prefers not to say", label: "Prefer not to say" },
   ];
 
   return (
     <>
+      <dialog
+        ref={dialogRef}
+        className="backdrop:backdrop-blur-sm z-1 p-4 bg-red-50 border border-red-200 rounded-xl top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+      >
+        <h3 className="text-red-800 font-semibold mb-2">
+          Immediate Support Available
+        </h3>
+        <p className="text-red-700 text-sm mb-2">
+          If you're having thoughts of harming yourself or others, please reach
+          out for immediate support:
+        </p>
+        <ul className="text-red-700 text-sm space-y-1">
+          <li>• National Suicide Prevention Lifeline: 988</li>
+          <li>• Crisis Text Line: Text HOME to 741741</li>
+          <li>• Emergency Services: 911</li>
+        </ul>
+        <Button onClick={closeDialog} text="Close" type="button" autoFocus/>
+      </dialog>
       <div className="space-y-8">
         <div className="text-center mb-12">
           <h2 className="text-2xl font-bold text-(--color-light) mb-2">
@@ -84,6 +120,7 @@ export const InitialAssessmentPage = ({ register, watch }) => {
             are optional, and you can skip anything you're not comfortable
             sharing.
           </p>
+          <Button onClick={showDialog} text="Show modal" type="button" />
         </div>
 
         <section className="space-y-6">
@@ -171,35 +208,35 @@ export const InitialAssessmentPage = ({ register, watch }) => {
           </h3>
           <div className="space-y-6">
             <div className="flex flex-col w-full pb-6">
-            <label htmlFor="user-goals" className="block font-medium mb-4">
-              What do you hope to achieve through these conversations?
-            </label>
-            <textarea
-              className="outline-1 rounded-xl p-2 min-h-26 max-h-46"
-              id="user-goals"
+              <label htmlFor="user-goals" className="block font-medium mb-4">
+                What do you hope to achieve through these conversations?
+              </label>
+              <textarea
+                className="outline-1 rounded-xl p-2 min-h-26 max-h-46"
+                id="user-goals"
                 {...register("initialAssessment.goals.conversation_goals", {
-                    required: false
+                  required: false,
                 })}
-              placeholder="Share your goals, hopes, or what you would like to work on..."
-            ></textarea>
+                placeholder="Share your goals, hopes, or what you would like to work on..."
+              ></textarea>
             </div>
 
             <div className="flex flex-col w-full pb-6">
-            <label htmlFor="user-goals" className="block font-medium mb-4">
-              What do you hope to achieve through these conversations?
-            </label>
-            <div className="grid grid-cols-2 gap-3">
-                {skillGoals.map(({value, label}) => 
-                    <Checkbox
+              <label htmlFor="user-goals" className="block font-medium mb-4">
+                What do you hope to achieve through these conversations?
+              </label>
+              <div className="grid grid-cols-2 gap-3">
+                {skillGoals.map(({ value, label }) => (
+                  <Checkbox
                     key={`goal-${value}`}
                     id={`skill-${value}`}
                     label={label}
                     value={value}
                     register={register}
                     name="initialAssessment.goals.skills"
-                    />
-                )}
-            </div>
+                  />
+                ))}
+              </div>
             </div>
           </div>
         </section>
@@ -209,43 +246,52 @@ export const InitialAssessmentPage = ({ register, watch }) => {
             Current Support & Well-being
           </h3>
           <div className="flex flex-col w-full pb-6">
-            <label htmlFor="user-support-system" className="block font-medium mb-4">
+            <label
+              htmlFor="user-support-system"
+              className="block font-medium mb-4"
+            >
               How would you describe your current support system?
             </label>
 
             <RadioButtonGroup
-                register={register}
-                options={supportSystem}
-                context="current-support"
-                name="initialAssessment.support_system.current_support"
-              />
-            </div>
+              register={register}
+              options={supportSystem}
+              context="current-support"
+              name="initialAssessment.support_system.current_support"
+            />
+          </div>
 
-            <div className="flex flex-col w-full pb-6">
-            <label htmlFor="user-support-system" className="block font-medium mb-4">
+          <div className="flex flex-col w-full pb-6">
+            <label
+              htmlFor="user-support-system"
+              className="block font-medium mb-4"
+            >
               Are you currently seeing a mental health professional?
             </label>
 
             <RadioButtonGroup
-                register={register}
-                options={standardRadioOptions}
-                context="professional-care"
-                name="initialAssessment.support_system.in_professional_care"
-              />
-            </div>
+              register={register}
+              options={standardRadioOptions}
+              context="professional-care"
+              name="initialAssessment.support_system.in_professional_care"
+            />
+          </div>
 
-            <div className="flex flex-col w-full pb-6">
-            <label htmlFor="user-support-system" className="block font-medium mb-4">
+          <div className="flex flex-col w-full pb-6">
+            <label
+              htmlFor="user-support-system"
+              className="block font-medium mb-4"
+            >
               Are you currently taking any psychiatric medications?
             </label>
 
             <RadioButtonGroup
-                register={register}
-                options={standardRadioOptions}
-                context="on-medication"
-                name="initialAssessment.support_system.on_medication"
-              />
-            </div>
+              register={register}
+              options={standardRadioOptions}
+              context="on-medication"
+              name="initialAssessment.support_system.on_medication"
+            />
+          </div>
         </section>
       </div>
     </>
