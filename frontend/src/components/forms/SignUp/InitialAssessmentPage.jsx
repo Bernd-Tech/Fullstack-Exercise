@@ -1,10 +1,21 @@
 import { Checkbox } from "../../ui/Checkbox";
 import { RadioButtonGroup } from "../../ui/RadioButton";
 import { Button } from "../../ui/Button";
-import { useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 
 export const InitialAssessmentPage = ({ register, watch }) => {
+  const [dialogAppeared, setDialogAppeared] = useState(false);
   const dialogRef = useRef();
+
+  const stressLevel = watch("initialAssessment.concerns.stress_level");
+
+//   
+  useEffect(() => {
+    if (stressLevel >= 8 && !dialogAppeared) {
+      showDialog();
+      setDialogAppeared(true);
+    }
+  }, [stressLevel]);
 
   const showDialog = () => {
     dialogRef.current.showModal();
@@ -96,19 +107,23 @@ export const InitialAssessmentPage = ({ register, watch }) => {
         ref={dialogRef}
         className="backdrop:backdrop-blur-sm z-1 p-4 bg-red-50 border border-red-200 rounded-xl top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
       >
-        <h3 className="text-red-800 font-semibold mb-2">
+        <div className="flex justify-between mb-2">
+        <h3 className="text-red-800 font-semibold mb-2 text-lg">
           Immediate Support Available
         </h3>
-        <p className="text-red-700 text-sm mb-2">
+        <button type="button" onClick={closeDialog} className="font-semibold bg-red-800 text-red-50 text-base px-3 rounded-lg hover:cursor-pointer hover:scale-95 duration-300 transition-all" autoFocus>
+            X
+        </button>
+        </div>
+        <p className="text-red-700 mb-2 text-base">
           If you're having thoughts of harming yourself or others, please reach
           out for immediate support:
         </p>
-        <ul className="text-red-700 text-sm space-y-1">
+        <ul className="text-red-700 text-base space-y-1">
           <li>• National Suicide Prevention Lifeline: 988</li>
           <li>• Crisis Text Line: Text HOME to 741741</li>
           <li>• Emergency Services: 911</li>
         </ul>
-        <Button onClick={closeDialog} text="Close" type="button" autoFocus/>
       </dialog>
       <div className="space-y-8">
         <div className="text-center mb-12">
@@ -120,7 +135,6 @@ export const InitialAssessmentPage = ({ register, watch }) => {
             are optional, and you can skip anything you're not comfortable
             sharing.
           </p>
-          <Button onClick={showDialog} text="Show modal" type="button" />
         </div>
 
         <section className="space-y-6">
