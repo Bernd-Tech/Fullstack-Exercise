@@ -8,6 +8,7 @@ export const InitialAssessmentPage = ({ register, watch }) => {
   const dialogRef = useRef();
 
   const stressLevel = watch("initialAssessment.concerns.stress_level");
+  const harmfulThoughts = watch("initialAssessment.support_system.harmful_thoughts");
 
 //   
   useEffect(() => {
@@ -16,6 +17,12 @@ export const InitialAssessmentPage = ({ register, watch }) => {
       setDialogAppeared(true);
     }
   }, [stressLevel]);
+
+  useEffect(() => {
+    if (harmfulThoughts === "yes") {
+        showDialog();
+    }
+  }, [harmfulThoughts]);
 
   const showDialog = () => {
     dialogRef.current.showModal();
@@ -35,7 +42,15 @@ export const InitialAssessmentPage = ({ register, watch }) => {
     { value: "grief", label: "Grief/Loss" },
     { value: "self-esteem", label: "Self-Esteem" },
     { value: "sleep", label: "Sleep Issues" },
-    { value: "other", label: "Other" },
+    { value: "other", label: "Other" }
+  ];
+
+  const sleepPatternOptions = [
+    { value: "user has normal to good sleep", label: "Normal/good sleep" },
+    { value: "user has difficulties falling asleep", label: "Difficulty falling asleep" },
+    { value: "user frequently wakes during the night", label: "Frequent waking during night" },
+    { value: "user sleeps too much", label: "Sleeping too much" },
+    { value: "user has an irregular sleep schedule", label: "Irregular sleep schedule" }
   ];
 
   const durationOptions = [
@@ -70,7 +85,7 @@ export const InitialAssessmentPage = ({ register, watch }) => {
       value: "user has not been in therapy before",
       label: "No, this is my first time",
     },
-    { value: "user prefers not to answer", label: "Prefer not to answer" },
+    { value: "user prefers not to answer", label: "Prefer not to answer" }
   ];
 
   const skillGoals = [
@@ -79,7 +94,7 @@ export const InitialAssessmentPage = ({ register, watch }) => {
     { value: "emotional-regulation", label: "Emotional regulation" },
     { value: "stress-management", label: "Stress management" },
     { value: "communication-skills", label: "Communication skills" },
-    { value: "mindfullness-techniques", label: "Mindfullness techniques" },
+    { value: "mindfullness-techniques", label: "Mindfullness techniques" }
   ];
 
   const supportSystem = [
@@ -92,13 +107,19 @@ export const InitialAssessmentPage = ({ register, watch }) => {
       label: "Some support available",
     },
     { value: "user only has limited support", label: "Limited support system" },
-    { value: "user prefers not to answer", label: "Prefer not to answer" },
+    { value: "user prefers not to answer", label: "Prefer not to answer" }
   ];
 
   const standardRadioOptions = [
     { value: "yes", label: "Yes" },
     { value: "no", label: "No" },
-    { value: "user prefers not to say", label: "Prefer not to say" },
+    { value: "user prefers not to say", label: "Prefer not to say" }
+  ];
+
+  const safetyRadioOptions = [
+    { value: "no", label: "No" },
+    { value: "yes", label: "Yes, I am having these thoughts" },
+    { value: "user prefers not to say", label: "Prefer not to say" }
   ];
 
   return (
@@ -186,6 +207,18 @@ export const InitialAssessmentPage = ({ register, watch }) => {
             </div>
             <div className="flex flex-col w-full pb-6">
               <label className="block font-medium mb-4">
+                How are your sleep patterns?
+              </label>
+
+              <RadioButtonGroup
+                register={register}
+                options={sleepPatternOptions}
+                context="sleep-pattern"
+                name="initialAssessment.concerns.sleep_pattern"
+              />
+            </div>
+            <div className="flex flex-col w-full pb-6">
+              <label className="block font-medium mb-4">
                 For how long have you been experiencing these concerns?
               </label>
 
@@ -237,7 +270,7 @@ export const InitialAssessmentPage = ({ register, watch }) => {
 
             <div className="flex flex-col w-full pb-6">
               <label htmlFor="user-goals" className="block font-medium mb-4">
-                What do you hope to achieve through these conversations?
+                What skills or areas are you most interested in developing?
               </label>
               <div className="grid grid-cols-2 gap-3">
                 {skillGoals.map(({ value, label }) => (
@@ -257,11 +290,10 @@ export const InitialAssessmentPage = ({ register, watch }) => {
 
         <section className="space-y-6">
           <h3 className="text-lg font-semibold border-b border-b-(--color-light)/50 pb-2">
-            Current Support & Well-being
+            Current Support & Well-being Check
           </h3>
           <div className="flex flex-col w-full pb-6">
             <label
-              htmlFor="user-support-system"
               className="block font-medium mb-4"
             >
               How would you describe your current support system?
@@ -277,7 +309,6 @@ export const InitialAssessmentPage = ({ register, watch }) => {
 
           <div className="flex flex-col w-full pb-6">
             <label
-              htmlFor="user-support-system"
               className="block font-medium mb-4"
             >
               Are you currently seeing a mental health professional?
@@ -293,7 +324,6 @@ export const InitialAssessmentPage = ({ register, watch }) => {
 
           <div className="flex flex-col w-full pb-6">
             <label
-              htmlFor="user-support-system"
               className="block font-medium mb-4"
             >
               Are you currently taking any psychiatric medications?
@@ -304,6 +334,21 @@ export const InitialAssessmentPage = ({ register, watch }) => {
               options={standardRadioOptions}
               context="on-medication"
               name="initialAssessment.support_system.on_medication"
+            />
+          </div>
+
+          <div className="flex flex-col w-full p-4 border-1 bg-(--color-light) text-(--color-dark) rounded-xl">
+            <label
+              className="block font-medium mb-4"
+            >
+              Are you currently having thoughts of harming yourself or others?
+            </label>
+
+            <RadioButtonGroup
+              register={register}
+              options={safetyRadioOptions}
+              context="harmful-thoughts"
+              name="initialAssessment.support_system.harmful_thoughts"
             />
           </div>
         </section>
