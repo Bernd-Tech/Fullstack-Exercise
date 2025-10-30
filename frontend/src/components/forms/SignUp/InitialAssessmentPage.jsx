@@ -146,6 +146,7 @@ export const InitialAssessmentPage = ({ register, watch }) => {
           <li>• Emergency Services: 911</li>
         </ul>
       </dialog>
+      
       <div className="space-y-8">
         <div className="text-center mb-12">
           <h2 className="text-2xl font-bold text-(--color-light) mb-2">
@@ -290,7 +291,7 @@ export const InitialAssessmentPage = ({ register, watch }) => {
 
         <section className="space-y-6">
           <h3 className="text-lg font-semibold border-b border-b-(--color-light)/50 pb-2">
-            Current Support & Well-being Check
+            Current Support & Well-being
           </h3>
           <div className="flex flex-col w-full pb-6">
             <label
@@ -338,8 +339,11 @@ export const InitialAssessmentPage = ({ register, watch }) => {
           </div>
 
           <div className="flex flex-col w-full p-4 border-1 bg-(--color-light) text-(--color-dark) rounded-xl">
+             <h3 className="text-lg font-semibold border-b border-b-(--color-dark)/50 pb-2">
+            Safety Check
+          </h3>
             <label
-              className="block font-medium mb-4"
+              className="block font-medium my-4"
             >
               Are you currently having thoughts of harming yourself or others?
             </label>

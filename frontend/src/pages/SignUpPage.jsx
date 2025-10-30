@@ -3,10 +3,11 @@ import { useForm } from "react-hook-form";
 import { CreateAccountPage } from "../components/forms/SignUp/CreateAccountPage";
 import { ConsentPage } from "../components/forms/SignUp/ConsentPage";
 import { InitialAssessmentPage } from "../components/forms/SignUp/InitialAssessmentPage";
+import { ReviewPage } from "../components/forms/SignUp/ReviewPage";
 import { Button } from "../components/ui/Button";
 
 export const SignUpPage = () => {
-  const [currentPage, setCurrentPage] = useState(3);
+  const [currentPage, setCurrentPage] = useState(1);
   const {
     register,
     handleSubmit,
@@ -80,6 +81,10 @@ export const SignUpPage = () => {
             <Button type="button" onClick={nextPage} text="Next" />
             </div>
         )}
+
+        {currentPage === 4 && ( 
+            <ReviewPage getValues={getValues}/>
+        )}  
           </form>
 
         </div>
