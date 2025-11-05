@@ -1,8 +1,8 @@
 export const CreateAccountPage = ({ register, errors, getValues, watch }) => {
   return (
     <>
-      <div className="flex flex-col gap-6 [&>div]:gap-1 [&>div>input]:h-10 [&>div>input]:outline-0 [&>div>input]:input-style">
-        <div className="flex flex-row justify-between [&>div]:flex [&>div]:flex-col [&>div]:gap-1 [&>div>input]:h-10 [&>div>input]:outline-0 [&>div>input]:input-style">
+      <div className="flex flex-col gap-6 [&>div]:gap-8 [&>div>input]:h-10 [&>div>input]:outline-0 [&>div>input]:input-style">
+        <div className="flex justify-between [&>div]:flex [&>div]:flex-1 [&>div]:flex-col [&>div]:gap-1 [&>div>input]:h-10 [&>div>input]:outline-0 [&>div>input]:input-style">
           <div>
             <label htmlFor="firstName">First Name*</label>
             <input
@@ -33,7 +33,7 @@ export const CreateAccountPage = ({ register, errors, getValues, watch }) => {
           </div>
         </div>
 
-        <div className="flex flex-row justify-between [&>div]:flex [&>div]:flex-col [&>div]:gap-1 [&>div>input]:h-10 [&>div>input]:outline-0 [&>div>input]:input-style">
+        <div className="flex flex-row justify-between [&>div]:flex [&>div]:flex-1 [&>div]:flex-col [&>div]:gap-1 [&>div>input]:h-10 [&>div>input]:outline-0 [&>div>input]:input-style">
           <div>
             <label htmlFor="preferredName">Preferred Name*</label>
             <input
@@ -100,7 +100,7 @@ export const CreateAccountPage = ({ register, errors, getValues, watch }) => {
           )}
         </div>
 
-        <div className="flex flex-row justify-between [&>div]:flex [&>div]:flex-col [&>div]:gap-1 [&>div>input]:h-10 [&>div>input]:outline-0 [&>div>input]:input-style">
+        <div className="flex flex-row justify-between [&>div]:flex [&>div]:flex-1 [&>div]:flex-col [&>div]:gap-1 [&>div>input]:h-10 [&>div>input]:outline-0 [&>div>input]:input-style">
           <div>
             <label htmlFor="country">Country*</label>
             <input
@@ -130,7 +130,7 @@ export const CreateAccountPage = ({ register, errors, getValues, watch }) => {
           </div>
         </div>
 
-        <div className="flex flex-col">
+        <div className="flex flex-col !gap-1">
           <label htmlFor="email">E-Mail*</label>
           <input
             {...register("user.email", {
@@ -144,7 +144,7 @@ export const CreateAccountPage = ({ register, errors, getValues, watch }) => {
           )}
         </div>
 
-        <div className="flex flex-col">
+        <div className="flex flex-col !gap-1">
           <label htmlFor="password">Password*</label>
           <input
             {...register("user.password", {
@@ -159,7 +159,7 @@ export const CreateAccountPage = ({ register, errors, getValues, watch }) => {
           )}
         </div>
 
-        <div className="flex flex-col">
+        <div className="flex flex-col !gap-1">
           <label htmlFor="confirmedPassword">Confirm Password*</label>
           <input
             {...register("user.confirmed_password", {

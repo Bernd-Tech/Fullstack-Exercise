@@ -7,7 +7,7 @@ import { ReviewPage } from "../components/forms/SignUp/ReviewPage";
 import { Button } from "../components/ui/Button";
 
 export const SignUpPage = () => {
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(4);
   const {
     register,
     handleSubmit,
@@ -51,6 +51,12 @@ export const SignUpPage = () => {
         {currentPage > 1 && (<>
         <h1 className="text-5xl">Welcome to Essentia AI, {getValues("preferredName")}.</h1>
         <p>To assure you have an enriching experience with Essentia, we kindly ask of you to fill out the following form as accurate as possible. This will help Essentia in assessing your needs pre-appointment and make the most of your valuable time.<br /> All information given will be kept confidential.</p>
+        <div className="flex gap-4">
+            <Button text="Account details" type="button" onClick={() => setCurrentPage(1)} />
+            <Button text="Consent Page" type="button" onClick={() => setCurrentPage(2)} />
+            <Button text="Initial Assessment" type="button" onClick={() => setCurrentPage(3)} />
+            <Button text="Summary Page" type="button" onClick={() => setCurrentPage(4)} />
+        </div>
         </>)}
         <div className="bg-(--color-dark) w-[50%] rounded-[40px] p-8">
           <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-8">

@@ -16,7 +16,7 @@ export const InitialAssessmentPage = ({ register, watch }) => {
       showDialog();
       setDialogAppeared(true);
     }
-  }, [stressLevel]);
+  }, [stressLevel, dialogAppeared]);
 
   useEffect(() => {
     if (harmfulThoughts === "yes") {
@@ -146,7 +146,7 @@ export const InitialAssessmentPage = ({ register, watch }) => {
           <li>• Emergency Services: 911</li>
         </ul>
       </dialog>
-      
+
       <div className="space-y-8">
         <div className="text-center mb-12">
           <h2 className="text-2xl font-bold text-(--color-light) mb-2">
