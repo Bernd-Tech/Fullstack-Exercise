@@ -33,93 +33,93 @@ export const InitialAssessmentPage = ({ register, watch }) => {
   };
 
   const concernsOptions = [
-    { value: "anxiety", label: "Anxiety" },
-    { value: "depression", label: "Depression" },
-    { value: "stress", label: "Stress Management" },
-    { value: "relationships", label: "Relationship Issues" },
-    { value: "work", label: "Work/Career Issues" },
-    { value: "trauma", label: "Trauma/PTSD" },
-    { value: "grief", label: "Grief/Loss" },
-    { value: "self-esteem", label: "Self-Esteem" },
-    { value: "sleep", label: "Sleep Issues" },
-    { value: "other", label: "Other" }
+    { value: "Anxiety", label: "Anxiety" },
+    { value: "Depression", label: "Depression" },
+    { value: "Stress Management", label: "Stress Management" },
+    { value: "Relationship Issues", label: "Relationship Issues" },
+    { value: "Work/Career Issues", label: "Work/Career Issues" },
+    { value: "Trauma/PTSD", label: "Trauma/PTSD" },
+    { value: "Grief/Loss", label: "Grief/Loss" },
+    { value: "Self-Esteem", label: "Self-Esteem" },
+    { value: "Sleep Issues", label: "Sleep Issues" },
+    { value: "Other", label: "Other" }
   ];
 
   const sleepPatternOptions = [
-    { value: "user has normal to good sleep", label: "Normal/good sleep" },
-    { value: "user has difficulties falling asleep", label: "Difficulty falling asleep" },
-    { value: "user frequently wakes during the night", label: "Frequent waking during night" },
-    { value: "user sleeps too much", label: "Sleeping too much" },
-    { value: "user has an irregular sleep schedule", label: "Irregular sleep schedule" }
+    { value: "Normal/Good sleep", label: "Normal/Good sleep" },
+    { value: "Difficulty falling asleep", label: "Difficulty falling asleep" },
+    { value: "Frequent waking during night", label: "Frequent waking during night" },
+    { value: "Sleeping too much", label: "Sleeping too much" },
+    { value: "Irregular sleep schedule", label: "Irregular sleep schedule" }
   ];
 
   const durationOptions = [
     {
-      value: "user has been experiencing concerns for less than 1 month",
+      value: "Less than 1 month",
       label: "Less than 1 month",
     },
     {
-      value: "user has been experiencing concerns for 1 - 6 months",
+      value: "1 - 6 months",
       label: "1 - 6 months",
     },
     {
-      value: "user has been experiencing concerns for 6 months to 1 year",
+      value: "6 months to 1 year",
       label: "6 months to 1 year",
     },
     {
-      value: "user has been experiencing concerns for 1 to 2 years",
+      value: "1 to 2 years",
       label: "1 to 2 years",
     },
     {
-      value: "user has been experiencing concerns for more than 2 years",
+      value: "More than 2 years",
       label: "More than 2 years",
     },
   ];
 
   const previousExperience = [
     {
-      value: "user has been in therapy before",
+      value: "Yes, I have been in therapy before",
       label: "Yes, I have been in therapy before",
     },
     {
-      value: "user has not been in therapy before",
+      value: "No, this is my first time",
       label: "No, this is my first time",
     },
-    { value: "user prefers not to answer", label: "Prefer not to answer" }
+    { value: "Prefer not to answer", label: "Prefer not to answer" }
   ];
 
   const skillGoals = [
-    { value: "coping-strategies", label: "Coping strategies" },
-    { value: "problem-solving", label: "Problem-solving" },
-    { value: "emotional-regulation", label: "Emotional regulation" },
-    { value: "stress-management", label: "Stress management" },
-    { value: "communication-skills", label: "Communication skills" },
-    { value: "mindfullness-techniques", label: "Mindfullness techniques" }
+    { value: "Coping Strategies", label: "Coping strategies" },
+    { value: "Problem-Solving", label: "Problem-Solving" },
+    { value: "Emotional-Regulation", label: "Emotional Regulation" },
+    { value: "Stress-Management", label: "Stress Management" },
+    { value: "Communication Skills", label: "Communication Skills" },
+    { value: "Mindfullness Techniques", label: "Mindfullness Techniques" }
   ];
 
   const supportSystem = [
     {
-      value: "user has a strong support system",
+      value: "Strong support system",
       label: "Strong support system",
     },
     {
-      value: "user has some support available",
+      value: "Some support available",
       label: "Some support available",
     },
-    { value: "user only has limited support", label: "Limited support system" },
-    { value: "user prefers not to answer", label: "Prefer not to answer" }
+    { value: "Limited support system", label: "Limited support system" },
+    { value: "Prefer not to answer", label: "Prefer not to answer" }
   ];
 
   const standardRadioOptions = [
-    { value: "yes", label: "Yes" },
-    { value: "no", label: "No" },
-    { value: "user prefers not to say", label: "Prefer not to say" }
+    { value: "Yes", label: "Yes" },
+    { value: "No", label: "No" },
+    { value: "Prefer not to say", label: "Prefer not to say" }
   ];
 
   const safetyRadioOptions = [
-    { value: "no", label: "No" },
-    { value: "yes", label: "Yes, I am having these thoughts" },
-    { value: "user prefers not to say", label: "Prefer not to say" }
+    { value: "No", label: "No" },
+    { value: "Yes", label: "Yes, I am having these thoughts" },
+    { value: "Prefer not to say", label: "Prefer not to say" }
   ];
 
   return (

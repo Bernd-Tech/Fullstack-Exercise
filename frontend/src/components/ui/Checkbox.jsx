@@ -1,7 +1,6 @@
 export const Checkbox = ({id, name, label, register, value}) => {
     return (
         <>
-        {/* <div className="flex flex-col gap-1"> */}
         <div className="flex items-baseline gap-2">
           <input
           id={id}
@@ -13,7 +12,6 @@ export const Checkbox = ({id, name, label, register, value}) => {
           />
           <label htmlFor={id}>{label}</label>
         </div>
-        {/* </div> */}
         </>
     )
 }
