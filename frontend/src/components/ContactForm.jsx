@@ -12,7 +12,7 @@ const initialFormState = {
 export const ContactForm = () => {
 
   const [contactFormData, setContactFormData] = useState(initialFormState);
-  const [submitted, setSubmitted] = useState(true);
+  const [submitted, setSubmitted] = useState(false);
   console.log(contactFormData);
 
   const handleFormData = (e) => {

@@ -13,7 +13,7 @@ export const ConsentPage = ({ register, errors}) => {
             })}
             type="checkbox"
           />
-          <label htmlFor="aiLimitation">I understand this AI cannot diagnose, prescribe medication, or replace professional therapy.</label>
+          <label htmlFor="aiLimitation">I understand this AI cannot diagnose, prescribe medication, or replace professional therapy.*</label>
           </div>
           {errors.consent?.ai_limitation && (
                 <p className="text-red-500 indent-5.5">{errors.consent.ai_limitation.message}</p>
@@ -29,7 +29,7 @@ export const ConsentPage = ({ register, errors}) => {
             })}
             type="checkbox"
           />
-          <label htmlFor="technologyLimitation">I understand AI responses are generated and may have limitations or errors.</label>
+          <label htmlFor="technologyLimitation">I understand AI responses are generated and may have limitations or errors.*</label>
           </div>
         
         {errors.consent?.technology_limitation && (
@@ -49,7 +49,7 @@ export const ConsentPage = ({ register, errors}) => {
             })}
             type="checkbox"
           />
-          <label htmlFor="crisisDisclaimer">In case of experiencing thoughts of self-harm, suicide, or any other mental health crisis, I understand that this AI is <b>not equipped to provide emergency assistance</b>.</label>
+          <label htmlFor="crisisDisclaimer">In case of experiencing thoughts of self-harm, suicide, or any other mental health crisis, I understand that this AI is <b>not equipped to provide emergency assistance</b>.*</label>
         </div>
             {errors.consent?.crisis_disclaimer && (
                 <p className="text-red-500 indent-5.5">{errors.consent.crisis_disclaimer.message}</p>
@@ -65,7 +65,7 @@ export const ConsentPage = ({ register, errors}) => {
             })}
             type="checkbox"
           />
-          <label htmlFor="supportDisclaimer">I understand this service provides AI-assisted mental health support for general wellness purposes only.</label>
+          <label htmlFor="supportDisclaimer">I understand this service provides AI-assisted mental health support for general wellness purposes only.*</label>
         </div>
             {errors.consent?.support_disclaimer && (
                 <p className="text-red-500 indent-5.5">{errors.consent.support_disclaimer.message}</p>

@@ -19,7 +19,7 @@ export const InitialAssessmentPage = ({ register, watch }) => {
   }, [stressLevel, dialogAppeared]);
 
   useEffect(() => {
-    if (harmfulThoughts === "yes") {
+    if (harmfulThoughts === "Yes") {
         showDialog();
     }
   }, [harmfulThoughts]);
