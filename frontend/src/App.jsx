@@ -4,7 +4,7 @@ import { LandingPage } from "./pages/LandingPage";
 import { AboutPage } from "./pages/AboutPage";
 import { ContactPage } from "./pages/ContactPage";
 import { SignUpPage } from "./pages/SignUpPage";
-import {LogInPage} from "./pages/LogInPage";
+import { LogInPage } from "./pages/LogInPage";
 import { CompleteProfilePage } from "./pages/CompleteProfilePage";
 import { NavBar } from '../src/components/navBar';
 

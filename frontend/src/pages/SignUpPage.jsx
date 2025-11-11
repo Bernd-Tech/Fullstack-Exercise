@@ -10,7 +10,7 @@ export const SignUpPage = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { errors },
     getValues,
     watch,
   } = useForm({
@@ -21,7 +21,10 @@ export const SignUpPage = () => {
     const formData = getValues();
     const {error} = await supabase.auth.signUp({
         email: formData.user.email, 
-        password: formData.user.password
+        password: formData.user.password,
+        options: {
+            name: formData.user.preferred_Name
+        }
     })
 
     if (error) {

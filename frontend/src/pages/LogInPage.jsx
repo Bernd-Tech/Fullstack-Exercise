@@ -1,86 +1,97 @@
 import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { supabase } from "../supabase-client";
 import { Button } from "../components/ui/Button";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
+
+const initialLogInData = {
+  email: "",
+  password: "",
+};
 
 export const LogInPage = () => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    reset,
-    getValues,
-    trigger,
-  } = useForm({
-    defaultValues: {
-    }
-  });
+  const [logInData, setLogInData] = useState(initialLogInData);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  
-
-  const onSubmit = (data) => {
-    console.log(data);
-    reset();
+  const handleFromData = (e) => {
+    const { name, value } = e.target;
+    setLogInData((prevData) => (
+      {
+        ...prevData,
+        [name]: value,
+    }));
   };
 
-  const confirm = async () => {
-    const isValid = await trigger();
-    
-    if (isValid) {
-        const formData = getValues();
-        console.log(getValues());
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    let { data, error } = await supabase.auth.signInWithPassword({
+      email: logInData.email,
+      password: logInData.password,
+    });
+
+    if (error) {
+        console.error("Error logging in:", error)
+        return
     }
+    console.log(data)
+    setIsLoggedIn(true);
+    setLogInData(initialLogInData)
   };
 
   return (
     <>
-      <div className="flex flex-col items-center justify-center p-35 gap-12">
-        <h1 className="text-5xl">Log in</h1>
-        <div className="bg-(--color-dark) w-[50%] rounded-[40px] p-8">
-          <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-8">
+      <div className="h-screen w-full flex flex-col items-center justify-center gap-12">
+        <div className="flex flex-col gap-6 bg-(--color-dark) w-[40%] rounded-[40px] p-8">
+          <div className="w-full flex flex-col gap-1 items-center">
+            <h1 className="text-xl font-semibold">Log in to Essentia AI</h1>
+            {isLoggedIn ? (
+                <p>You are logged in!</p>
+            ) : (
+                <p>Welcome back! Please log in to continue</p>
+            )}
+          </div>
+          <form onSubmit={handleSubmit} className="flex flex-col gap-10">
             <div className="flex flex-col gap-6 [&>div]:gap-8 [&>div>input]:h-10 [&>div>input]:outline-0 [&>div>input]:input-style">
+              <div className="flex flex-col !gap-1">
+                <label htmlFor="email">E-Mail</label>
+                <input
+                  id="email"
+                  type="email"
+                  name="email"
+                  value={logInData.email}
+                  onChange={handleFromData}
+                  required
+                />
+                {/* {email && (
+            <p className="text-red-500"></p>
+          )} */}
+              </div>
 
-        
-
-        <div className="flex flex-col !gap-1">
-          <label htmlFor="email">E-Mail*</label>
-          <input
-            {...register("user.email", {
-              required: "Please enter your email address.",
-            })}
-            id="email"
-            type="email"
-          />
-          {errors.user?.email && (
-            <p className="text-red-500">{errors.user.email.message}</p>
-          )}
-        </div>
-
-        <div className="flex flex-col !gap-1">
-          <label htmlFor="password">Password*</label>
-          <input
-            {...register("user.password", {
-              required: "Please create a password.",
-              minLength: 8,
-            })}
-            id="password"
-            type="password"
-          />
-          {errors.user?.password && (
-            <p className="text-red-500">{errors.user.password.message}</p>
-          )}
-        </div>
-
-       
-      <div className="flex w-full justify-end">
-            <Button type="button" onClick={confirm} text="Confirm" />
-        </div>
-        </div>
+              <div className="flex flex-col !gap-1">
+                <label htmlFor="password">Password</label>
+                <input
+                  id="password"
+                  type="password"
+                  name="password"
+                  value={logInData.password}
+                  onChange={handleFromData}
+                  required
+                />
+                {/* {password && (
+            <p className="text-red-500"></p>
+          )} */}
+              </div>
+            </div>
+            <Button type="submit" text="Continue" />
           </form>
         </div>
         <div>
-            <p>Don't have an account yet? <Link className="border-b-1" to="/sign-up">Sign up</Link></p>
-          </div>
+          <p>
+            Don't have an account yet?{" "}
+            <Link className="border-b-1" to="/sign-up">
+              Sign up
+            </Link>
+          </p>
+        </div>
       </div>
     </>
   );
