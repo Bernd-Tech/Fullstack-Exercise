@@ -17,22 +17,36 @@ export const SignUpPage = () => {
     defaultValues: {},
   });
 
-  const onSubmit = async () => {
+
+   const onSubmit = async () => {
     const formData = getValues();
-    const {error} = await supabase.auth.signUp({
+console.log("Form data:", formData);
+  console.log("Metadata being sent:", {
+    preferred_name: formData.user.preferred_name,
+    email: formData.user.email,
+    age_range: formData.user.age_range,
+    service_agreement: formData.consent.service_agreement
+  });
+    const {data, error} = await supabase.auth.signUp({
         email: formData.user.email, 
         password: formData.user.password,
         options: {
-            name: formData.user.preferred_Name
-        }
-    })
-
+            data: {
+            preferred_name: formData.user.preferred_name,
+            email: formData.user.email,
+            age_range: formData.user.age_range,
+            service_agreement: formData.consent.service_agreement
+            }
+    }})
+  
+          console.log("Supabase response:", { data, error })
     if (error) {
         console.error("Error signing up: ", error.message)
+      console.error("Full error object:", error)
         return 
-    }
-    setAuthenticated(true);
-  };
+     }
+     setAuthenticated(true);
+   };
 
   return (
     <>
@@ -81,12 +95,12 @@ export const SignUpPage = () => {
                     <option disabled value="">
                       Select Age
                     </option>
-                    <option>18-24</option>
-                    <option>25-34</option>
-                    <option>35-44</option>
-                    <option>45-54</option>
-                    <option>55-64</option>
-                    <option>Above 64</option>
+                    <option>18 - 24</option>
+                    <option>25 - 34</option>
+                    <option>35 - 44</option>
+                    <option>45 - 54</option>
+                    <option>55 - 64</option>
+                    <option>64+</option>
                   </select>
                   {errors.user?.age_range && (
                     <p className="text-red-500">
@@ -147,20 +161,20 @@ export const SignUpPage = () => {
               <div className="flex flex-col !gap-1">
                 <div className="flex items-center !gap-2">
                   <input
-                    {...register("consent.service_understanding", {
+                    {...register("consent.service_agreement", {
                       required: "This checkbox is required",
                     })}
                     type="checkbox"
-                    id="serviceUnderstanding"
+                    id="serviceAgreement"
                   />
-                  <label htmlFor="serviceUnderstanding">
+                  <label htmlFor="serviceAgreement">
                     I understand this is an AI-powered service, not human
                     therapy.
                   </label>
                 </div>
-                {errors.consent?.service_understanding && (
+                {errors.consent?.service_agreement && (
                   <p className="text-red-500">
-                    {errors.consent.service_understanding.message}
+                    {errors.consent.service_agreement.message}
                   </p>
                 )}
               </div>
