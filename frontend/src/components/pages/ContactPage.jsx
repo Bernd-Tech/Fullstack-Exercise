@@ -1,9 +1,9 @@
 // import { useState } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
-import { Confirmation } from "../components/Confirmation";
-import { Button } from "../components/ui/Button";
-import { ContactForm } from "../components/ContactForm";
+import { Confirmation } from "../Confirmation";
+import { Button } from "../ui/Button";
+import { ContactForm } from "../forms/ContactForm";
 
 export const ContactPage = () => {
   useGSAP(() => {

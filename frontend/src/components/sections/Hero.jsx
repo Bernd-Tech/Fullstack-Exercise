@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import Spline from "@splinetool/react-spline";
 import { useGSAP } from "@gsap/react";
 import { gsap } from "gsap/gsap-core";
-import { Button } from "./ui/Button";
+import { Button } from "../ui/Button";
 
 export const Hero = () => {
 

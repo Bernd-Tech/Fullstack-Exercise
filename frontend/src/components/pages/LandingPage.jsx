@@ -1,5 +1,5 @@
-import { NavBar } from '../components/navBar';
-import { Hero } from '../components/Hero';
+import { NavBar } from '../sections/navBar';
+import { Hero } from '../sections/Hero';
 
 export const LandingPage = () => {
     return (

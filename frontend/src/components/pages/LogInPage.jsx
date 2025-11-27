@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { supabase } from "../supabase-client";
-import { Button } from "../components/ui/Button";
+import { supabase } from "../../supabase-client";
+import { Button } from "../ui/Button";
 import { Link } from "react-router-dom";
 
 const initialLogInData = {

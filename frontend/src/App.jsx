@@ -1,12 +1,12 @@
 import React from "react";
 import {Routes, Route} from 'react-router-dom';
-import { LandingPage } from "./pages/LandingPage";
-import { AboutPage } from "./pages/AboutPage";
-import { ContactPage } from "./pages/ContactPage";
-import { SignUpPage } from "./pages/SignUpPage";
-import { LogInPage } from "./pages/LogInPage";
-import { CompleteProfilePage } from "./pages/CompleteProfilePage";
-import { NavBar } from '../src/components/navBar';
+import { LandingPage } from "./components/pages/LandingPage";
+import { AboutPage } from "./components/pages/AboutPage";
+import { ContactPage } from "./components/pages/ContactPage";
+import { SignUpPage } from "./components/pages/SignUpPage";
+import { LogInPage } from "./components/pages/LogInPage";
+import { CompleteProfilePage } from "./components/pages/CompleteProfilePage";
+import { NavBar } from './components/sections/navBar';
 
 const App = () => {
 

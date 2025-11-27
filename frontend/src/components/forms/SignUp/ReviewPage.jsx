@@ -101,9 +101,7 @@ export const ReviewPage = ({ getValues }) => {
             <div className="flex">
               <label className="basis-1/2">Skill Interest/-s:</label>
               <div className="basis-1/2">
-            {
-            formData?.initialAssessment?.goals?.skills
-            }
+                {formData?.initialAssessment?.goals?.skills.join(', ')}
             </div>
             </div>
 
