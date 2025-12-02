@@ -7,15 +7,44 @@ export const setupAuthListener = async (store) => {
 
         if (error) throw error;
 
-        if (data.session.user) {
+        if (data.session?.user) {
             store.dispatch(setUser(data.session.user));
             console.log("user is logged in: ", data.session.user)
         } else {
             store.dispatch(clearUser());
-            console.log("user is not logged in.")
+            console.log("user is signed out.")
         }
+
+        supabase.auth.onAuthStateChange((event, session) => {
+            console.log(`Event: ${event}`)
+            console.log(`Session: ${session}`)
+
+            if (event === "SIGNED_IN") {
+                store.dispatch(setUser(session.user));
+                console.log("user is logged in: ", session.user)
+            }
+
+            // if signed out, local and session storage have to be cleared and state updated
+            if (event === "SIGNED_OUT") {
+                // or simpler without looping through entire storage:
+                // window.sessionStorage.clear()
+                // window.localStorage.clear()
+               [
+                window.sessionStorage, 
+                window.localStorage
+                ].forEach((storage) => {
+                    Object.entries(storage).forEach(([key]) => {
+                        storage.removeItem(key);
+                    })
+                })
+                console.log("Session and local storage have been cleared.");
+                store.dispatch(clearUser());
+                console.log("user is signed out.")
+            }
+        })
+
     } catch (err) {
-        console.log("Error restoring session: ", err)
+        console.log("Error ", err)
         store.dispatch(clearUser());
     }
 }

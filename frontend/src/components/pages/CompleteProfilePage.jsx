@@ -1,54 +1,22 @@
 import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../hooks/useAuth";
+// import { useNavigate } from "react-router-dom";
 import { supabase } from "../../supabase-client";
 import { CreateAccountPage } from "../forms/SignUp/CreateAccountPage";
 import { ConsentPage } from "../forms/SignUp/ConsentPage";
 import { InitialAssessmentPage } from "../forms/SignUp/InitialAssessmentPage";
 import { ReviewPage } from "../forms/SignUp/ReviewPage";
 import { Button } from "../ui/Button";
-import { Confirmation } from "../Confirmation";
+import { Confirmation } from "../ui/Confirmation";
 
 export const CompleteProfilePage = () => {
   const [currentPage, setCurrentPage] = useState(1);
-  // const [isSignedOut, setIsSignedOut] = useState(false);
-  const [userData, setUserData] = useState();
-  const [loading, setLoading] = useState(true);
-  let navigate = useNavigate();
-  
+  const {user} = useAuth();
   useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        // checking session data before getUser() because getUser() is NOT guaranteed to return the correct user on initial page load (because session hydration can lag behind React rendering)
-        // Otherwise unwanted redirects
-        const {data: sessionData} = await supabase.auth.getSession()
-        console.log("This is the session data", sessionData);
-
-        if (!sessionData.session) {
-          navigate("/login");
-          return;
-        }
-
-        const {data: {user}, error} = await supabase.auth.getUser();
-        console.log("This is the user data ", user);
-
-
-        if (!user || error) {
-          navigate("/login");
-          return;
-        }
-
-        setUserData(user)
-        setLoading(false)
-
-      } catch (error) {
-        console.error(error);
-         navigate("/login");
-         return;
-      }
-    }
-    fetchUser();
-  }, []);
+    console.log(user)
+  }, 
+  [user])
 
   const {
     register,
@@ -79,7 +47,7 @@ export const CompleteProfilePage = () => {
       country: formData.user?.country,
       city: formData.user?.city
     })
-    .eq('id', userData.id);
+    .eq('id', user.id);
 
     if (profileError) {
       console.log("Error updating user profile: ", profileError);
@@ -88,7 +56,7 @@ export const CompleteProfilePage = () => {
 
     const {error: consentsError} = await supabase.from('consents')
     .insert({
-      profile_id: userData.id,
+      profile_id: user.id,
       ai_limitation: formData.consent.ai_limitation,
       technology_limitation: formData.consent.technology_limitation,
       crisis_disclaimer: formData.consent.crisis_disclaimer,
@@ -102,7 +70,7 @@ export const CompleteProfilePage = () => {
 
     const {error: assessmentError} = await supabase.from('initial_assessments')
     .insert({
-      profile_id: userData.id,
+      profile_id: user.id,
       current_concerns: formData.initialAssessment.concerns.current_concerns,
       stress_level: parseInt(formData.initialAssessment.concerns.stress_level),
       sleep_pattern: formData.initialAssessment.concerns.sleep_pattern,
@@ -139,21 +107,9 @@ export const CompleteProfilePage = () => {
     setCurrentPage((prevPage) => prevPage - 1);
   };
 
-  // const signOut = async () => {
-  //   let { error } = await supabase.auth.signOut();
-  //   if (error) {
-  //     console.error("Error signing out: ", error);
-  //   }
-  //   setIsSignedOut(true);
-  // };
-
   return (
     <>
       <div className="flex flex-col items-center justify-center p-35 gap-12">
-        {loading ? (
-          <p>Loading...</p>
-        ) : (
-          <>
             <h1 className="text-5xl">
               Welcome to Essentia AI, {getValues("preferredName")}.
             </h1>
@@ -236,10 +192,7 @@ export const CompleteProfilePage = () => {
                   </>
                 )}
               </form>
-              {/* <Button text="Sign Out" type="button" onClick={signOut} /> */}
             </div>
-          </>
-        )}
       </div>
     </>
   );

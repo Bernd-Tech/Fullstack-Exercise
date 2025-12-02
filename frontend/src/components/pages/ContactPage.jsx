@@ -1,7 +1,7 @@
 // import { useState } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
-import { Confirmation } from "../Confirmation";
+import { Confirmation } from "../ui/Confirmation";
 import { Button } from "../ui/Button";
 import { ContactForm } from "../forms/ContactForm";
 
