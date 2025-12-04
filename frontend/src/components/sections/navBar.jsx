@@ -2,20 +2,36 @@ import { Link } from "react-router-dom";
 import { Button } from "../ui/Button";
 import { supabase } from "../../supabase-client";
 import { useAuth } from "../../hooks/useAuth";
-import { useState } from "react";
+import { useRef } from "react";
+import { useClickOutside } from "../../hooks/useClickOutside";
 
 export const NavBar = () => {
   const {user} = useAuth();
-  const [showDropdown, setShowDropdown] = useState(false)
-  // const [isSignedOut, setIsSignedOut] = useState(false);
-  console.log(user);
-
+  const ref = useRef(null);  
+  const {isOpen, setIsOpen} = useClickOutside({
+    elementRef: ref,
+    eventType: "mousedown"
+  });
+  
+  // useEffect(() => {
+  //   console.log(user);
+  //   const handleClickOutside = (e) => {
+  //     // checking if ref has been assigned and ref current does not contain the element targeted by "mousedown" event (meaning: event target is outside of dropdown menu)
+  //     if (ref.current && !ref.current.contains(e.target)) {
+  //       setOpen(false);
+  //     }
+  //   }
+  //   document.addEventListener("mousedown", handleClickOutside);
+  //   // Always have to return a "clean up" function when using an addEventListener()-> removes event listener
+  //   return () => document.removeEventListener("mousedown", handleClickOutside);
+  // }, []);
+ 
   const signOut = async () => {
     let { error } = await supabase.auth.signOut();
     if (error) {
       console.error("Error signing out: ", error);
     }
-    setShowDropdown(false);
+    setIsOpen(false);
   };
 
   return (
@@ -38,10 +54,11 @@ export const NavBar = () => {
             </li>
             <li 
             className="dropdown cursor-pointer"
-            onMouseEnter={() => setShowDropdown(true)}
-            onMouseLeave={() => setShowDropdown(false)} >
+            ref={ref}
+            onClick={() => setIsOpen(true)}
+            >
               <p>Account</p>
-              {showDropdown && (
+              {isOpen && (
                 <div className="dropdown-content text-base rounded-lg [&>p]:dropdown-item w-50 right-0 glass-effect2 border border-gray-700/50">
                 <p className="px-6 py-5 border-b border-gray-700/50">{user.user_metadata.preferred_name}</p>
                 <div className="[&>p]:dropdown-item">
