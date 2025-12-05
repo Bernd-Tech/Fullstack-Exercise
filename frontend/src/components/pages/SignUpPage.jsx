@@ -51,15 +51,23 @@ export const SignUpPage = () => {
 
   return (
     <>
-      <div className="flex flex-col items-center justify-center p-35 gap-12">
-        {isAuthenticated ? (
+    <div className="h-screen w-full flex items-center justify-center radial-gradient">
+        <div className="flex flex-col items-center">
+          <div className="flex flex-col items-center gap-3">
+            <Link to="/">
+              <h1 className="font-semibold linear-gradient text-5xl">
+                Essentia AI
+              </h1>
+            </Link>
+            <h1 className="text-2xl font-medium">Create a new account</h1>
+            </div>
+          {isAuthenticated ? (
           <>
             <div className="text-2xl pt-12">Please verify you email</div>
           </>
         ) : (
           <>
-            <h1 className="text-5xl">Create an account</h1>
-            <div className="bg-(--color-dark) w-[50%] rounded-[40px] p-8">
+            <div className="p-8">
               <form
                 onSubmit={handleSubmit(onSubmit)}
                 className="flex flex-col gap-8"
@@ -67,13 +75,14 @@ export const SignUpPage = () => {
                 <div className="flex flex-col gap-6 [&>div]:gap-8 [&>div>input]:h-10 [&>div>input]:outline-0 [&>div>input]:input-style">
                   <div className="flex flex-row justify-between [&>div]:flex [&>div]:flex-1 [&>div]:flex-col [&>div]:gap-1 [&>div>input]:h-10 [&>div>input]:outline-0 [&>div>input]:input-style">
                     <div>
-                      <label htmlFor="preferredName">Preferred Name*</label>
+                      <label htmlFor="preferredName">Preferred Name</label>
                       <input
                         {...register("user.preferred_name", {
                           required: "Please enter your preferred name.",
                         })}
                         id="preferredName"
                         type="text"
+                        placeholder="Your preferred name..."
                       />
 
                       {errors.user?.preferred_name && (
@@ -84,13 +93,14 @@ export const SignUpPage = () => {
                     </div>
 
                     <div>
-                      <label htmlFor="age">Age*</label>
+                      <label htmlFor="age">Age</label>
                       <select
                         className="input-style h-10"
                         {...register("user.age_range", {
                           required: "Please select your range of age.",
                         })}
                         id="age"
+                        defaultValue=""
                       >
                         <option disabled value="">
                           Select Age
@@ -111,13 +121,14 @@ export const SignUpPage = () => {
                   </div>
 
                   <div className="flex flex-col !gap-1">
-                    <label htmlFor="email">E-Mail*</label>
+                    <label htmlFor="email">E-Mail</label>
                     <input
                       {...register("user.email", {
                         required: "Please enter your email address.",
                       })}
                       id="email"
                       type="email"
+                      placeholder="Your email address..."
                     />
                     {errors.user?.email && (
                       <p className="text-red-500">
@@ -127,7 +138,7 @@ export const SignUpPage = () => {
                   </div>
 
                   <div className="flex flex-col !gap-1">
-                    <label htmlFor="password">Password*</label>
+                    <label htmlFor="password">Password</label>
                     <input
                       {...register("user.password", {
                         required: "Please create a password.",
@@ -135,6 +146,7 @@ export const SignUpPage = () => {
                       })}
                       id="password"
                       type="password"
+                      placeholder="Your password..."
                     />
                     {errors.user?.password && (
                       <p className="text-red-500">
@@ -144,7 +156,7 @@ export const SignUpPage = () => {
                   </div>
 
                   <div className="flex flex-col !gap-1">
-                    <label htmlFor="confirmedPassword">Confirm Password*</label>
+                    <label htmlFor="confirmedPassword">Confirm Password</label>
                     <input
                       {...register("user.confirmed_password", {
                         required: "Please confirm your password.",
@@ -154,6 +166,7 @@ export const SignUpPage = () => {
                       })}
                       id="confirmedPassword"
                       type="password"
+                      placeholder="Confirm your password..."
                     />
                     {errors.user?.confirmed_password && (
                       <p className="text-red-500">
@@ -183,15 +196,14 @@ export const SignUpPage = () => {
                     )}
                   </div>
                 </div>
-                <div className="flex w-full justify-end">
+                
                   <Button type="submit" text="Confirm" />
-                </div>
               </form>
             </div>
             <div>
-              <p>
+              <p className="text-lg">
                 Already have an account?{" "}
-                <Link className="border-b-1" to="/login">
+                <Link className="hover:text-(--color-dark) duration-300" to="/login">
                   Log in
                 </Link>
               </p>
@@ -199,6 +211,7 @@ export const SignUpPage = () => {
           </>
         )}
       </div>
+    </div>
     </>
   );
 };

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { supabase } from "../../supabase-client";
 import { Button } from "../ui/Button";
-import { Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
 
 const initialLogInData = {
@@ -12,6 +12,7 @@ const initialLogInData = {
 export const LogInPage = () => {
   const [logInData, setLogInData] = useState(initialLogInData);
   const {user} = useAuth();
+  const navigate = useNavigate();
 
   const handleFromData = (e) => {
     const { name, value } = e.target;
@@ -33,12 +34,15 @@ export const LogInPage = () => {
       return;
     }
     setLogInData(initialLogInData);
+    // Had to use useNavigate(), because <Navigate /> is jsx which gets ignored by react if inside of helper functions
+    // navigate("/", {replace: true});
   };
 
   return (
     <>
-      <div className="h-screen w-full flex flex-col items-center justify-center gap-4 radial-gradient">
-        <div className="flex flex-col gap-8 w-[40%] p-8">
+      <div className="h-screen w-full flex items-center justify-center radial-gradient">
+        <div className="flex flex-col items-center gap-8 w-[33%]">
+        <div className="flex flex-col gap-8 w-full">
           <div className="w-full flex flex-col items-center gap-8">
             <Link to="/">
               <h1 className="font-semibold linear-gradient text-5xl">
@@ -99,6 +103,7 @@ export const LogInPage = () => {
               Sign up
             </Link>
           </p>
+        </div>
         </div>
       </div>
     </>
