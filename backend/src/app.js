@@ -1,20 +1,11 @@
 import express from "express";
-import MenuRoutes from "./routes/menuRoutes.js";
-import OrderRouter from "./routes/orderRoutes.js";
+import userRouter from "./routes/userRoutes.js";
 
+// assisgn app to express() to initialize the app
 const app = express();
+
 app.use(express.json());
-
-app.use("/menu", MenuRoutes);
-app.use("/order", OrderRouter);
-
-/*
-Endpoints:
-- menu items, get request
-- order submit, post request
-- 
-*/
-
+app.use("/api/v1/users", userRouter, () => console.log("Successfull access to users endpoint."));
 
 
 export default app;
