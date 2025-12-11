@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { supabase } from "../../supabase-client";
 import { Button } from "../ui/Button";
 import { useNavigate, Link } from "react-router-dom";
@@ -11,6 +11,9 @@ const initialLogInData = {
 
 export const LogInPage = () => {
   const [logInData, setLogInData] = useState(initialLogInData);
+  const {btnDisabled, setBtnDisabled} = useState(false);
+  // ToDo: Need to set Button to disabled while login data gets processed
+  // const confirmBtn = useRef();
   const {user} = useAuth();
   const navigate = useNavigate();
 
@@ -24,6 +27,7 @@ export const LogInPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
     let { error } = await supabase.auth.signInWithPassword({
       email: logInData.email,
       password: logInData.password,
@@ -35,7 +39,7 @@ export const LogInPage = () => {
     }
     setLogInData(initialLogInData);
     // Had to use useNavigate(), because <Navigate /> is jsx which gets ignored by react if inside of helper functions
-    // navigate("/", {replace: true});
+    navigate("/dashboard", {replace: true});
   };
 
   return (
@@ -90,7 +94,7 @@ export const LogInPage = () => {
           )} */}
               </div>
             </div>
-            <Button className="" type="submit" text="Continue" />
+            <Button type="submit" text="Continue" disabled={btnDisabled}/>
           </form>
         </div>
         <div>

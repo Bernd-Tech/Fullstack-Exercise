@@ -6,6 +6,7 @@ import { AboutPage } from "./components/pages/AboutPage";
 import { ContactPage } from "./components/pages/ContactPage";
 import { SignUpPage } from "./components/pages/SignUpPage";
 import { LogInPage } from "./components/pages/LogInPage";
+import { DashboardPage } from "./components/pages/DashboardPage";
 import { CompleteProfilePage } from "./components/pages/CompleteProfilePage";
 import { MainLayout } from "./routes/routeLayouts/MainLayout";
 import { AuthLayout } from "./routes/routeLayouts/AuthLayout";
@@ -18,7 +19,6 @@ const App = () => {
           <Route path="/" element={<LandingPage />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/contact" element={<ContactPage />} />
-
           <Route
             path="/complete-profile"
             element={
@@ -27,8 +27,16 @@ const App = () => {
               </ProtectedRoute>
             }
           />
+          <Route
+            path="/dashboard"
+            element={
+              <ProtectedRoute>
+                <DashboardPage />
+              </ProtectedRoute>
+            }
+          />
         </Route>
-
+        
         <Route element={<AuthLayout />}>
           <Route path="/sign-up" element={<SignUpPage />} />
           <Route path="/login" element={<LogInPage />} />
