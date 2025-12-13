@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 const Sidebar = () => {
   return (
     <>
-      <aside className="fixed mt-16 flex flex-col lg:mt-0 top-0 p-6 left-0 bg-(--color-light) dark:border-gray-800 text-gray-900 h-screen transition-all duration-300 ease-in-out z-50 border-r border-gray-200">
+      <aside className="h-full w-full flex flex-col p-6 bg-(--color-light) dark:border-gray-800 text-gray-900 transition-all duration-300 ease-in-out z-50 border-r border-gray-200">
         <div className="flex flex-col gap-10">
           <Link to="/">
             <div className="bg-black rounded-xl p-2">
@@ -18,7 +18,7 @@ const Sidebar = () => {
               <ul className="pl-3 space-y-3.5">
                 <li className="flex items-center gap-1">
                   <svg
-                    classNAme="w-5 h-5"
+                    className="w-6 h-6"
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
                     viewBox="0 0 24 24"
@@ -43,7 +43,7 @@ const Sidebar = () => {
                     viewBox="0 0 24 24"
                     fill="none"
                     stroke="currentColor"
-                    stroke-width="2"
+                    stroke-width="1.5"
                     stroke-linecap="round"
                     stroke-linejoin="round"
                     class="icon icon-tabler icons-tabler-outline icon-tabler-plant-2"

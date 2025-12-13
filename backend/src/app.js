@@ -1,5 +1,5 @@
 import express from "express";
-import userRouter from "./routes/userRoutes.js";
+import userRouter from "./routes/user.routes.js";
 
 // assisgn app to express() to initialize the app
 const app = express();

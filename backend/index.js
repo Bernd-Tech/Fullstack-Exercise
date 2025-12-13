@@ -1,6 +1,9 @@
 import app from "./src/app.js";
 import "dotenv/config";
+import { PORT } from "./src/config/env.js";
+import testDbConnection from "./src/config/database/supabase.js";
 
-const PORT = process.env.PORT || 3000;
-
-app.listen(PORT, () => console.log(`Server running on port: ${PORT}`));
+app.listen(PORT, async () => {
+    console.log(`Server running on port: ${PORT}`)
+    await testDbConnection();
+});

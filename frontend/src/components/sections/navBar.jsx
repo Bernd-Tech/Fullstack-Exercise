@@ -5,7 +5,7 @@ import { useAuth } from "../../hooks/useAuth";
 import { useRef } from "react";
 import { useClickOutside } from "../../hooks/useClickOutside";
 
-export const NavBar = () => {
+export const NavBar = ({showLogo = true}) => {
   const { user } = useAuth();
   const ref = useRef(null);
   const { isOpen, setIsOpen } = useClickOutside({
@@ -36,21 +36,20 @@ export const NavBar = () => {
 
   return (
     <>
-      <header className="glass-effect w-screen h-[70px] fixed top-0 z-10">
+      <header className="glass-effect w-full md:h-[70px]">
         {user ? (
           <>
-            <nav className="flex justify-between items-center w-full h-full px-8 font-medium text-lg">
-              <div>
+            <nav className={`flex ${showLogo ? 'justify-between' : 'justify-end'} items-center w-full h-full px-8 font-medium text-lg`}>
+              {showLogo && (
+                <div>
                 <Link to="/">
                   <p className="font-semibold linear-gradient text-2xl">
                     Essentia AI
                   </p>
                 </Link>
               </div>
+              )}
               <ul className="col-end-auto flex items-center gap-12">
-                <li>
-                  <Link to="/about">About</Link>
-                </li>
                 <li>
                   <Link to="/contact">Contact us</Link>
                 </li>
@@ -132,7 +131,7 @@ export const NavBar = () => {
           </>
         ) : (
           <>
-            <nav className="grid grid-cols-[1fr_1fr_1fr] items-center w-full h-full px-8 font-medium text-lg">
+            <nav className="grid grid-cols-[1fr_1fr] items-center w-full h-full px-8 font-medium text-lg">
               <div className="">
                 <Link to="/">
                   <p className="font-semibold linear-gradient text-2xl">
@@ -140,15 +139,10 @@ export const NavBar = () => {
                   </p>
                 </Link>
               </div>
-              <ul className="flex gap-12 justify-self-center">
-                <li>
-                  <Link to="/about">About</Link>
-                </li>
+              <ul className="flex items-center gap-12 justify-self-end">
                 <li>
                   <Link to="/contact">Contact us</Link>
                 </li>
-              </ul>
-              <ul className="flex items-center gap-12 justify-self-end">
                 <li>
                   <Link to="/login">Log in</Link>
                 </li>

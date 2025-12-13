@@ -10,6 +10,7 @@ import { DashboardPage } from "./components/pages/DashboardPage";
 import { CompleteProfilePage } from "./components/pages/CompleteProfilePage";
 import { MainLayout } from "./routes/routeLayouts/MainLayout";
 import { AuthLayout } from "./routes/routeLayouts/AuthLayout";
+import { DashboardLayout } from "./routes/routeLayouts/DashboardLayout";
 
 const App = () => {
   return (
@@ -17,7 +18,6 @@ const App = () => {
       <Routes>
         <Route element={<MainLayout />}>
           <Route path="/" element={<LandingPage />} />
-          <Route path="/about" element={<AboutPage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route
             path="/complete-profile"
@@ -27,7 +27,10 @@ const App = () => {
               </ProtectedRoute>
             }
           />
-          <Route
+        </Route>
+
+        <Route element={<DashboardLayout/>}>
+        <Route
             path="/dashboard"
             element={
               <ProtectedRoute>
@@ -35,7 +38,7 @@ const App = () => {
               </ProtectedRoute>
             }
           />
-        </Route>
+          </Route>
         
         <Route element={<AuthLayout />}>
           <Route path="/sign-up" element={<SignUpPage />} />

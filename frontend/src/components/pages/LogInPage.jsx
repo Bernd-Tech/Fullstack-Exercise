@@ -11,7 +11,7 @@ const initialLogInData = {
 
 export const LogInPage = () => {
   const [logInData, setLogInData] = useState(initialLogInData);
-  const {btnDisabled, setBtnDisabled} = useState(false);
+  // const {btnDisabled, setBtnDisabled} = useState(false);
   // ToDo: Need to set Button to disabled while login data gets processed
   // const confirmBtn = useRef();
   const {user} = useAuth();
