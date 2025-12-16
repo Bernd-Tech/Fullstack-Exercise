@@ -94,7 +94,7 @@ export const LogInPage = () => {
           )} */}
               </div>
             </div>
-            <Button type="submit" text="Continue" disabled={btnDisabled}/>
+            <Button type="submit" text="Continue" disabled={false}/>
           </form>
         </div>
         <div>

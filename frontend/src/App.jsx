@@ -2,7 +2,6 @@ import React from "react";
 import { Routes, Route } from "react-router-dom";
 import { ProtectedRoute } from "./routes/ProtectedRoute";
 import { LandingPage } from "./components/pages/LandingPage";
-import { AboutPage } from "./components/pages/AboutPage";
 import { ContactPage } from "./components/pages/ContactPage";
 import { SignUpPage } from "./components/pages/SignUpPage";
 import { LogInPage } from "./components/pages/LogInPage";

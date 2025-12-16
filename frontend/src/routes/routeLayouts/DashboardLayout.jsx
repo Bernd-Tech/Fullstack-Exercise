@@ -1,18 +1,23 @@
 import { NavBar } from "../../components/sections/navBar";
-import  Sidebar from "../../components/sections/Sidebar";
+import Sidebar from "../../components/sections/Sidebar";
 import { Outlet } from "react-router-dom";
 
 export const DashboardLayout = () => {
-    return (
-        <>
-        <div className="fixed top-0 md:left-[290px] md:w-[calc(100vw-290px)]">
-            <NavBar showLogo={false}/>
-        </div>
+  return (
+    <>
+      <div className="h-screen flex">
         <div className="h-screen fixed left-0 top-0 md:w-[290px]">
-            <Sidebar />
+          <Sidebar />
         </div>
-        {/* <Outlet /> tells React Router where the child page should be inserted. */}
-            <Outlet />
-        </>
-    )
-}
+        <div className="flex-1 ml-[290px]">
+          <div className="sticky top-0 md:left-[290px] md:w-[calc(100vw-290px)] z-99 bg-gray-800">
+            <NavBar showLogo={false} />
+          </div>
+
+          {/* <Outlet /> tells React Router where the child page should be inserted. */}
+          <Outlet />
+        </div>
+      </div>
+    </>
+  );
+};

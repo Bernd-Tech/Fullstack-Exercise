@@ -5,8 +5,11 @@ export const useClickOutside = ({elementRef, initialState = false, eventType, on
 
     useEffect(() => {
         const close = (e) => {
+        // if ref is assigned an element and passed to useClickOutside and ref.current does not contain evvvent target elemnt -> setIsOpen(false)
         if (elementRef.current && !elementRef.current.contains(e.target))
             setIsOpen(false);
+
+            // for optional callback function execution when modal closes
             if (onClose) onClose();
         };
 
