@@ -1,0 +1,1 @@
+const errorMiddleWare = (err, req, res, next) => {};

@@ -13,7 +13,20 @@ body {
 @theme {
     --color-light: rgb(226, 226, 226);
     --color-dark: rgb(45, 45, 45);
+
+    --animate-scale-in: scale-in 50ms linear;
 }
+
+@keyframes scale-in {
+      from {
+        transform: scale(0.9);
+        opacity: 40%;
+      }
+      to {
+        transform: scale(1);
+        opacity: 100%;
+      }
+    }
 
 @utility glass-effect {
   backdrop-filter: blur(10px);

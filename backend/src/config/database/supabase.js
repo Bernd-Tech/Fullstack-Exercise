@@ -3,7 +3,7 @@ import { SUPABASE_URL, SUPABASE_SERVICE_KEY } from "../env.js";
 
 const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_KEY);
 
-const testDbConnection = async () => {
+export const testDbConnection = async () => {
     const {error} = await supabase.from("profiles").select();
     
     if (error) {
@@ -15,4 +15,4 @@ const testDbConnection = async () => {
 
 }
 
-export default testDbConnection;
+export default supabase;
