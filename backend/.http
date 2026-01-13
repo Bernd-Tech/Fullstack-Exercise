@@ -1,27 +1,12 @@
 ###
-POST http://localhost:3001/order HTTP/1.1
+POST http://localhost:3001/api/chat/messages HTTP/1.1
 Content-Type: application/json
+Authorization: Bearer 
 
 {
-     "items": [{
-         "item": "Udon Curry Soup",
-         "price": 14,
-         "spiceLevel": "middle",
-         "customerRating": 10
-     },
-     {
-         "item": "Karaage",
-         "price": 8.75,
-         "spiceLevel": "low",
-         "customerRating": 9
-     },
-     {
-         "item": "Pho Soup",
-         "price": 11.8,
-         "spiceLevel": "low",
-         "customerRating": 9.5
-     }]
+    "content": "I feel very tired and exhausted in the last days. Do you think it might be due to the stress at my work? Please answer in one sentence."
 }
+
 
 
 

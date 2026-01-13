@@ -1,11 +1,11 @@
 import { Router } from "express";
-import supabase from "../config/database/supabase";
 import generateAiResponse from "../config/openai/openai.mjs";
+import newChatInsert from "../services/chat.insert.js";
 
 const chatRouter = Router();
 
 //Have to validate and sanitize post req before passing to controller -> With zod library?
-app.post("/messages", async (req, res, next) => {
+chatRouter.post("/messages", async (req, res) => {
     try {
     // To Do's: extract message content and user id from req
     // To Do's: validate message content
@@ -13,29 +13,37 @@ app.post("/messages", async (req, res, next) => {
     // call openAI to generate ai response
     // store ai response in db with role of "assistant"
     // send response to client
+    console.log("Full user req: ", req.body)
     const {content} = req.body;
     const userId = req.user.id;
 
     if (!content) {
-        res.status(400).json({error: "Invalid Request"});
-    } else {
-        const cleanContent = content.trim();
+        return res.status(400).json({error: "Invalid Request"});
     }
 
-    newChatInsert("user", content)
+    await newChatInsert("user", userId, content)
+    console.log("user message: ", content)
 
-    const aiResponse = await generateAiResponse();
-    console.log("Generated response", aiResponse);
+    const aiResponse = await generateAiResponse(content);
+    console.log("Assistant response: ", aiResponse);
 
     if (!aiResponse) {
-        res.status(500).json({error: "AI response unsuccessfull"})
+        return res.status(500).json({error: "AI response unsuccessfull"});
     }
 
-    newChatInsert("assistant", aiResponse, "gpt-5-nano")
+    await newChatInsert("assistant", aiResponse, "gpt-5-nano");
 
+    return res.status(201).json({
+        success: true,
+        message: {
+            userID: userId,
+            user_message: content,
+            ai_response: aiResponse
+        }
+    })
     } catch (error) {
         console.log("ChatRoutes error:", error.message);
-        res.status(400).json({error: "Invalid Request"});
+        return res.status(400).json({error: "Invalid Request"});
     }
 })
 

@@ -1,7 +1,10 @@
 import OpenAI from "openai";
-import buildSystemPrompt from "./system.prompt";
+import { OPENAI_API_KEY } from "../env.js";
+import buildSystemPrompt from "./system.prompt.js";
 
-const client = new OpenAI();
+const client = new OpenAI({
+    apiKey: OPENAI_API_KEY
+});
 
 const generateAiResponse = async (userInput) => {
 const systemPrompt = buildSystemPrompt();

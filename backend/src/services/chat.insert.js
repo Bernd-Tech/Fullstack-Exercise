@@ -1,17 +1,21 @@
-import supabase from "../config/database/supabase";
+import supabase from "../config/database/supabase.js";
 
-const newChatInsert = async (role, message, model) => {
+const newChatInsert = async (role, userId, message, model) => {
     const {error} = await supabase
     .from('chat_messages')
     .insert({
         role: role,
-        message: message,
+        profile_id: userId,
+        // Zwischenlösung für session Id, have to extract session id from database and assign it to session_id
+        // session_id: Math.floor(Math.random() * 100) + 1,
+        message_content: message,
         created_at: new Date(),
-        ai_model: null || model
+        ai_model: model || null
     })
 
     if (error) {
-        return res.status(500).json({error: "Database connection unsuccessfull"})
+        // throw new error instead of res.send/res.status because service function don't have access to res. controller accesses req and res
+        throw new Error(`Database connection failed: ${error.message}`)
     }
 }
 

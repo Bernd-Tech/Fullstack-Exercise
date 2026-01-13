@@ -1,4 +1,4 @@
-import supabase from "../config/database/supabase";
+import supabase from "../config/database/supabase.js";
 
 const authMiddleWare = async (req, res, next) => {
     try {
