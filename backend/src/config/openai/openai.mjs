@@ -14,7 +14,7 @@ const response = await client.responses.create({
     instructions: systemPrompt,
     input: userInput
 });
-console.log(response.output_text);
+
 return response;
 }
 
