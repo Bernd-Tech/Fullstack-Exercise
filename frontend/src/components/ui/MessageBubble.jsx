@@ -1,23 +1,23 @@
-export const MessageBubble = ({ message, isUser = true, isStreaming = true }) => {
+export const MessageBubble = ({ message, isUser = "user"}) => {
   return (
-    <div className={`flex ${isUser ? 'justify-end' : 'justify-start'} mb-4 animate-fade-in`}>
-      <div className={`flex items-start max-w-[70%] ${isUser ? 'flex-row-reverse' : 'flex-row'}`}>
+    <div className={`flex ${isUser === "user" ? 'justify-end' : 'justify-start'} mb-8 animate-fade-in`}>
+      <div className={`flex items-start max-w-[70%] ${isUser === "user" ? 'flex-row-reverse' : 'flex-row'}`}>
 
         {/* Message Content */}
-        <div className={`rounded-2xl px-4 py-3 shadow-sm ${
-          isUser 
-            ? 'bg-blue-500 text-white rounded-tr-none' 
+        <div className={`flex flex-col rounded-2xl px-4 py-3 shadow-sm ${
+          isUser === "user"
+            ? 'bg-(--color-dark) text-white rounded-tr-none' 
             : 'bg-gray-100 text-gray-800 rounded-tl-none'
         }`}>
-          <p className="leading-relaxed whitespace-pre-wrap">
+          <p className="leading-relaxed">
             {message}
-            {isStreaming && (
+            {/* {isStreaming && (
               <span className="inline-block w-2 h-4 ml-1 bg-current animate-pulse" />
-            )}
+            )} */}
           </p>
           
           {/* Timestamp */}
-          <div className={`text-xs mt-1 ${isUser ? 'text-blue-100' : 'text-gray-500'}`}>
+          <div className={`text-xs mt-1 self-end ${isUser === "user" ? 'text-blue-100' : 'text-gray-500'} `}>
             {new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
           </div>
         </div>

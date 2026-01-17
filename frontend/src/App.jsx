@@ -5,7 +5,7 @@ import { LandingPage } from "./components/pages/LandingPage";
 import { ContactPage } from "./components/pages/ContactPage";
 import { SignUpPage } from "./components/pages/SignUpPage";
 import { LogInPage } from "./components/pages/LogInPage";
-import { DashboardPage } from "./components/pages/DashboardPage";
+import { AiGuidePage } from "./components/pages/dashboard-pages/AiGuidePage";
 import { CompleteProfilePage } from "./components/pages/CompleteProfilePage";
 import { MainLayout } from "./routes/routeLayouts/MainLayout";
 import { AuthLayout } from "./routes/routeLayouts/AuthLayout";
@@ -30,10 +30,10 @@ const App = () => {
 
         <Route element={<DashboardLayout/>}>
         <Route
-            path="/dashboard"
+            path="/dashboard/ai-guide"
             element={
               <ProtectedRoute>
-                <DashboardPage />
+                <AiGuidePage />
               </ProtectedRoute>
             }
           />

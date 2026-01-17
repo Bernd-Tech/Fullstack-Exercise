@@ -68,7 +68,7 @@ export const NavBar = ({showLogo = true}) => {
                         {user.user_metadata.preferred_name}
                       </p>
                       <div className="[&>p]:dropdown-item">
-                          <Link to="/dashboard"
+                          <Link to="/dashboard/ai-guide"
                             className="flex items-center gap-2 hover:bg-white/10 transition dropdown-item">
                         
                             <svg className="w-6 h-6" viewBox="0 0 640 640">
