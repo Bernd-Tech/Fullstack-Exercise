@@ -4,7 +4,9 @@ import { useState, useEffect } from "react";
 
 
 export const Chat = () => {
-    const [messages, setMessages] = useState();
+    const [chatMessages, setChatMessages] = useState([]);
+    const [userMessage, setUserMessage] = useState("");
+    const [messageId, setMessageId] = useState(7);
 
     const testMessages = [
         {
@@ -40,26 +42,53 @@ export const Chat = () => {
     ];
 
     useEffect(() => {
-        setMessages(testMessages);
-    }, [messages]);
+        setChatMessages(testMessages);
+    }, []);
 
-    // const postMessage = () => {
 
-    // }
+    const storeUserMessage = (e) => {
+        const newMessageContent = e.target.value;
+        setUserMessage(newMessageContent);
+    }
+    console.log("The user enters: ", userMessage);
+
+
+    const postNewMessage = (e) => {
+        e.preventDefault();
+
+        const newMessage = {
+            id: messageId,
+            role: "user",
+            message: userMessage,
+            timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+        }
+
+        setChatMessages((chatHistory) => {
+            return [...chatHistory, newMessage];
+        });
+
+        setMessageId((prevId) => {
+            return prevId + 1;
+        })
+
+        console.log(`Next message id ${messageId}`)
+        console.log(chatMessages[chatMessages.length - 1])
+        setUserMessage("");
+    };
 
     return (
         <>
         <div className="p-2 h-full">
             <div className="h-full w-full flex flex-col">
                 <div className="w-full h-full overflow-y-scroll pl-6 pr-8 py-4">
-                {messages.map(({id, role, message}) => {
-                    return <MessageBubble key={id} isUser={role} message={message}/>
+                {chatMessages.map(({id, role, message, timestamp = null}) => {
+                    return <MessageBubble key={id} isUser={role} message={message} timestamp={timestamp}/>
                 })}
                 </div>
                 <div className="flex flex-col gap-2 w-full items-center pb-1">
                 <div className="w-[70%] flex justify-between gap-3">
-                    <textarea className="w-full input-style h-16 resize-none focus:outline-none "></textarea>
-                    <Button text="Send" type="button"/>
+                    <textarea className="w-full input-style h-16 resize-none focus:outline-none" onChange={storeUserMessage} value={userMessage}></textarea>
+                    <Button text="Send" type="button" onClick={postNewMessage}/>
                 </div>
                 <div className="w-full h-4 flex justify-center text-sm text-(--color-dark)">
                     <p>
