@@ -14,6 +14,7 @@ export const useClickOutside = ({elementRef, initialState = false, eventType, on
         };
 
         document.addEventListener(eventType, close);
+         // Always have to return a "clean up" function when using an addEventListener() -> removes event listener
         return () => document.removeEventListener(eventType, close);
 
         // Have to add elementRef, eventType and onClose function to dependency array because:

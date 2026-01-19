@@ -13,19 +13,6 @@ export const NavBar = ({showLogo = true}) => {
     eventType: "mousedown",
   });
 
-  // useEffect(() => {
-  //   console.log(user);
-  //   const handleClickOutside = (e) => {
-  //     // checking if ref has been assigned and ref current does not contain the element targeted by "mousedown" event (meaning: event target is outside of dropdown menu)
-  //     if (ref.current && !ref.current.contains(e.target)) {
-  //       setOpen(false);
-  //     }
-  //   }
-  //   document.addEventListener("mousedown", handleClickOutside);
-  //   // Always have to return a "clean up" function when using an addEventListener()-> removes event listener
-  //   return () => document.removeEventListener("mousedown", handleClickOutside);
-  // }, []);
-
   const signOut = async () => {
     let { error } = await supabase.auth.signOut();
     if (error) {

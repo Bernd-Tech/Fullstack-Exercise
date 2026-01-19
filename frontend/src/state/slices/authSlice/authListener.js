@@ -44,7 +44,7 @@ export const setupAuthListener = async (store) => {
         })
 
     } catch (err) {
-        console.log("Error ", err)
+        console.log("Error: ", err)
         store.dispatch(clearUser());
     }
 }
