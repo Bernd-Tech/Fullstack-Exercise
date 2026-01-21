@@ -39,7 +39,7 @@ export const LogInPage = () => {
     }
     setLogInData(initialLogInData);
     // Had to use useNavigate(), because <Navigate /> is jsx which gets ignored by react if inside of helper functions
-    navigate("/dashboard", {replace: true});
+    navigate("/dashboard/ai-guide", {replace: true});
   };
 
   return (

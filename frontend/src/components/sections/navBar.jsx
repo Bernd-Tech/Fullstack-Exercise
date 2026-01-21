@@ -46,13 +46,13 @@ export const NavBar = ({showLogo = true}) => {
                   onClick={() => setIsOpen(prev => !prev)}
                 >
                   <p className="flex items-center gap-1.5">
-                    <span>{user.user_metadata.preferred_name}</span>
+                    <span>{user.user.user_metadata.preferred_name}</span>
                     <svg className="w-4 h-4" fill="#76e04b" viewBox="0 0 256 256" id="Flat" xmlns="http://www.w3.org/2000/svg" stroke="rgb(226, 226, 226)" stroke-width="15.6"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M128,180a3.98881,3.98881,0,0,1-2.82861-1.17139l-80-80.00024a4.00009,4.00009,0,0,1,5.65722-5.65674L128,170.34326l77.17139-77.17163a4.00009,4.00009,0,0,1,5.65722,5.65674l-80,80.00024A3.98881,3.98881,0,0,1,128,180Z"></path> </g></svg>                    </p>
                   {isOpen && (
                     <>
                     <div className="dropdown-content text-base rounded-xl [&>p]:dropdown-item w-50 top-10 right-0 glass-effect2 border border-(--color-light)/20 animate-scale-in">
                       <p className="px-6 py-5 border-b border-(--color-light)/20">
-                        {user.user_metadata.preferred_name}
+                        {user.user.user_metadata.preferred_name}
                       </p>
                       <div className="[&>p]:dropdown-item">
                           <Link to="/dashboard/ai-guide"

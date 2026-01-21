@@ -7,9 +7,9 @@ export const setupAuthListener = async (store) => {
 
         if (error) throw error;
 
-        if (data.session?.user) {
-            store.dispatch(setUser(data.session.user));
-            console.log("user is logged in: ", data.session.user)
+        if (data.session) {
+            store.dispatch(setUser(data.session));
+            console.log("user is logged in: ", data.session)
         } else {
             store.dispatch(clearUser());
             console.log("user is signed out.")
@@ -20,8 +20,8 @@ export const setupAuthListener = async (store) => {
             console.log(`Session: ${session}`)
 
             if (event === "SIGNED_IN") {
-                store.dispatch(setUser(session.user));
-                console.log("user is logged in: ", session.user)
+                store.dispatch(setUser(session));
+                console.log("user is logged in: ", session)
             }
 
             // if signed out, local and session storage have to be cleared and state updated
