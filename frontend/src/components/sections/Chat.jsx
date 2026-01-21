@@ -1,12 +1,13 @@
 import { MessageBubble } from "../ui/MessageBubble"
 import { Button } from "../ui/Button";
 import { useState, useEffect } from "react";
+import { sendMessage } from "../../state/slices/chatSlice/chatSlice";
 
 
 export const Chat = () => {
     const [chatMessages, setChatMessages] = useState([]);
     const [userMessage, setUserMessage] = useState("");
-    const [messageId, setMessageId] = useState(7);
+    // const [messageId, setMessageId] = useState(7);
 
     const testMessages = [
         {
@@ -50,30 +51,33 @@ export const Chat = () => {
         const newMessageContent = e.target.value;
         setUserMessage(newMessageContent);
     }
-    console.log("The user enters: ", userMessage);
+    console.log("The user entered: ", userMessage);
 
 
     const postNewMessage = (e) => {
         e.preventDefault();
+        sendMessage(userMessage);
+        // setUserMessage("");
 
-        const newMessage = {
-            id: messageId,
-            role: "user",
-            message: userMessage,
-            timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-        }
 
-        setChatMessages((chatHistory) => {
-            return [...chatHistory, newMessage];
-        });
+        // const newMessage = {
+        //     id: messageId,
+        //     role: "user",
+        //     message: userMessage,
+        //     timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+        // }
 
-        setMessageId((prevId) => {
-            return prevId + 1;
-        })
+        // setChatMessages((chatHistory) => {
+        //     return [...chatHistory, newMessage];
+        // });
 
-        console.log(`Next message id ${messageId}`)
-        console.log(chatMessages[chatMessages.length - 1])
-        setUserMessage("");
+        // setMessageId((prevId) => {
+        //     return prevId + 1;
+        // })
+
+        // console.log(`Next message id ${messageId}`)
+        // console.log(chatMessages[chatMessages.length - 1])
+        // setUserMessage("");
     };
 
     return (

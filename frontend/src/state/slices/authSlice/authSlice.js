@@ -13,6 +13,7 @@ const authSlice = createSlice({
         setUser: (state, action) => {
             state.user = action.payload;
             state.loading = false;
+            console.log("User state in redux store: ", state.user);
         },
         clearUser: (state) => {
             state.user = null;
