@@ -1,4 +1,6 @@
 export const MessageBubble = ({ message, isUser = "user", timestamp}) => {
+    const time = new Date(timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
   return (
     <div className={`flex ${isUser === "user" ? 'justify-end' : 'justify-start'} mb-8 animate-fade-in`}>
       <div className={`flex items-start max-w-[70%] ${isUser === "user" ? 'flex-row-reverse' : 'flex-row'}`}>
@@ -19,7 +21,7 @@ export const MessageBubble = ({ message, isUser = "user", timestamp}) => {
           
           {/* Timestamp */}
           <div className={`text-xs mt-1 self-end ${isUser === "user" ? 'text-gray-400' : 'text-gray-500'} `}>
-            {timestamp}
+            {time}
           </div>
         </div>
       </div>
