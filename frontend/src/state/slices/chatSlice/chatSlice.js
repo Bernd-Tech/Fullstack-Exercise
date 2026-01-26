@@ -71,11 +71,6 @@ const chatSlice = createSlice({
             console.log("chat/sendMessage pending.")
         })
         .addCase(sendMessage.fulfilled, (state, action) => {
-            
-            if (action.payload.error) {
-                return;
-            }
-
             const {ai_response_id, ai_response} = action.payload.message;
 
             const newAiResponse = {
@@ -89,9 +84,11 @@ const chatSlice = createSlice({
             state.messages.push(newAiResponse);
         })
         .addCase(sendMessage.rejected, (state, action) => {
-            const prevUserMessageId = action.payload.messageId;
-            const prevUserInput = state.messages.find(({messageId}) => messageId === prevUserMessageId);
-            console.log(prevUserInput);
+            console.log("chat/sendMessage rejected.");
+            // messageId is not included within error return yet
+            // const prevUserMessageId = action.payload.messageId;
+            // const prevUserInput = state.messages.find(({messageId}) => messageId === prevUserMessageId);
+            // console.log("ID of previous user message", prevUserInput);
 
             console.log(`rejected payload: ${action.payload}`)
             
@@ -103,7 +100,6 @@ const chatSlice = createSlice({
                 error: {...action.error}
             };
 
-            console.log("chat/sendMessage rejected.");
             console.log("Error:", action.error);
         })
     }

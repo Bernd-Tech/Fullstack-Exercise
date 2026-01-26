@@ -13,6 +13,7 @@ body {
 @theme {
     --color-light: rgb(226, 226, 226);
     --color-dark: rgb(45, 45, 45);
+    --color-off-white: #FAF9F6;
 
     --animate-scale-in: scale-in 50ms linear;
 }

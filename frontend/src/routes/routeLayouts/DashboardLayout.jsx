@@ -9,8 +9,8 @@ export const DashboardLayout = () => {
         <div className="h-screen fixed left-0 top-0 md:w-[290px]">
           <Sidebar />
         </div>
-        <div className="flex-1 ml-[290px]">
-          <div className="sticky top-0 md:left-[290px] md:w-[calc(100vw-290px)] z-99 bg-gray-800">
+        <div className="flex-1 ml-[290px] radial-gradient">
+          <div className="sticky top-0 md:left-[290px] md:w-[calc(100vw-290px)] z-99 glass-effect shadow-lg shadow-amber-50/10">
             <NavBar showLogo={false} />
           </div>
 

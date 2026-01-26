@@ -3,16 +3,19 @@ import { Link } from "react-router-dom";
 const Sidebar = () => {
   return (
     <>
-      <aside className="h-full w-full flex flex-col p-6 bg-(--color-light) dark:border-gray-800 text-gray-900 transition-all duration-300 ease-in-out z-50 border-r border-gray-200">
-        <div className="flex flex-col gap-10">
+      <aside className="h-full w-full flex flex-col p-6 bg-(--color-off-white) dark:border-gray-800 text-gray-900 transition-all duration-300 ease-in-out z-50 border-r border-gray-200">
+        <div className="flex flex-col gap-16 h-full">
+          <div className="flex justify-center">
           <Link to="/">
-            <div className="bg-black rounded-xl p-2">
+            <div className="bg-black outline-1 outline-offset-2 rounded-xl w-fit py-2 px-4">
               <p className="font-semibold linear-gradient text-2xl">
                 Essentia AI
               </p>
             </div>
           </Link>
-          <div className="flex flex-col gap-8">
+          </div>
+          <div className="flex flex-col justify-between h-full pb-16">
+            <div className="flex flex-col gap-8">
             <div className="flex flex-col gap-3">
               <h2 className="text-black/30">Menu</h2>
               <ul className="pl-3 space-y-3.5">
@@ -138,6 +141,8 @@ const Sidebar = () => {
                 </li>
               </ul>
             </div>
+            </div>
+            
             <div className="flex flex-col gap-3">
               <h2 className="text-black/30">Others</h2>
               <ul className="pl-3 space-y-3.5">
