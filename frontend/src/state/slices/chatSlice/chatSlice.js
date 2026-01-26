@@ -8,7 +8,7 @@ const initialState = {
 
 export const sendMessage = createAsyncThunk(
     'chat/sendMessage',
-    async ({content, messageId}, {getState}) => {
+    async ({content, messageId}, {getState, rejectWithValue}) => {
         console.log("content passed to sendMessage: ", content)
         
         const state = await getState();
@@ -31,19 +31,18 @@ export const sendMessage = createAsyncThunk(
                 role: "user",
                 content: content
             })
-        })
+        });
 
         const data = await response.json();
 
-        console.log(`chat/sendMessage response: ${data}`)
+        console.log(`chat/sendMessage response from async thunk:`, data);
+
+        if (data.error) {
+            const {error} = data;
+            throw rejectWithValue(error)
+        }
+
         return data;
-
-        // } catch (error) {
-        //     // Can't do state modifications in async thunk. State modifications is job of reducers
-        //     // Have to throw error and n ot return error, so that rejected case in extra reducer gets called.
-        //     throw error;
-        // }
-
     }
 )
 
@@ -72,6 +71,11 @@ const chatSlice = createSlice({
             console.log("chat/sendMessage pending.")
         })
         .addCase(sendMessage.fulfilled, (state, action) => {
+            
+            if (action.payload.error) {
+                return;
+            }
+
             const {ai_response_id, ai_response} = action.payload.message;
 
             const newAiResponse = {
@@ -81,12 +85,26 @@ const chatSlice = createSlice({
                 status: "fulfilled",
             }
             console.log("this is the payload: ", action.payload);
-            console.log("this is ai response oject: ", newAiResponse);
+            console.log("this is ai response object: ", newAiResponse);
             state.messages.push(newAiResponse);
         })
         .addCase(sendMessage.rejected, (state, action) => {
+            const prevUserMessageId = action.payload.messageId;
+            const prevUserInput = state.messages.find(({messageId}) => messageId === prevUserMessageId);
+            console.log(prevUserInput);
+
+            console.log(`rejected payload: ${action.payload}`)
+            
+            const failedAiResponse = {
+                messageId: "",
+                content: "",
+                role: "assistant",        
+                status: "rejected",
+                error: {...action.error}
+            };
+
             console.log("chat/sendMessage rejected.");
-            console.log("Error:", action.error.message);
+            console.log("Error:", action.error);
         })
     }
 });

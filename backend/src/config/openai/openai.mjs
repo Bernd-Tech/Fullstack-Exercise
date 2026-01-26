@@ -12,7 +12,9 @@ const systemPrompt = buildSystemPrompt();
 const response = await client.responses.create({
     model: "gpt-5-nano",
     instructions: systemPrompt,
-    input: userInput
+    max_output_tokens: 300,
+    input: userInput,
+
 });
 
 return response;
