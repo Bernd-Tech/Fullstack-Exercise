@@ -1,6 +1,6 @@
 import supabase from "../config/database/supabase.js";
 
-const newChatInsert = async (role, userId, messageId, message, model) => {
+const newChatInsert = async (role, userId, messageId, message, model, unixTimestamp = null) => {
     const {error} = await supabase
     .from('chat_messages')
     .insert({
@@ -10,7 +10,7 @@ const newChatInsert = async (role, userId, messageId, message, model) => {
         // Zwischenlösung für session Id, have to extract session id from database and assign it to session_id
         // session_id: Math.floor(Math.random() * 100) + 1,
         message_content: message,
-        created_at: new Date(),
+        created_at: new Date(unixTimestamp),
         ai_model: model || null
     })
 

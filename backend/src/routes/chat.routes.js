@@ -27,19 +27,20 @@ chatRouter.post("/messages", async (req, res) => {
     console.log("user message: ", content)
 
     const aiResponse = await generateAiResponse(content);
-    console.log("Assistant response: ", aiResponse.output_text);
+    console.log("Assistant response: ", aiResponse.text);
 
     if (!aiResponse) {
         return res.status(500).json({error: "AI response unsuccessfull"});
     }
 
-    await newChatInsert("assistant", userId, aiResponseId, aiResponse.output_text, aiResponse.model);
+    await newChatInsert("assistant", userId, aiResponseId, aiResponse.text, aiResponse.model, aiResponse.created_at);
 
     return res.status(201).json({
         success: true,
         message: {
-            ai_response: aiResponse.output_text,
-            ai_response_id: aiResponseId
+            ai_response: aiResponse.text,
+            ai_response_id: aiResponseId,
+            created_at: aiResponse.created_at
         }
     })
     } catch (error) {

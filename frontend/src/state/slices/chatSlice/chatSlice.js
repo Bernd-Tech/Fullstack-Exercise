@@ -71,13 +71,14 @@ const chatSlice = createSlice({
             console.log("chat/sendMessage pending.")
         })
         .addCase(sendMessage.fulfilled, (state, action) => {
-            const {ai_response_id, ai_response} = action.payload.message;
+            const {ai_response_id, ai_response, created_at} = action.payload.message;
 
             const newAiResponse = {
                 messageId: ai_response_id,
                 content: ai_response,
                 role: "assistant",        
                 status: "fulfilled",
+                timestamp: new Date(created_at).toISOString()
             }
             console.log("this is the payload: ", action.payload);
             console.log("this is ai response object: ", newAiResponse);

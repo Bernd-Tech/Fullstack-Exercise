@@ -7,17 +7,27 @@ const client = new OpenAI({
 });
 
 const generateAiResponse = async (userInput) => {
+try {
 const systemPrompt = buildSystemPrompt();
 
 const response = await client.responses.create({
     model: "gpt-5-nano",
-    instructions: systemPrompt,
-    max_output_tokens: 300,
+    // instructions: systemPrompt,
     input: userInput,
 
 });
 
-return response;
+// Open Ai delivers unix timestamp in seconds not milliseconds. therefore * 1000
+return {
+    text: response.output_text, 
+    token_usage: response.usage,
+    model: response.model,
+    created_at: response.completed_at * 1000
+};
+
+} catch (error) {
+    throw error;
+}
 }
 
 export default generateAiResponse;
