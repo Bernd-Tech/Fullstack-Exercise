@@ -8,8 +8,7 @@ const chatRouter = Router();
 //Have to validate and sanitize post req before passing to controller -> With zod library?
 chatRouter.post("/messages", async (req, res) => {
     try {
-    // To Do's: extract message content and user id from req
-    // To Do's: validate message content
+    // To Do's: validate + sanitize message content
     // store message in database with role of "user"
     // call openAI to generate ai response
     // store ai response in db with role of "assistant"
@@ -37,7 +36,6 @@ chatRouter.post("/messages", async (req, res) => {
 
     return res.status(201).json({
         success: true,
-        // error: true, //DELETE LAter
         message: {
             ai_response: aiResponse.text,
             ai_response_id: aiResponseId,
@@ -47,7 +45,7 @@ chatRouter.post("/messages", async (req, res) => {
     })
     } catch (error) {
         console.log("ChatRoutes error:", error.message);
-        return res.status(400).json({error: error.message, messageId});
+        return res.status(400).json({error: error.message});
     }
 })
 

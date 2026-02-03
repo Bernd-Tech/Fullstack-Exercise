@@ -31,16 +31,15 @@ export const sendMessage = createAsyncThunk(
                 role: "user",
                 content: content
             })
-        });
+        }); 
+
+        // Have to check response before awaiting data
+        if (!response.ok) {
+            return rejectWithValue({error: "Fetching AI response failed.", messageId})
+        }
 
         const data = await response.json();
-
         console.log(`chat/sendMessage response from async thunk:`, data);
-
-        if (data.error) {
-            const {error} = data;
-            throw rejectWithValue({error, messageId})
-        }
 
         return data;
     }
@@ -88,22 +87,22 @@ const chatSlice = createSlice({
             prevUserRequest.status = "fulfilled";
         })
         .addCase(sendMessage.rejected, (state, action) => {
+            // renaming destructured messageId to user_request_id
+            const {error, messageId: user_request_id} = action.payload;
             console.log("chat/sendMessage rejected.");
-
-            console.log("rejected payload: ", action.payload, action.error, action.messageId)
+            console.log("Full action object:", action);
             
             const failedAiResponse = {
                 messageId: "",
                 content: "",
                 role: "assistant",        
                 status: "rejected",
-                error: {...action.error}
+                error: error
             };
 
-            console.log("Error:", action.error);
             state.messages.push(failedAiResponse);
 
-            const prevUserRequest = state.messages.find(({messageId}) => messageId === action.messageId);
+            const prevUserRequest = state.messages.find(({messageId}) => messageId === user_request_id);
             prevUserRequest.status = "rejected";
         })
     }
