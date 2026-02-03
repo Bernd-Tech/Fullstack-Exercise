@@ -37,15 +37,17 @@ chatRouter.post("/messages", async (req, res) => {
 
     return res.status(201).json({
         success: true,
+        // error: true, //DELETE LAter
         message: {
             ai_response: aiResponse.text,
             ai_response_id: aiResponseId,
-            created_at: aiResponse.created_at
+            created_at: aiResponse.created_at,
+            user_request_id: messageId,
         }
     })
     } catch (error) {
         console.log("ChatRoutes error:", error.message);
-        return res.status(400).json({error: "Invalid Request"});
+        return res.status(400).json({error: error.message, messageId});
     }
 })
 

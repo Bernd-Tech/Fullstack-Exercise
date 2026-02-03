@@ -39,7 +39,7 @@ export const sendMessage = createAsyncThunk(
 
         if (data.error) {
             const {error} = data;
-            throw rejectWithValue(error)
+            throw rejectWithValue({error, messageId})
         }
 
         return data;
@@ -67,11 +67,11 @@ const chatSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
-        .addCase(sendMessage.pending, () => {
-            console.log("chat/sendMessage pending.")
-        })
+        // .addCase(sendMessage.pending, (state, action) => {
+        //     console.log("chat/sendMessage pending.")
+        // })
         .addCase(sendMessage.fulfilled, (state, action) => {
-            const {ai_response_id, ai_response, created_at} = action.payload.message;
+            const {ai_response_id, ai_response, created_at, user_request_id} = action.payload.message;
 
             const newAiResponse = {
                 messageId: ai_response_id,
@@ -83,15 +83,14 @@ const chatSlice = createSlice({
             console.log("this is the payload: ", action.payload);
             console.log("this is ai response object: ", newAiResponse);
             state.messages.push(newAiResponse);
+            
+            const prevUserRequest = state.messages.find(({messageId}) => messageId === user_request_id);
+            prevUserRequest.status = "fulfilled";
         })
         .addCase(sendMessage.rejected, (state, action) => {
             console.log("chat/sendMessage rejected.");
-            // messageId is not included within error return yet
-            // const prevUserMessageId = action.payload.messageId;
-            // const prevUserInput = state.messages.find(({messageId}) => messageId === prevUserMessageId);
-            // console.log("ID of previous user message", prevUserInput);
 
-            console.log(`rejected payload: ${action.payload}`)
+            console.log("rejected payload: ", action.payload, action.error, action.messageId)
             
             const failedAiResponse = {
                 messageId: "",
@@ -102,6 +101,10 @@ const chatSlice = createSlice({
             };
 
             console.log("Error:", action.error);
+            state.messages.push(failedAiResponse);
+
+            const prevUserRequest = state.messages.find(({messageId}) => messageId === action.messageId);
+            prevUserRequest.status = "rejected";
         })
     }
 });

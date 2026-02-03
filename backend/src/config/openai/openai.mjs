@@ -8,7 +8,7 @@ const client = new OpenAI({
 
 const generateAiResponse = async (userInput) => {
 try {
-const systemPrompt = buildSystemPrompt();
+// const systemPrompt = buildSystemPrompt();
 
 const response = await client.responses.create({
     model: "gpt-5-nano",
@@ -22,7 +22,7 @@ return {
     text: response.output_text, 
     token_usage: response.usage,
     model: response.model,
-    created_at: response.completed_at * 1000
+    created_at: response.completed_at * 1000,
 };
 
 } catch (error) {

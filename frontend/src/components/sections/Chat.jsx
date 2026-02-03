@@ -10,19 +10,13 @@ export const Chat = () => {
     const [userMessage, setUserMessage] = useState("");
     const messages = useSelector((state) => state.chat.messages);
     const dispatch = useDispatch();
-
-
-    // useEffect(() => {
-    //     setChatMessages(testMessages);
-    // }, []);
-
+    console.log("These are the messages in state.messages: ", messages);
 
     const storeUserMessage = (e) => {
         const newMessageContent = e.target.value;
         setUserMessage(newMessageContent);
     }
     console.log("The user entered: ", userMessage);
-
 
     const postNewMessage = (e) => {
         e.preventDefault();

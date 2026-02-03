@@ -6,10 +6,10 @@ export const MessageBubble = ({ message, isUser = "user", timestamp}) => {
       <div className={`flex items-start max-w-[70%] ${isUser === "user" ? 'flex-row-reverse' : 'flex-row'}`}>
 
         {/* Message Content */}
-        <div className={`flex flex-col rounded-2xl px-4 py-3 shadow-sm ${
+        <div className={`flex flex-col rounded-2xl px-4 py-3 shadow-sm animate-scale-in ${
           isUser === "user"
             ? 'bg-(--color-dark) text-white rounded-tr-none' 
-            : 'bg-gray-100 text-gray-800 rounded-tl-none'
+            : 'bg-(--color-off-white) text-gray-800 rounded-tl-none'
         }`}>
             {/* whitespace-pre-wrap -> preserves entered white space (tabs,space, line breaks) */}
           <p className="leading-relaxed whitespace-pre-wrap">
