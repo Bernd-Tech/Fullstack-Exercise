@@ -22,12 +22,30 @@ export const Chat = () => {
 
     const postNewMessage = (e) => {
         e.preventDefault();
+        const trimmedUserMessage = userMessage.trim();
+        if (trimmedUserMessage === "") {
+            return;
+        }
+
         const messageId = uuidv4();
 
-        dispatch(addUserMessage({content: userMessage, messageId}));
-        dispatch(sendMessage({content: userMessage, messageId}));
+        dispatch(addUserMessage({content: trimmedUserMessage, messageId}));
+        dispatch(sendMessage({content: trimmedUserMessage, messageId}));
         
         setUserMessage("");
+    };
+
+    const handleKeyDown = (e) => {
+        if (pendingMessage) {
+            return;
+        }
+        
+        if (e.key === "Enter" && !e.shiftKey && userMessage.trim() !== "") {
+           postNewMessage(e);
+           return;
+        };
+
+        return;
     };
 
     return (
@@ -41,7 +59,7 @@ export const Chat = () => {
                 </div>
                 <div className="flex flex-col gap-2 w-full items-center pb-1">
                 <div className="w-[70%] flex justify-between gap-3">
-                    <textarea className="w-full input-style h-16 resize-none focus:outline-none" onChange={storeUserMessage} value={userMessage}></textarea>
+                    <textarea onKeyDown={(e) => handleKeyDown(e)} className="w-full input-style h-16 resize-none focus:outline-none" onChange={storeUserMessage} value={userMessage}></textarea>
                     <Button text="Send" type="button" onClick={postNewMessage} disabled={buttonIsDisabled}/>
                 </div>
                 <div className="w-full h-4 flex justify-center text-sm text-(--color-dark)">
