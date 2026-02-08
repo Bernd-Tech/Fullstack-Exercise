@@ -15,8 +15,7 @@ export const sendMessage = createAsyncThunk(
         const loggedUser = state.auth.user;
         const token = loggedUser.access_token;
         const userId = loggedUser.user.id;
-        // const currentSessionId = state.chat.currentSessionId;
-        
+        const currentSessionId = state.chat.currentSessionId;
 
         const response = await fetch("http://localhost:3001/api/chat/messages", {
             method: "POST",
@@ -29,7 +28,8 @@ export const sendMessage = createAsyncThunk(
                 messageId: messageId,
                 userId: userId,
                 role: "user",
-                content: content
+                content: content,
+                currentSessionId: currentSessionId
             })
         }); 
 
