@@ -14,7 +14,6 @@ export const sendMessage = createAsyncThunk(
         const state = await getState();
         const loggedUser = state.auth.user;
         const token = loggedUser.access_token;
-        const userId = loggedUser.user.id;
         const currentSessionId = state.chat.currentSessionId;
 
         const response = await fetch("http://localhost:3001/api/chat/messages", {
@@ -23,10 +22,9 @@ export const sendMessage = createAsyncThunk(
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${token}`
             },
+            // Security rule: Never use user ID from req body for authorization. Malicious user might attempt to get data from different user.
             body: JSON.stringify({
-                // currentSessionId: currentSessionId,
                 messageId: messageId,
-                userId: userId,
                 role: "user",
                 content: content,
                 currentSessionId: currentSessionId

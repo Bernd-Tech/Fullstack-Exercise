@@ -6,23 +6,34 @@ const verifySessionId = async (sessionId, userId) => {
     .select('id, profile_id')
     .eq('id', sessionId)
 
+    let sessionStatus;
+
     console.log("Fetched session data from supabase", data)
 
-    if (!data) {
-        console.log("Missing session data from supabase", data)
-        return;
-    }
+    if (!data || data.length === 0) {
+        sessionStatus = {
+            status: 404,
+            message: "Session ID does not exist."
+        }
 
-    if (data && data[0].profile_id === userId) {
-        console.log("Authorized session data from supabase", data)
-        return data;
+        return sessionStatus;
+    }
+    else if (data && data[0].profile_id === userId) {
+        sessionStatus = {
+            status: 200,
+            message: "Session ID exists."
+        }
+        console.log("Authorized session data from supabase.", data)
+
+        return sessionStatus;
     } 
     else if (data && data[0].profile_id !== userId) {
-        const error = [{
+        sessionStatus = {
             status: 403,
             message: "Forbidden"
-        }];
-        return error;
+        };
+        
+        return sessionStatus;
     }
 }
 
