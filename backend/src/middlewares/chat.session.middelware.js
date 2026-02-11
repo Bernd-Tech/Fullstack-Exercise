@@ -1,4 +1,4 @@
-import verifySessionId from "../services/chat.verifySessionId.js";
+import verifySessionId from "../services/chat.Services/verifySessionId.js";
 import { v4 as uuidv4 } from 'uuid';
 
 const sessionMiddleware = async (req, res, next) => {

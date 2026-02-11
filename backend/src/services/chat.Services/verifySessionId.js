@@ -1,10 +1,11 @@
-import supabase from "../config/database/supabase.js"
+import supabase from "../../config/database/supabase.js"
 
 const verifySessionId = async (sessionId, userId) => {
     const { data } = await supabase
     .from('chat_sessions')
     .select('id, profile_id')
     .eq('id', sessionId)
+    .single()
 
     let sessionStatus;
 
@@ -18,7 +19,7 @@ const verifySessionId = async (sessionId, userId) => {
 
         return sessionStatus;
     }
-    else if (data && data[0].profile_id === userId) {
+    else if (data && data.profile_id === userId) {
         sessionStatus = {
             status: 200,
             message: "Session ID exists."
@@ -27,7 +28,7 @@ const verifySessionId = async (sessionId, userId) => {
 
         return sessionStatus;
     } 
-    else if (data && data[0].profile_id !== userId) {
+    else if (data && data.profile_id !== userId) {
         sessionStatus = {
             status: 403,
             message: "Forbidden"

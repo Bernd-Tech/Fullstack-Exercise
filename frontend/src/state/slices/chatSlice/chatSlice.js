@@ -8,7 +8,7 @@ const initialState = {
 
 export const sendMessage = createAsyncThunk(
     'chat/sendMessage',
-    async ({content, messageId}, {getState, rejectWithValue}) => {
+    async ({content, messageId, createdAt}, {getState, rejectWithValue}) => {
         console.log("content passed to sendMessage: ", content)
         
         const state = await getState();
@@ -27,7 +27,8 @@ export const sendMessage = createAsyncThunk(
                 messageId: messageId,
                 role: "user",
                 content: content,
-                currentSessionId: currentSessionId
+                currentSessionId: currentSessionId,
+                createdAt: createdAt
             })
         }); 
 
@@ -68,7 +69,7 @@ const chatSlice = createSlice({
         //     console.log("chat/sendMessage pending.")
         // })
         .addCase(sendMessage.fulfilled, (state, action) => {
-            const {ai_response_id, ai_response, created_at, user_request_id} = action.payload.message;
+            const {ai_response_id, ai_response, created_at, user_request_id, currentSessionId} = action.payload.message;
 
             const newAiResponse = {
                 messageId: ai_response_id,
@@ -77,9 +78,10 @@ const chatSlice = createSlice({
                 status: "fulfilled",
                 timestamp: new Date(created_at).toISOString()
             }
-            console.log("this is the payload: ", action.payload);
-            console.log("this is ai response object: ", newAiResponse);
+
             state.messages.push(newAiResponse);
+            state.currentSessionId = currentSessionId;
+            console.log("State sessionId after fulfilled aync request: ",state.currentSessionId);
             
             const prevUserRequest = state.messages.find(({messageId}) => messageId === user_request_id);
             prevUserRequest.status = "fulfilled";

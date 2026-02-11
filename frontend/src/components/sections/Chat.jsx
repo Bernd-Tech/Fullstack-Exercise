@@ -29,9 +29,10 @@ export const Chat = () => {
     }
 
     const messageId = uuidv4();
+    const createdAt = Date.now();
 
-    dispatch(addUserMessage({ content: trimmedUserMessage, messageId }));
-    dispatch(sendMessage({ content: trimmedUserMessage, messageId }));
+    dispatch(addUserMessage({ content: trimmedUserMessage, messageId, createdAt}));
+    dispatch(sendMessage({ content: trimmedUserMessage, messageId, createdAt }));
 
     setUserMessage("");
   };
