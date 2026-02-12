@@ -13,3 +13,20 @@ export const insertNewChatSession = async (sessionId, userId, title) => {
         return error;
     }
 }
+
+export const getSessionById = async (sessionId, userId) => {
+    const { data, error } = await supabase
+    .from('chat_sessions')
+    .select('id, profile_id')
+    .eq('id', sessionId)
+    .eq('profile_id', userId)
+    .single()
+
+    if (error) {
+        console.error("Failed getting Session from DB: ", error)
+        return {data: null, error};
+    }
+
+    console.log("Fetched session from DB: ", data)
+    return {data, error: null};
+}

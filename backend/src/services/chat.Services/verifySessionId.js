@@ -1,20 +1,14 @@
-import supabase from "../../config/database/supabase.js"
+import { getSessionById } from "../../repositories/sessions.repository.js";
 
 const verifySessionId = async (sessionId, userId) => {
-    const { data } = await supabase
-    .from('chat_sessions')
-    .select('id, profile_id')
-    .eq('id', sessionId)
-    .single()
+    const { data, error } = await getSessionById(sessionId, userId);
 
     let sessionStatus;
 
-    console.log("Fetched session data from supabase", data)
-
-    if (!data || data.length === 0) {
+    if (error) {
         sessionStatus = {
             status: 404,
-            message: "Session ID does not exist."
+            message: "Session ID not found."
         }
 
         return sessionStatus;

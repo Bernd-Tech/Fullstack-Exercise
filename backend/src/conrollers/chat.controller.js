@@ -2,6 +2,7 @@ import { v4 as uuidv4 } from 'uuid';
 import generateAiResponse from "../config/openai/openai.mjs";
 import { insertNewChatMessage } from '../repositories/messages.repository.js';
 import { insertNewChatSession } from '../repositories/sessions.repository.js';
+import { getRecentMessages } from '../repositories/messages.repository.js';
 
 //Have to validate and sanitize post req before passing to controller -> With zod library?
 const chatController = async (req, res) => {
@@ -9,6 +10,7 @@ const chatController = async (req, res) => {
     // To Do's: validate + sanitize message content
     console.log("Full user req: ", req.body, req.isNewSession)
     const {content, messageId, role, currentSessionId, createdAt} = req.body;
+    const userInput = {role, content};
     const userId = req.user.id;
     const {isNewSession} = req;
     const title = "Super nice!";
@@ -22,9 +24,10 @@ const chatController = async (req, res) => {
         await insertNewChatSession(currentSessionId, userId, title);
     }
 
-    await insertNewChatMessage(role, userId, currentSessionId, messageId, content, createdAt)
-
-    const aiResponse = await generateAiResponse(content);
+    await insertNewChatMessage(role, userId, currentSessionId, messageId, content, createdAt);
+    
+    const recentMessages = await getRecentMessages(currentSessionId, userId);
+    const aiResponse = await generateAiResponse(recentMessages, userInput);
 
     if (!aiResponse) {
         return res.status(500).json({error: "AI response unsuccessfull"});

@@ -7,7 +7,7 @@ export const insertNewChatMessage = async (role, userId, sessionId, messageId, m
         role: role,
         profile_id: userId,
         id: messageId,
-        message_content: message,
+        content: message,
         created_at: new Date(unixTimestamp),
         ai_model: model || null,
         session_id: sessionId
@@ -18,4 +18,21 @@ export const insertNewChatMessage = async (role, userId, sessionId, messageId, m
         // return error instead of res.send/res.status because service functions don't have access to res. controller accesses req and res
         return error;
     }
+}
+
+export const getRecentMessages = async (sessionId, userId) => {
+    const {data, error} = await supabase
+    .from('chat_messages')
+    .select('role, content')
+    .eq('profile_id', userId)
+    .eq('session_id', sessionId)
+    .order('created_at', { descending: true })
+    .limit(10)
+
+    if (error) {
+        return error;
+    }
+
+    console.log("last 10 chat messages: ", data)
+    return data;
 }
