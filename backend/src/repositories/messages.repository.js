@@ -26,7 +26,7 @@ export const getRecentMessages = async (sessionId, userId) => {
     .select('role, content')
     .eq('profile_id', userId)
     .eq('session_id', sessionId)
-    .order('created_at', { descending: true })
+    .order('created_at', { ascending: true })
     .limit(10)
 
     if (error) {

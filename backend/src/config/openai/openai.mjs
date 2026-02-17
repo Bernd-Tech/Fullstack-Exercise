@@ -30,5 +30,22 @@ return {
 }
 }
 
-export default generateAiResponse;
+const generateSpeechFromText = async (text) => {
+  try {
+    const mp3 = await client.audio.speech.create({
+      model: "gpt-4o-mini-tts-2025-12-15",
+      voice: "marin", // alloy, ash, ballad, coral, echo, fable, onyx, nova, sage, shimmer, verse, marin, cedar
+      input: text
+    });
 
+    // Convert to Buffer
+    const buffer = Buffer.from(await mp3.arrayBuffer());
+    
+    return buffer;
+  } catch (error) {
+    console.log("Error from openAI speech API call: ", error)
+    throw error;
+  }
+}
+
+export {generateAiResponse as default, generateSpeechFromText}

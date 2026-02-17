@@ -5,7 +5,7 @@ import { insertNewChatSession } from '../repositories/sessions.repository.js';
 import { getRecentMessages } from '../repositories/messages.repository.js';
 
 //Have to validate and sanitize post req before passing to controller -> With zod library?
-const chatController = async (req, res) => {
+const chatMessagesController = async (req, res) => {
     try {
     // To Do's: validate + sanitize message content
     console.log("Full user req: ", req.body, req.isNewSession)
@@ -51,4 +51,4 @@ const chatController = async (req, res) => {
     }
 };
 
-export default chatController;
+export default chatMessagesController;

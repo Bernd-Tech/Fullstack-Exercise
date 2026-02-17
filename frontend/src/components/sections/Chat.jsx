@@ -59,7 +59,7 @@ export const Chat = () => {
               return (
                 <MessageBubble
                   key={messageId}
-                  isUser={role}
+                  role={role}
                   message={content}
                   timestamp={timestamp}
                 />
