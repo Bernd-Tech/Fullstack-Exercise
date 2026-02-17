@@ -14,7 +14,6 @@ const response = await client.responses.create({
     model: "gpt-5-nano",
     instructions: systemPrompt,
     input: [...recent_context]
-
 });
 
 // Open Ai delivers unix timestamp in seconds not milliseconds. therefore * 1000
@@ -35,7 +34,8 @@ const generateSpeechFromText = async (text) => {
     const mp3 = await client.audio.speech.create({
       model: "gpt-4o-mini-tts-2025-12-15",
       voice: "marin", // alloy, ash, ballad, coral, echo, fable, onyx, nova, sage, shimmer, verse, marin, cedar
-      input: text
+      instructions: "Speak clearly and complete all sentences.",
+      input: text,
     });
 
     // Convert to Buffer

@@ -17,6 +17,7 @@ chatRouter.post("/speak", async (req, res) => {
     }
 
     const audioBuffer = await generateSpeechFromText(text);
+
     
     res.setHeader("Content-Type", "audio/mpeg");
     res.send(audioBuffer);

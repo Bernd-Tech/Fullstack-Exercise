@@ -65,6 +65,11 @@ export const Chat = () => {
                 />
               );
             })}
+            {pendingMessage && (
+                <div>
+                    <p className="animate-pulse">Thinking...</p>
+                </div>
+            )}
           </div>
           <div className="flex flex-col gap-2 w-full items-center pb-1">
             <div className="w-[70%] flex justify-between gap-3">
