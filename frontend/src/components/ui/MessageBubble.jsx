@@ -33,10 +33,10 @@ export const MessageBubble = ({ message, role = "user", timestamp }) => {
       setIsPlaying(true);
       audio.onended = () => setIsPlaying(false);
       audio.play();
+
+      setIsLoading(false);
     } catch (error) {
       console.error("Speech error:", error);
-    } finally {
-      setIsLoading(false);
     }
   };
 

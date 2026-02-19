@@ -10,7 +10,7 @@ export const useClickOutside = ({elementRef, initialState = false, eventType, on
             setIsOpen(false);
 
             // for optional callback function execution when modal closes
-            if (onClose) onClose();
+            if (onClose) onClose;
         };
 
         document.addEventListener(eventType, close);
