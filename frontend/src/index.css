@@ -16,6 +16,7 @@ body {
     --color-off-white: #FAF9F6;
 
     --animate-scale-in: scale-in 50ms linear;
+    --animate-fade-in: fade-in 500ms linear;
 }
 
 @keyframes scale-in {
@@ -28,6 +29,15 @@ body {
         opacity: 100%;
       }
     }
+
+  @keyframes fade-in {
+    from {
+      opacity: 40%;
+    }
+    to {
+      opacity: 100%;
+    }
+  }
 
 @utility glass-effect {
   backdrop-filter: blur(10px);

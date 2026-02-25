@@ -51,17 +51,17 @@ export const MessageBubble = ({ message, role = "user", timestamp }) => {
           role === "user" ? "flex-row-reverse" : "flex-row"
         }`}
       >
-        <div className="flex flex-col">
         {/* Message Content */}
-        <div
+        {message && (
+            <div
           className={`flex flex-col rounded-2xl px-4 py-3 shadow-sm animate-scale-in ${
             role === "user"
               ? "bg-(--color-dark) text-white rounded-tr-none"
-              : "bg-(--color-off-white) text-gray-800 rounded-tl-none"
+              : "glass-effect text-(--color-off-white) rounded-tl-none"
           }`}
         >
           {/* whitespace-pre-wrap -> preserves entered white space (tabs,space, line breaks) */}
-          <p className="leading-relaxed whitespace-pre-wrap">
+          <p className="leading-relaxed whitespace-pre-wrap animate-fade-in">
             {message}
             {/* {isStreaming && (
               <span className="inline-block w-2 h-4 ml-1 bg-current animate-pulse" />
@@ -69,7 +69,7 @@ export const MessageBubble = ({ message, role = "user", timestamp }) => {
           </p>
             
             <div className="flex gap-1 text-xs mt-1 self-end">
-        {role === "assistant" && (
+        {role === "assistant" && message && (
           <div title="Listen to response" className="flex items-end w-fit hover:cursor-pointer">
             <svg
             onClick={handleSpeak}
@@ -79,7 +79,7 @@ export const MessageBubble = ({ message, role = "user", timestamp }) => {
               viewBox="0 0 24 24"
               strokeWidth={1.5}
               stroke="currentColor"
-              className="size-4 text-gray-500"
+              className="size-4 text-(--color-off-white) "
               title="Listen to response"
             >
               <path
@@ -91,17 +91,17 @@ export const MessageBubble = ({ message, role = "user", timestamp }) => {
           </div>
         )}
           {/* Timestamp */}
+          {timestamp && (
           <div
-            className={`text-xs mt-1 self-end ${
-              role === "user" ? "text-gray-400" : "text-gray-500"
-            } `}
+            className={"text-xs mt-1 self-end text-(--color-off-white) opacity-80"}
           >
             {time}
           </div>
+          )}
           </div>
         </div>
+        )}
         </div>
       </div>
-    </div>
   );
 };

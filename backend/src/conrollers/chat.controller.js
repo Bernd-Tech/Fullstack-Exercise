@@ -1,5 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
-import generateAiResponse from "../config/openai/openai.mjs";
+// import generateAiResponse from "../config/openai/openai.mjs";
+import streamAiResponse from '../config/anthropicai/anthropic.ai.js';
 import { insertNewChatMessage } from '../repositories/messages.repository.js';
 import { insertNewChatSession } from '../repositories/sessions.repository.js';
 import { getRecentMessages } from '../repositories/messages.repository.js';
@@ -14,13 +15,13 @@ const chatMessagesController = async (req, res) => {
     });
     res.flushHeaders();
 
-    const stream = (event, data) => {
+    const streamResponse = (event, data) => {
         res.write(`event: ${event}\n`);
         res.write(`data: ${JSON.stringify(data)}\n\n`);
     }
 
     try {
-    stream("loadingStage", {stage: "Receiving your input..."});
+    streamResponse("loadingStage", {stage: "Receiving your input..."});
     // To Do's: validate + sanitize message content
     console.log("Full user req: ", req.body, req.isNewSession)
     const {content, messageId, role, currentSessionId, createdAt} = req.body;
@@ -29,9 +30,11 @@ const chatMessagesController = async (req, res) => {
     const {isNewSession} = req;
     const title = "Super nice!";
     const aiResponseId = uuidv4();
+    let fullAiResponseTokens = "";
+    let completedAiResponse;
 
     if (!content) {
-        stream("error", {message: "Invalid request."})
+        streamResponse("error", {message: "Invalid request."})
         return res.end();
     }
 
@@ -43,30 +46,40 @@ const chatMessagesController = async (req, res) => {
     
     const recentMessages = await getRecentMessages(currentSessionId, userId);
 
-    stream("loadingStage", {stage: "Thinking..."})
+    streamResponse("loadingStage", {stage: "Thinking..."})
 
-    const aiResponse = await generateAiResponse(recentMessages, userInput);
-
+    const aiResponse = await streamAiResponse(recentMessages, streamResponse);
+    console.log("aiResponse object: ", { aiResponse: aiResponse})
+    
     if (!aiResponse) {
-        stream("error", {message: "AI response unsuccessfull"})
+        streamResponse("error", {message: "AI response unsuccessfull"})
         return res.end();
     }
 
-    stream("loadingStage", {stage: "Generating response..."});
+    streamResponse("loadingStage", {stage: "Generating response..."});
 
-    for await (const event of aiResponse) {
-        if (event.type === "response.output_text.delta") {
-            console.log(event.delta);
-            stream("responseToken",  event.delta)
-        }
+    
+    // for await (const event of aiResponse) {
+    //     if (event.type === "content_block_delta") {
+    //         console.log("streamed event in for loop: ", event)
+    //     } else {
+    //         return;
+    //     }
+        // if (event.type === "response.output_text.delta") {
+        //     console.log("streamed token: ", event.delta);
+        //     fullAiResponseTokens += event.delta; // Need to accumulate all response tokens and assign to fullAiResponse
+        //     stream("responseToken",  event.delta)
+        // }
 
-        if (event.type === "response.completed") {
-            stream("done", { ok: true });
-        }
-    }
-
-    await insertNewChatMessage("assistant", userId, currentSessionId, aiResponseId, aiResponse.text, aiResponse.created_at, aiResponse.model);
-
+        // if (event.type === "response.completed") {
+        //     completedAiResponse = event.response;
+        //     stream("done", { ok: true });
+        // }
+    //}
+    console.log("About to insert ai response");
+    //ToDo: Somehow need to get exact model from response and not manually
+    await insertNewChatMessage("assistant", userId, currentSessionId, aiResponseId, fullAiResponseTokens, completedAiResponse.created_at * 1000, completedAiResponse.model);
+    console.log("ai response inserted in db");
     // return res.status(201).json({
     //     success: true,
     //     message: {
@@ -79,7 +92,7 @@ const chatMessagesController = async (req, res) => {
     // })
     } catch (error) {
         console.log("ChatRoutes error: ", error.message);
-        stream("error", {message: error.message})
+        streamResponse("error", {message: error.message})
     } finally {
         res.end();
     }

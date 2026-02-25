@@ -10,13 +10,14 @@ const generateAiResponse = async (recent_context) => {
 try {
 const systemPrompt = buildSystemPrompt();
 
-const response = await client.responses.stream({
-    model: "gpt-5-nano",
+const response = client.responses.stream({
+    model: "gpt-5",
     store: false,
     instructions: systemPrompt,
     input: [...recent_context]
 });
 
+console.log("ai response: ", response)
 return response;
 // Open Ai delivers unix timestamp in seconds not milliseconds. therefore * 1000
 // return {

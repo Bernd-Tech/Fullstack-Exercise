@@ -1,7 +1,7 @@
 import { MessageBubble } from "../ui/MessageBubble";
 import { Button } from "../ui/Button";
 import { useState, useEffect } from "react";
-import { sendMessage, addUserMessage} from "../../state/slices/chatSlice/chatSlice";
+import { sendMessage, addUserMessage, startResponseStream} from "../../state/slices/chatSlice/chatSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { v4 as uuidv4 } from "uuid";
 
@@ -10,6 +10,7 @@ export const Chat = () => {
 //   const [loadingState, setLoadingState] = useState(false);
   // useSelector is a hook that subscribes the component to Redux state changes. When the selected state changes, React automatically re-renders the component.
   const messages = useSelector((state) => state.chat.messages);
+  const loadingStage = useSelector((state) => state.chat.loadingStage);
   // Checking if state.chat.messages contains a pending state and either returning true or false
   const pendingMessage = messages.some(
     (message) => message.status === "pending"
@@ -45,10 +46,12 @@ export const Chat = () => {
     }
 
     const messageId = uuidv4();
+    const aiResponseId = uuidv4();
     const createdAt = Date.now();
 
     dispatch(addUserMessage({ content: trimmedUserMessage, messageId, createdAt}));
-    dispatch(sendMessage({ content: trimmedUserMessage, messageId, createdAt }));
+    dispatch(startResponseStream({aiResponseId}));
+    dispatch(sendMessage({ content: trimmedUserMessage, messageId, aiResponseId, createdAt }));
 
     setUserMessage("");
   };
@@ -83,7 +86,7 @@ export const Chat = () => {
             })}
             {pendingMessage && (
                 <div>
-                    <p className="animate-pulse">Thinking...</p>
+                    <p className="animate-pulse">{loadingStage}</p>
                 </div>
             )}
           </div>
