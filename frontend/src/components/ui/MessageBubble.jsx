@@ -18,12 +18,14 @@ export const MessageBubble = ({ message, role = "user", timestamp }) => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${user.access_token}`, // if needed
+          Authorization: `Bearer ${user.access_token}`
         },
         body: JSON.stringify({ text: message }),
       });
 
       if (!response.ok) throw new Error("Failed to generate speech");
+
+      console.log("Response of handleSpeak", response);
 
       // Convert response to blob and play it
       const audioBlob = await response.blob();

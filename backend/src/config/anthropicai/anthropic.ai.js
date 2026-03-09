@@ -11,6 +11,8 @@ const streamAiResponse = (recent_context, streamResponse) => {
 try {
 const systemPrompt = buildSystemPrompt();
 
+streamResponse("loadingStage", {stage: "Generating response..."});
+
 const stream = client.messages.stream({
   model: "claude-haiku-4-5", //"claude-sonnet-4-5",
   system: systemPrompt,
@@ -18,6 +20,8 @@ const stream = client.messages.stream({
   max_tokens: 6024,
   messages: [...recent_context],
 })
+
+console.log("claude stream: ", stream);
 
 // Need to return a Promise, so that chatController can await the stream to resolve and not end it prematurely
 return new Promise((resolve, reject) => {

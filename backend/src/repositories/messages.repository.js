@@ -1,6 +1,6 @@
 import supabase from "../config/database/supabase.js"
 
-export const insertNewChatMessage = async (role, userId, sessionId, messageId, message, unixTimestamp, model) => {
+export const insertNewChatMessage = async (role, userId, sessionId, messageId, message, unixTimestamp, model, tokenUsage) => {
     const {error} = await supabase
     .from('chat_messages')
     .insert({
@@ -10,7 +10,8 @@ export const insertNewChatMessage = async (role, userId, sessionId, messageId, m
         content: message,
         created_at: new Date(unixTimestamp),
         ai_model: model || null,
-        session_id: sessionId
+        session_id: sessionId,
+        token_usage: tokenUsage
     })
 
     if (error) {

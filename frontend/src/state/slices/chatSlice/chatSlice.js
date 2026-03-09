@@ -28,12 +28,12 @@ export const sendMessage = createAsyncThunk(
       },
       // Security rule: Never use user ID from req body for authorization. Malicious user might attempt to get data from different user.
       body: JSON.stringify({
-        messageId: messageId,
+        messageId,
         role: "user",
-        content: content,
-        currentSessionId: currentSessionId,
-        createdAt: createdAt,
-        aiResponseId: aiResponseId,
+        content,
+        currentSessionId,
+        createdAt,
+        aiResponseId
       }),
     });
 
@@ -137,6 +137,7 @@ const chatSlice = createSlice({
       const aiMsg = state.messages.find(message => message.messageId === aiResponseId);
       if (aiMsg) {
         aiMsg.status = "fulfilled";
+        // ToDo: Need to get timestamp from backend
         aiMsg.timestamp = Date.now();
       }
 

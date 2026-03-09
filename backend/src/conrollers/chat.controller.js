@@ -1,5 +1,4 @@
 import { v4 as uuidv4 } from 'uuid';
-// import generateAiResponse from "../config/openai/openai.mjs";
 import streamAiResponse from '../config/anthropicai/anthropic.ai.js';
 import { insertNewChatMessage } from '../repositories/messages.repository.js';
 import { insertNewChatSession } from '../repositories/sessions.repository.js';
@@ -30,8 +29,10 @@ const chatMessagesController = async (req, res) => {
     const {isNewSession} = req;
     const title = "Super nice!";
     const aiResponseId = uuidv4();
-    let fullAiResponseTokens = "";
+    
+    let tokenUsage;
     let completedAiResponse;
+    let unixTimestamp;
 
     if (!content) {
         streamResponse("error", {message: "Invalid request."})
@@ -49,47 +50,20 @@ const chatMessagesController = async (req, res) => {
     streamResponse("loadingStage", {stage: "Thinking..."})
 
     const aiResponse = await streamAiResponse(recentMessages, streamResponse);
-    console.log("aiResponse object: ", { aiResponse: aiResponse})
+    console.log("aiResponse object: ", aiResponse)
     
     if (!aiResponse) {
         streamResponse("error", {message: "AI response unsuccessfull"})
         return res.end();
     }
 
-    streamResponse("loadingStage", {stage: "Generating response..."});
+    tokenUsage = aiResponse.usage.input_tokens + aiResponse.usage.output_tokens;
+    completedAiResponse = aiResponse.content[0].text;
+    unixTimestamp = Date.now();
 
-    
-    // for await (const event of aiResponse) {
-    //     if (event.type === "content_block_delta") {
-    //         console.log("streamed event in for loop: ", event)
-    //     } else {
-    //         return;
-    //     }
-        // if (event.type === "response.output_text.delta") {
-        //     console.log("streamed token: ", event.delta);
-        //     fullAiResponseTokens += event.delta; // Need to accumulate all response tokens and assign to fullAiResponse
-        //     stream("responseToken",  event.delta)
-        // }
-
-        // if (event.type === "response.completed") {
-        //     completedAiResponse = event.response;
-        //     stream("done", { ok: true });
-        // }
-    //}
-    console.log("About to insert ai response");
-    //ToDo: Somehow need to get exact model from response and not manually
-    await insertNewChatMessage("assistant", userId, currentSessionId, aiResponseId, fullAiResponseTokens, completedAiResponse.created_at * 1000, completedAiResponse.model);
+    await insertNewChatMessage(aiResponse.role, userId, currentSessionId, aiResponseId, completedAiResponse, unixTimestamp, aiResponse.model, tokenUsage);
     console.log("ai response inserted in db");
-    // return res.status(201).json({
-    //     success: true,
-    //     message: {
-    //         ai_response: aiResponse.text,
-    //         ai_response_id: aiResponseId,
-    //         created_at: aiResponse.created_at,
-    //         user_request_id: messageId,
-    //         currentSessionId: currentSessionId
-    //     }
-    // })
+   
     } catch (error) {
         console.log("ChatRoutes error: ", error.message);
         streamResponse("error", {message: error.message})
