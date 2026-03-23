@@ -46,7 +46,7 @@ export const MessageBubble = ({ message, role = "user", timestamp }) => {
     <div
       className={`flex ${
         role === "user" ? "justify-end" : "justify-start"
-      } mb-8 animate-fade-in`}
+      } mb-8`}
     >
       <div
         className={`flex items-start max-w-[70%] ${
@@ -56,14 +56,14 @@ export const MessageBubble = ({ message, role = "user", timestamp }) => {
         {/* Message Content */}
         {message && (
             <div
-          className={`flex flex-col rounded-2xl px-4 py-3 shadow-sm animate-scale-in ${
+          className={`flex flex-col rounded-2xl px-4 py-3 shadow-sm ${
             role === "user"
               ? "bg-(--color-dark) text-white rounded-tr-none"
               : "glass-effect text-(--color-off-white) rounded-tl-none"
           }`}
         >
           {/* whitespace-pre-wrap -> preserves entered white space (tabs,space, line breaks) */}
-          <p className="leading-relaxed whitespace-pre-wrap animate-fade-in">
+          <p className="leading-relaxed whitespace-pre-wrap">
             {message}
             {/* {isStreaming && (
               <span className="inline-block w-2 h-4 ml-1 bg-current animate-pulse" />

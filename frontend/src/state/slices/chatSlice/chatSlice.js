@@ -18,7 +18,7 @@ export const sendMessage = createAsyncThunk(
     const state = await getState();
     const loggedUser = state.auth.user;
     const token = loggedUser.access_token;
-    const currentSessionId = state.chat.currentSessionId;
+    const currentSessionId = state.chat.currentSessionId || null;
 
     const response = await fetch("http://localhost:3001/api/chat/messages", {
       method: "POST",
@@ -33,7 +33,7 @@ export const sendMessage = createAsyncThunk(
         content,
         currentSessionId,
         createdAt,
-        aiResponseId
+        aiResponseId,
       }),
     });
 
@@ -41,11 +41,11 @@ export const sendMessage = createAsyncThunk(
     if (!response.ok) {
       return rejectWithValue({
         error: "Fetching AI response failed.",
-        messageId
+        messageId,
       });
     }
 
-    console.log("Fetched Response: ", response)
+    console.log("Fetched Response: ", response);
     const reader = response.body.getReader();
     const decoder = new TextDecoder();
     let buffer = "";
@@ -76,8 +76,12 @@ export const sendMessage = createAsyncThunk(
         const parsed = JSON.parse(data);
 
         switch (eventName) {
+          case "startNewSession":
+            dispatch(createNewSession(parsed));
+            break;
+
           case "responseToken":
-            dispatch(addTokensToStream({aiResponseId, parsed}));
+            dispatch(addTokensToStream({ aiResponseId, parsed }));
             break;
 
           case "loadingStage":
@@ -85,12 +89,12 @@ export const sendMessage = createAsyncThunk(
             break;
 
           case "done":
-            dispatch(finishMessage({aiResponseId, messageId}));
+            dispatch(finishMessage({ aiResponseId, messageId }));
             break;
 
-          // case "error":
-          //   dispatch(setError(parsed.message));
-          //   break;
+          case "error":
+            dispatch(setError(parsed.message));
+            break;
         }
       }
     }
@@ -111,6 +115,10 @@ const chatSlice = createSlice({
       };
 
       state.messages.push(newMessage);
+    },
+    createNewSession: (state, action) => {
+      state.currentSessionId = action.payload;
+      console.log("Payload from createNewSession reducer: ", action.payload)
     },
     // Creating a placeholder in messages array for ai token stream
     startResponseStream: (state, action) => {
@@ -133,53 +141,31 @@ const chatSlice = createSlice({
       streamPlaceholder.content += parsed;
     },
     finishMessage: (state, action) => {
-      const {aiResponseId, messageId} = action.payload;
-      const aiMsg = state.messages.find(message => message.messageId === aiResponseId);
+      const { aiResponseId, messageId } = action.payload;
+      const aiMsg = state.messages.find(
+        (message) => message.messageId === aiResponseId
+      );
       if (aiMsg) {
         aiMsg.status = "fulfilled";
         // ToDo: Need to get timestamp from backend
         aiMsg.timestamp = Date.now();
       }
 
-      const userMsg = state.messages.find(message => message.messageId === messageId);
+      const userMsg = state.messages.find(
+        (message) => message.messageId === messageId
+      );
       if (userMsg) userMsg.status = "fulfilled";
-  }, 
-  setLoadingStage: (state, action) => {
-    const currentStage = action.payload;
-    state.loadingStage = currentStage;
-  }
+    },
+    setLoadingStage: (state, action) => {
+      const currentStage = action.payload;
+      state.loadingStage = currentStage;
+    },
+    setError: (state, action) => {
+      state.error = action.payload;
+    }
   },
   extraReducers: (builder) => {
     builder
-      // .addCase(sendMessage.fulfilled, (state, action) => {
-      //   const {
-      //     ai_response_id,
-      //     ai_response,
-      //     created_at,
-      //     user_request_id,
-      //     currentSessionId,
-      //   } = action.payload.message;
-
-      //   const newAiResponse = {
-      //     messageId: ai_response_id,
-      //     content: ai_response,
-      //     role: "assistant",
-      //     status: "fulfilled",
-      //     timestamp: new Date(created_at).toISOString(),
-      //   };
-
-      //   state.messages.push(newAiResponse);
-      //   state.currentSessionId = currentSessionId;
-      //   console.log(
-      //     "State sessionId after fulfilled aync request: ",
-      //     state.currentSessionId
-      //   );
-
-      //   const prevUserRequest = state.messages.find(
-      //     ({ messageId }) => messageId === user_request_id
-      //   );
-      //   prevUserRequest.status = "fulfilled";
-      // })
       .addCase(sendMessage.rejected, (state, action) => {
         // renaming destructured messageId to user_request_id
         const {
@@ -204,12 +190,14 @@ const chatSlice = createSlice({
   },
 });
 
-export const { 
-  addUserMessage, 
-  startResponseStream, 
-  addTokensToStream, 
-  finishMessage, 
-  setLoadingStage 
+export const {
+  addUserMessage,
+  createNewSession,
+  startResponseStream,
+  addTokensToStream,
+  finishMessage,
+  setLoadingStage,
+  setError
 } = chatSlice.actions;
 
 export default chatSlice.reducer;

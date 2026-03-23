@@ -41,6 +41,7 @@ const chatMessagesController = async (req, res) => {
 
     if (isNewSession) {
         await insertNewChatSession(currentSessionId, userId, title);
+        streamResponse("startNewSession", currentSessionId);
     }
 
     await insertNewChatMessage(role, userId, currentSessionId, messageId, content, createdAt);
@@ -65,8 +66,9 @@ const chatMessagesController = async (req, res) => {
     console.log("ai response inserted in db");
    
     } catch (error) {
-        console.log("ChatRoutes error: ", error.message);
-        streamResponse("error", {message: error.message})
+        console.log("chat/messages route error: ", error.message);
+        streamResponse("error", {message: error.message});
+        res.end();
     } finally {
         res.end();
     }

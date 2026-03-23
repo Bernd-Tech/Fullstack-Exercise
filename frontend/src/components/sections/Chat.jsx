@@ -1,4 +1,4 @@
-import { MessageBubble } from "../ui/MessageBubble";
+import { MessageBubble } from "../chat/MessageBubble.jsx";
 import { Button } from "../ui/Button";
 import { useState, useEffect } from "react";
 import { sendMessage, addUserMessage, startResponseStream} from "../../state/slices/chatSlice/chatSlice";
@@ -71,7 +71,7 @@ export const Chat = () => {
 
   return (
     <>
-      <div className="p-2 h-full">
+      <div className="py-2 h-full">
         <div className="h-full w-full flex flex-col">
           <div className="w-full h-full overflow-y-scroll pl-6 pr-8 py-4">
             {messages.map(({ messageId, role, content, timestamp = null }) => {

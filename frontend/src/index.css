@@ -1,19 +1,30 @@
 @import url('https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&display=swap');
 @import "tailwindcss";
 
+* {
+  scroll-behavior: smooth;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(226, 226, 226, 0.4) transparent;
+}
+
 body {
   font-family: "Figtree", sans-serif;
   width: 100%;
   background-color: black;
-  color: rgb(226, 226, 226);
-  scroll-behavior: smooth;
-  overflow-x: hidden;
+  color: hsl(48 33.3% 97.1%);
+  overflow: hidden;
 }
+
 
 @theme {
     --color-light: rgb(226, 226, 226);
     --color-dark: rgb(45, 45, 45);
     --color-off-white: #FAF9F6;
+    --color-bg-hover-dark: hsl(60 2.6% 7.6%);
+    --color-text-hover: hsl(48 33.3% 97.1%);
+    --color-bg-dark: rgb(38, 38, 36);
+    --color-danger: rgb(254, 129, 129);
+    --color-bg-danger: rgb(104, 38, 38);
 
     --animate-scale-in: scale-in 50ms linear;
     --animate-fade-in: fade-in 500ms linear;
@@ -86,5 +97,5 @@ body {
 }
 
 @utility dropdown-item {
-  padding: 12px 20px;
+  padding: 10px 14px;
 }

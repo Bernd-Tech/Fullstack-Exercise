@@ -30,3 +30,17 @@ export const getSessionById = async (sessionId, userId) => {
     console.log("Fetched session from DB: ", data)
     return {data, error: null};
 }
+
+export const getSessions = async (userId) => {
+    const {data, error} = await supabase
+    .from('chat_sessions')
+    .select('id, title, created_at, updated_at')
+    .eq('profile_id', userId)
+
+    if (error) {
+        console.log("Error fetching sessions from db: ", error)
+    }
+
+    console.log("Sessions data received by Supabase: ", data)
+    // ToDo: Need ordered by updated_at, as soon as column gets filled
+}

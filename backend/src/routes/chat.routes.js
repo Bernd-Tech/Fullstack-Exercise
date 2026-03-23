@@ -1,5 +1,6 @@
 import { Router } from "express";
-import chatMessagesController from "../conrollers/chat.controller.js";
+import chatMessagesController from "../conrollers/chat.messages.controller.js";
+import chatSessionsController from "../conrollers/chat.sessions.controller.js";
 import sessionMiddleware from "../middlewares/chat.session.middelware.js";
 import generateSpeechFromText from "../config/elevenlabs/elevenlabs.tts.js";
 
@@ -24,5 +25,7 @@ chatRouter.post("/speak", async (req, res) => {
     res.status(500).json({ error: "Failed to generate speech" });
   }
 })
+
+chatRouter.get("/sessions", chatSessionsController);
 
 export default chatRouter;
