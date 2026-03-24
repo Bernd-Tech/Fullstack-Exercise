@@ -42,5 +42,6 @@ export const getSessions = async (userId) => {
     }
 
     console.log("Sessions data received by Supabase: ", data)
+    return data;
     // ToDo: Need ordered by updated_at, as soon as column gets filled
 }

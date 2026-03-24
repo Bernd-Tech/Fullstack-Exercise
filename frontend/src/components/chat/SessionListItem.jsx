@@ -32,7 +32,7 @@ export default function SessionItem({
   const href = `${basePath}/${id}`;
 
   return (
-    <li className="opacity-100" ref={itemOptions} key={id}>
+    <li className="opacity-100" ref={itemOptions}>
       <div
         className="relative group"
         onMouseEnter={() => setIsHovered(true)}

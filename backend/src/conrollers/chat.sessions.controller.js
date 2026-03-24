@@ -5,15 +5,17 @@ const chatSessionsController = async (req, res) => {
     const userId = req.user.id;
     
     const userSessions = await getSessions(userId);
-    console.log("Fetched user sessions:", userSessions)
+    console.log("Fetched user sessions again:", userSessions)
 
     if (!userSessions) {
-        return res.status(404).send(json({error: "No sessions found"}));
+        return res.status(404).send(({error: "No sessions found"}));
     }
 
     res.status(200).send({data: userSessions})
 
-  } catch (error) {}
+  } catch (error) {
+    res.status(500).send({error: error})
+  }
 };
 
 export default chatSessionsController;
