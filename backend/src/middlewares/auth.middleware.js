@@ -8,7 +8,7 @@ const authMiddleWare = async (req, res, next) => {
 
         // checking if authorization value exists and starts with "Bearer"
         if (!authHeader || !authHeader.startsWith("Bearer")) {
-            return res.status(401).json({error: "Unauthorized"})
+            return res.status(401).json({error: "Invalid authorization"})
         }
 
         //Splitting authorization value into "Bearer" and token value and assigning token value to token variable

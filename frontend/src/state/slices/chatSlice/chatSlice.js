@@ -101,6 +101,35 @@ export const sendMessage = createAsyncThunk(
   }
 );
 
+export const loadSessionMessages = createAsyncThunk(
+  "chat/loadSessionMessages",
+  async (sessionId, { getState, rejectWithValue }) => {
+    const state = await getState();
+    const loggedUser = state.auth.user;
+    const token = loggedUser.access_token;
+
+    const response = await fetch(
+      `http://localhost:3001/api/chat/sessions/${sessionId}/messages`,
+      {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    if (!response.ok) {
+      return rejectWithValue({
+        error: "Fetching session messages failed.",
+      });
+    }
+
+    const data = await response.json();
+    return data;
+  }
+);
+
 const chatSlice = createSlice({
   name: "chat",
   initialState,
@@ -186,6 +215,19 @@ const chatSlice = createSlice({
           ({ messageId }) => messageId === user_request_id
         );
         prevUserRequest.status = "rejected";
+      })
+      .addCase(loadSessionMessages.pending, (state) => {
+        // state.loadingStage = "loadingSessionMessages";
+        state.error = null;
+      })
+      .addCase(loadSessionMessages.fulfilled, (state, action) => {
+        const { messages, sessionId } = action.payload;
+        state.messages = messages;
+        state.currentSessionId = sessionId;
+        state.error = null;
+      })
+      .addCase(loadSessionMessages.rejected, (state, action) => {
+        state.error = action.payload.error;
       });
   },
 });

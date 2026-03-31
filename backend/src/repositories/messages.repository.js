@@ -37,3 +37,20 @@ export const getRecentMessages = async (sessionId, userId) => {
     console.log("last 10 chat messages: ", data)
     return data;
 }
+
+export const getSessionMessages = async (sessionId, userId) => {
+    const {data, error} = await supabase
+    .from('chat_messages')
+    .select('role, content')
+    .eq('profile_id', userId)
+    .eq('session_id', sessionId)
+    .order('created_at', { ascending: true })
+
+    if (error) {
+        console.error("Error fetching session messages: ", error);
+        return error;
+    }
+
+    console.log(`All messages for session ${sessionId}: `, data)
+    return data;
+}

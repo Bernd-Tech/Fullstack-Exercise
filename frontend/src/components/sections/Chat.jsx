@@ -1,6 +1,6 @@
 import { MessageBubble } from "../chat/MessageBubble.jsx";
 import { Button } from "../ui/Button";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { sendMessage, addUserMessage, startResponseStream} from "../../state/slices/chatSlice/chatSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { v4 as uuidv4 } from "uuid";
@@ -17,21 +17,6 @@ export const Chat = () => {
   );
   const buttonIsDisabled = pendingMessage;
   const dispatch = useDispatch();
-
-//   useEffect(() => {
-//     const eventSource = new EventSource('http://localhost:3001/api/chat/messages');
-
-//     eventSource.addEventListener('aiResponseState', (e) => {
-//         console.log(e.data);
-//         setLoadingState(e.data);
-//     })
-
-//     if (eventSource.data === "Done") {
-//         eventSource.close();
-//     }
-
-//     return () => eventSource.removeEventListener();
-//   }, []);
 
   const storeUserMessage = (e) => {
     const newMessageContent = e.target.value;

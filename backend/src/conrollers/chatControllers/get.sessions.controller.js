@@ -1,6 +1,6 @@
-import { getSessions } from "../repositories/sessions.repository.js";
+import { getSessions } from "../../repositories/sessions.repository.js";
 
-const chatSessionsController = async (req, res) => {
+const getSessionsController = async (req, res) => {
   try {
     const userId = req.user.id;
     
@@ -18,4 +18,4 @@ const chatSessionsController = async (req, res) => {
   }
 };
 
-export default chatSessionsController;
+export default getSessionsController;

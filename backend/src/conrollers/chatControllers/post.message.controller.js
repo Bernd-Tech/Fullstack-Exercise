@@ -1,11 +1,11 @@
 import { v4 as uuidv4 } from 'uuid';
-import streamAiResponse from '../config/anthropicai/anthropic.ai.js';
-import { insertNewChatMessage } from '../repositories/messages.repository.js';
-import { insertNewChatSession } from '../repositories/sessions.repository.js';
-import { getRecentMessages } from '../repositories/messages.repository.js';
+import streamAiResponse from '../../config/anthropicai/anthropic.ai.js';
+import { insertNewChatMessage } from '../../repositories/messages.repository.js';
+import { insertNewChatSession } from '../../repositories/sessions.repository.js';
+import { getRecentMessages } from '../../repositories/messages.repository.js';
 
 //Have to validate and sanitize post req before passing to controller -> With zod library?
-const chatMessagesController = async (req, res) => {
+const postMessageController= async (req, res) => {
     res.writeHead(200, {
         'Content-type': 'text/event-stream',
         'Connection': 'keep-alive',
@@ -24,7 +24,6 @@ const chatMessagesController = async (req, res) => {
     // To Do's: validate + sanitize message content
     console.log("Full user req: ", req.body, req.isNewSession)
     const {content, messageId, role, currentSessionId, createdAt} = req.body;
-    const userInput = {role, content};
     const userId = req.user.id;
     const {isNewSession} = req;
     const title = "Super nice!";
@@ -74,4 +73,4 @@ const chatMessagesController = async (req, res) => {
     }
 };
 
-export default chatMessagesController;
+export default postMessageController;
