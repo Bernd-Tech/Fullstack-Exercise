@@ -18,10 +18,10 @@ import {
  *  - basePath    {string}   Base URL prefix for sessions (default: "/chat")
  */
 export default function SessionItem({
-  id,
+  sessionId,
   title,
   isActive = false,
-  basePath = "/chat",
+  basePath = "/ai-guide",
 }) {
   const [isHovered, setIsHovered] = useState(false);
   const itemOptions = useRef(null);
@@ -29,7 +29,7 @@ export default function SessionItem({
     elementRef: itemOptions,
     eventType: "mousedown",
   });
-  const href = `${basePath}/${id}`;
+  const href = `${basePath}/${sessionId}`;
 
   return (
     <li className="opacity-100" ref={itemOptions}>

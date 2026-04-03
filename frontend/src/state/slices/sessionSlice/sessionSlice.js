@@ -13,8 +13,6 @@ export const getSessions = createAsyncThunk(
     const loggedUser = state.auth.user;
     const token = loggedUser.access_token;
 
-    console.log("About to fetch sessions getSessions");
-
     const response = await fetch("http://localhost:3001/api/chat/sessions", {
       method: "GET",
       headers: {
@@ -31,8 +29,6 @@ export const getSessions = createAsyncThunk(
     }
 
     const data = await response.json();
-    console.log("Response from getSessions: ", data);
-
     return data;
   }
 );
@@ -52,7 +48,6 @@ const sessionsSlice = createSlice({
         state.error = null;
       })
       .addCase(getSessions.fulfilled, (state, action) => {
-        console.log("fullfilled getSession payload: ", action.payload.data);
         state.sessions = action.payload.data;
         state.loading = false;
         state.error = null; 

@@ -104,6 +104,8 @@ export const sendMessage = createAsyncThunk(
 export const loadSessionMessages = createAsyncThunk(
   "chat/loadSessionMessages",
   async (sessionId, { getState, rejectWithValue }) => {
+    console.log("Loading messages for session: ", sessionId);
+
     const state = await getState();
     const loggedUser = state.auth.user;
     const token = loggedUser.access_token;
@@ -203,7 +205,6 @@ const chatSlice = createSlice({
           aiResponseId,
         } = action.payload;
         console.log("chat/sendMessage rejected.");
-        console.log("Full action object:", action);
 
         const failedAiResponse = state.messages.find(
           (message) => message.aiResponseId === aiResponseId
@@ -221,13 +222,25 @@ const chatSlice = createSlice({
         state.error = null;
       })
       .addCase(loadSessionMessages.fulfilled, (state, action) => {
-        const { messages, sessionId } = action.payload;
-        state.messages = messages;
+        console.log("chat/loadSessionMessages fulfilled: ", action.payload);
+        const { messages, sessionId } = action.payload
+         const transformedMessages = messages.map(message => {
+          const {id, created_at, ...rest} = message;
+          return {
+            ...rest,
+            messageId: id,
+            timestamp: created_at
+          }
+      });
+        console.log("transformed messages with messageId and timestamp: ", transformedMessages)
+
+        state.messages = transformedMessages;
         state.currentSessionId = sessionId;
         state.error = null;
       })
       .addCase(loadSessionMessages.rejected, (state, action) => {
-        state.error = action.payload.error;
+        console.log("chat/loadSessionMessages rejected: ", action.payload);
+        state.error = action.payload?.error || "Unknown error";
       });
   },
 });

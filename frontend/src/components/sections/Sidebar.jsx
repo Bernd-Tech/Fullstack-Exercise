@@ -1,5 +1,4 @@
 import { useSelector } from "react-redux";
-import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import {
   SearchIcon,
@@ -14,11 +13,6 @@ import SessionItem from "../chat/SessionListItem";
 const Sidebar = () => {
   const sessions = useSelector((state) => state.sessions);
   const sessionsChunk = sessions.sessions.slice(0, 5);
-
-  useEffect(() => {
-    console.log("Sessions in Sidebar", sessions)
-    console.log("Sessions chunk in Sidebar", sessionsChunk)
-  })
 
   return (
     <>
@@ -62,7 +56,7 @@ const Sidebar = () => {
           <p className="text-sm">Session History</p>
           <ul className="flex flex-col w-full">
             {sessionsChunk.map((session) => {
-              return <SessionItem title={session.title} key={session.id} id={session.id}/>
+              return <SessionItem title={session.title} key={session.id} sessionId={session.id}/>
             })}
           </ul>
         </div>

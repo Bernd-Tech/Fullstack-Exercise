@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState } from "react";
 import { supabase } from "../../supabase-client";
 import { Button } from "../ui/Button";
 import { useNavigate, Link } from "react-router-dom";
@@ -14,7 +14,7 @@ export const LogInPage = () => {
   // const {btnDisabled, setBtnDisabled} = useState(false);
   // ToDo: Need to set Button to disabled while login data gets processed
   // const confirmBtn = useRef();
-  const {user} = useAuth();
+  // const {user} = useAuth();
   const navigate = useNavigate();
 
   const handleFromData = (e) => {
@@ -39,7 +39,7 @@ export const LogInPage = () => {
     }
     setLogInData(initialLogInData);
     // Had to use useNavigate(), because <Navigate /> is jsx which gets ignored by react if inside of helper functions
-    navigate("/dashboard/ai-guide", {replace: true});
+    navigate("/ai-guide", {replace: true});
   };
 
   return (

@@ -30,7 +30,15 @@ const App = () => {
 
         <Route element={<DashboardLayout/>}>
         <Route
-            path="/dashboard/ai-guide"
+            path="/ai-guide"
+            element={
+              <ProtectedRoute>
+                <AiGuidePage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/ai-guide/:sessionId"
             element={
               <ProtectedRoute>
                 <AiGuidePage />
@@ -38,7 +46,7 @@ const App = () => {
             }
           />
           </Route>
-        
+    
         <Route element={<AuthLayout />}>
           <Route path="/sign-up" element={<SignUpPage />} />
           <Route path="/login" element={<LogInPage />} />

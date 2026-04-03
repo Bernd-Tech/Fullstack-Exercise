@@ -12,7 +12,7 @@ const getSessionMessagesController = async (req, res) => {
         if (!sessionMessages) {
             return res.status(404).send(({error: "No messages found for this session"}));
         }
-        res.status(200).json({messages: sessionMessages});
+        res.status(200).json({sessionId, messages: sessionMessages});
     } catch (error) {
         console.error("Error fetching session messages:", error);
         res.status(500).json({error: "Failed to fetch session messages"});

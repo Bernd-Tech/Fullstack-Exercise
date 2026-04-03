@@ -36,6 +36,8 @@ export const getSessions = async (userId) => {
     .from('chat_sessions')
     .select('id, title, created_at, updated_at')
     .eq('profile_id', userId)
+    // ToDo: order by updated_at as soon as column gets filled, for now order by created_at to have recent sessions first
+    .order('created_at', { ascending: false })
 
     if (error) {
         console.log("Error fetching sessions from db: ", error)
@@ -43,5 +45,4 @@ export const getSessions = async (userId) => {
 
     console.log("Sessions data received by Supabase: ", data)
     return data;
-    // ToDo: Need ordered by updated_at, as soon as column gets filled
 }

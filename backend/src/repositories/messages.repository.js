@@ -41,7 +41,7 @@ export const getRecentMessages = async (sessionId, userId) => {
 export const getSessionMessages = async (sessionId, userId) => {
     const {data, error} = await supabase
     .from('chat_messages')
-    .select('role, content')
+    .select('role, content, id, created_at')
     .eq('profile_id', userId)
     .eq('session_id', sessionId)
     .order('created_at', { ascending: true })
