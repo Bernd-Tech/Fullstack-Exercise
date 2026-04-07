@@ -6,11 +6,15 @@ import { sendMessage, addUserMessage, startResponseStream} from "../../state/sli
 import { useDispatch, useSelector } from "react-redux";
 import { v4 as uuidv4 } from "uuid";
 import { loadSessionMessages } from "../../state/slices/chatSlice/chatSlice";
+import { useGetSessionsQuery, useGetSessionMessagesQuery } from "../../state/slices/chatSlice/chatApi.js";
 
 export const Chat = () => {
   const { sessionId } = useParams();
   const [userMessage, setUserMessage] = useState("");
-//   const [loadingState, setLoadingState] = useState(false);
+  const { data, error, isLoading } = useGetSessionsQuery();
+  const {data: sessionMessagesData, error: sessionMessagesError, isLoading: isLoadingSessionMessages} = useGetSessionMessagesQuery(sessionId);
+
+  //   const [loadingState, setLoadingState] = useState(false)
   // useSelector is a hook that subscribes the component to Redux state changes. When the selected state changes, React automatically re-renders the component.
   const messages = useSelector((state) => state.chat.messages);
   const loadingStage = useSelector((state) => state.chat.loadingStage);
@@ -60,7 +64,10 @@ export const Chat = () => {
   useEffect(() => {
     // Load messages for the current session when the component mounts
     dispatch(loadSessionMessages(sessionId));
-  }, [sessionId]);
+    console.log("loading from useGetSessionMessagesQuery: ", isLoadingSessionMessages);
+    console.log("data from useGetSessionMessagesQuery: ", sessionMessagesData?.messages);
+    console.log("error from useGetSessionMessagesQuery: ", sessionMessagesError);
+  }, [isLoadingSessionMessages, data]);
 
   return (
     <>

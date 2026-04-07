@@ -11,7 +11,7 @@ const getSessionsController = async (req, res) => {
         return res.status(404).send(({error: "No sessions found"}));
     }
 
-    res.status(200).send({data: userSessions})
+    res.status(200).setHeader("Cache-Control", "private").send({data: userSessions})
 
   } catch (error) {
     res.status(500).send({error: error})

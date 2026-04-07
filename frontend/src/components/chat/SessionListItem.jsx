@@ -21,7 +21,7 @@ export default function SessionItem({
   sessionId,
   title,
   isActive = false,
-  basePath = "/ai-guide",
+  basePath = "/ai-guide"
 }) {
   const [isHovered, setIsHovered] = useState(false);
   const itemOptions = useRef(null);
