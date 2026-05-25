@@ -5,16 +5,15 @@ const getSessionsController = async (req, res) => {
     const userId = req.user.id;
     
     const userSessions = await getSessions(userId);
-    console.log("Fetched user sessions again:", userSessions)
 
     if (!userSessions) {
-        return res.status(404).send(({error: "No sessions found"}));
+        throw res.status(404).send(({error: "No sessions found"}));
     }
 
     res.status(200).setHeader("Cache-Control", "private").send({data: userSessions})
 
   } catch (error) {
-    res.status(500).send({error: error})
+    throw res.status(500).send({error: error})
   }
 };
 

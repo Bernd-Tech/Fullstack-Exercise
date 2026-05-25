@@ -16,7 +16,7 @@ streamResponse("loadingStage", {stage: "Generating response..."});
 const stream = client.messages.stream({
   model: "claude-haiku-4-5", //"claude-sonnet-4-5",
   system: systemPrompt,
-    stream: true,
+  stream: true,
   max_tokens: 6024,
   messages: [...recent_context],
 })

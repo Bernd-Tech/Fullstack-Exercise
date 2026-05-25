@@ -20,9 +20,9 @@ const postMessageController= async (req, res) => {
     }
 
     try {
+    console.log("Received message in controller: ", req.body, req.isNewSession);
     streamResponse("loadingStage", {stage: "Receiving your input..."});
     // To Do's: validate + sanitize message content
-    console.log("Full user req: ", req.body, req.isNewSession)
     const {content, messageId, role, currentSessionId, createdAt} = req.body;
     const userId = req.user.id;
     const {isNewSession} = req;
@@ -65,9 +65,8 @@ const postMessageController= async (req, res) => {
     console.log("ai response inserted in db");
    
     } catch (error) {
-        console.log("chat/messages route error: ", error.message);
+        console.log("chat/messages route error: ", error);
         streamResponse("error", {message: error.message});
-        res.end();
     } finally {
         res.end();
     }

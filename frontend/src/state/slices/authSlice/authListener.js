@@ -1,11 +1,8 @@
 import { supabase } from "../../../supabase-client";
 import { setUser, clearUser } from "./authSlice";
-import { getSessions } from "../sessionSlice/sessionSlice";
 
 export const setupAuthListener = async (store) => {
   try {
-    const storeState = store.getState();
-    console.log("AuthListener store: ", store.getState());
     const { data, error } = await supabase.auth.getSession();
 
     if (error) throw error;
@@ -13,10 +10,6 @@ export const setupAuthListener = async (store) => {
     if (data.session) {
       store.dispatch(setUser(data.session));
       console.log("user is logged in: ", data.session);
-
-      if (!storeState.sessions.length) {
-          store.dispatch(getSessions());
-        }
 
     } else {
       store.dispatch(clearUser());
@@ -30,6 +23,7 @@ export const setupAuthListener = async (store) => {
       if (event === "SIGNED_IN") {
         store.dispatch(setUser(session));
         console.log("user is logged in: ", session);
+        console.log("AuthListener store: ", store.getState());
       }
 
       // if signed out, local and session storage have to be cleared and state updated

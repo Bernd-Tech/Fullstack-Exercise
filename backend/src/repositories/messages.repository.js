@@ -31,10 +31,10 @@ export const getRecentMessages = async (sessionId, userId) => {
     .limit(10)
 
     if (error) {
-        return error;
+        throw error;
     }
 
-    console.log("last 10 chat messages: ", data)
+    // console.log("last 10 chat messages: ", data)
     return data;
 }
 
@@ -48,7 +48,7 @@ export const getSessionMessages = async (sessionId, userId) => {
 
     if (error) {
         console.error("Error fetching session messages: ", error);
-        return error;
+        throw error;
     }
 
     console.log(`All messages for session ${sessionId}: `, data)

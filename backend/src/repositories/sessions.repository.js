@@ -10,7 +10,7 @@ export const insertNewChatSession = async (sessionId, userId, title) => {
 
     if (error) {
         console.error("Inserting new session unsuccessfull: ", error.message)
-        return error;
+        throw error;
     }
 }
 
@@ -40,9 +40,9 @@ export const getSessions = async (userId) => {
     .order('created_at', { ascending: false })
 
     if (error) {
-        console.log("Error fetching sessions from db: ", error)
+        console.log("Error fetching sessions from db: ", error);
+        throw error;
     }
-
-    console.log("Sessions data received by Supabase: ", data)
+    
     return data;
 }

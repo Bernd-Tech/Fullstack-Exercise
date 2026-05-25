@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+// import { chatApi } from "./chatApi";
 
 const initialState = {
   currentSessionId: null,
@@ -10,7 +11,7 @@ const initialState = {
 export const sendMessage = createAsyncThunk(
   "chat/sendMessage",
   async (
-    { content, messageId, aiResponseId, createdAt },
+    { content, messageId, aiResponseId, createdAt, currentSessionId },
     { getState, rejectWithValue, dispatch }
   ) => {
     console.log("content passed to sendMessage: ", content);
@@ -18,7 +19,7 @@ export const sendMessage = createAsyncThunk(
     const state = await getState();
     const loggedUser = state.auth.user;
     const token = loggedUser.access_token;
-    const currentSessionId = state.chat.currentSessionId || null;
+    // const currentSessionId = state.chat.currentSessionId || null;
 
     const response = await fetch("http://localhost:3001/api/chat/messages", {
       method: "POST",
@@ -90,6 +91,9 @@ export const sendMessage = createAsyncThunk(
 
           case "done":
             dispatch(finishMessage({ aiResponseId, messageId }));
+            // dispatch(chatApi.util.invalidateTags([
+            //   {type: "SessionMessages", id: currentSessionId}
+            // ]))
             break;
 
           case "error":
@@ -193,7 +197,12 @@ const chatSlice = createSlice({
     },
     setError: (state, action) => {
       state.error = action.payload;
-    }
+    },
+    clearMessages: (state) => {
+      state.messages = [];
+      state.loadingStage = "";
+      state.error = null;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -252,7 +261,8 @@ export const {
   addTokensToStream,
   finishMessage,
   setLoadingStage,
-  setError
+  setError,
+  clearMessages,
 } = chatSlice.actions;
 
 export default chatSlice.reducer;

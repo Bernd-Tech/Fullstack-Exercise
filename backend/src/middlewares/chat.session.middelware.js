@@ -9,7 +9,7 @@ const sessionMiddleware = async (req, res, next) => {
 
 
     if (sessionStatus.status === 403) {
-        return res.status(403).json({error: sessionStatus.message});
+        throw res.status(403).json({error: sessionStatus.message});
     }
 
     if (sessionStatus.status === 404) {

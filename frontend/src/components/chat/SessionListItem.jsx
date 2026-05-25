@@ -1,4 +1,5 @@
 import { useState, useRef } from "react";
+import { Link } from "react-router-dom";
 import { useClickOutside } from "../../hooks/useClickOutside.js";
 import { 
     DotsIcon,
@@ -6,16 +7,10 @@ import {
     PencilIcon
 } from "../ui/icons.jsx";
 
-/**
- * SessionItem
- *
- * Props:
- *  - id          {string}   Unique session ID (used to build href)
- *  - title       {string}   Session title shown in the list
+/*
  *  - isActive    {boolean}  Whether this session is currently open
  *  - onOptions   {function} Callback fired when the "..." button is clicked,
  *                           receives the event as argument so you can anchor a context menu
- *  - basePath    {string}   Base URL prefix for sessions (default: "/chat")
  */
 export default function SessionItem({
   sessionId,
@@ -39,8 +34,7 @@ export default function SessionItem({
         onMouseLeave={() => setIsHovered(false)}
       >
         {/* Session link */}
-        <a
-          href={href}
+        <Link to={href}
           aria-current={isActive ? "page" : undefined}
           className={`-translate-x-2 duration-75 flex items-center w-full h-8 px-2 py-1.5 rounded-md text-xs font-medium whitespace-nowrap overflow-hidden select-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring hover:text-(--color-text-hover)  ${
             isActive
@@ -59,7 +53,7 @@ export default function SessionItem({
           >
             {title}
           </span>
-        </a>
+        </Link>
 
         {/* Options button — always visible when active, fades in on hover otherwise */}
         <div

@@ -1,5 +1,8 @@
-import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { useEffect } from "react";
+import { useAuth } from "../../hooks/useAuth.js";
+// import { useDispatch, useSelector } from "react-redux";
+// import { chatApi } from "../../state/slices/chatSlice/chatApi.js";
 import {
   SearchIcon,
   JournalIcon,
@@ -7,12 +10,30 @@ import {
   HandshakeIcon,
   SidebarIcon
 } from "../ui/icons";
+import { useGetSessionsQuery } from "../../state/slices/chatSlice/chatApi.js";
 import SessionItem from "../chat/SessionListItem";
 
 
 const Sidebar = () => {
-  const sessions = useSelector((state) => state.sessions);
-  const sessionsChunk = sessions.sessions.slice(0, 5);
+  const { user, loading } = useAuth();
+  // const [getSessions, { data, error, isLoading }] = useLazyGetSessionsQuery();
+  const isAuthenticated = user && !loading;
+  // const { data, error, isLoading } = useGetSessionsQuery();
+  // const sessions = useSelector((state) => state.sessions);
+  // const sessionsChunk = sessions.sessions.slice(0, 5);
+  
+  const { data: sessionsData, error, isLoading } = useGetSessionsQuery(undefined, {
+    skip: !isAuthenticated
+  });
+
+  
+  useEffect(() => {
+    console.log("data:", sessionsData);
+   console.log("error:", error);
+  if (error) {
+    alert(`Error fetching sessions: ${error.data.error}`);
+  }
+}, [isLoading, loading])
 
   return (
     <>
@@ -55,9 +76,11 @@ const Sidebar = () => {
         <div className="flex flex-col h-full p-5 overflow-y-scroll gap-2 scroll-container">
           <p className="text-sm">Session History</p>
           <ul className="flex flex-col w-full">
-            {sessionsChunk.map((session) => {
+            {sessionsData ? sessionsData.data.map((session) => {
               return <SessionItem title={session.title} key={session.id} sessionId={session.id}/>
-            })}
+            }) : (
+              <p className="text-sm text-(--color-dark)">No sessions yet. Start a new session to see it here.</p>
+            )}
           </ul>
         </div>
         <div className="flex p-5 border-t-1 border-t-white/30">
