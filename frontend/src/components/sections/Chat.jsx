@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import {
   sendMessage,
+  updateCurrentSessionId,
   addUserMessage,
   startResponseStream,
   clearMessages,
@@ -50,6 +51,7 @@ export const Chat = () => {
   // session's optimistic messages don't bleed into the next session's view.
   useEffect(() => {
     dispatch(clearMessages());
+    dispatch(updateCurrentSessionId(sessionId));
   }, [sessionId]);
   
   const loadingStage = useSelector((state) => state.chat.loadingStage);

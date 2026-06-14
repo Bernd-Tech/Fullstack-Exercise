@@ -11,15 +11,10 @@ export const chatApi = createApi({
       const state = getState();
       const loggedUser = state.auth.user;
 
-      console.log("state.auth:", state.auth);
-      console.log("loggedUser:", loggedUser);
-      console.log("token:", loggedUser?.access_token);
-
       if (loggedUser && loggedUser.access_token) {
         Headers.set("Authorization", `Bearer ${loggedUser.access_token}`);
       }
 
-      console.log("Headers in prepareHeaders: ", Headers);
       return Headers;
     },
   }),

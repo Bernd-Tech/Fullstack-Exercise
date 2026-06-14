@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-// import { chatApi } from "./chatApi";
+import { chatApi } from "./chatApi";
 
 const initialState = {
   currentSessionId: null,
@@ -91,9 +91,9 @@ export const sendMessage = createAsyncThunk(
 
           case "done":
             dispatch(finishMessage({ aiResponseId, messageId }));
-            // dispatch(chatApi.util.invalidateTags([
-            //   {type: "SessionMessages", id: currentSessionId}
-            // ]))
+            dispatch(chatApi.util.invalidateTags([
+              {type: "SessionMessages", id: currentSessionId}
+            ]))
             break;
 
           case "error":
@@ -154,6 +154,9 @@ const chatSlice = createSlice({
     createNewSession: (state, action) => {
       state.currentSessionId = action.payload;
       console.log("Payload from createNewSession reducer: ", action.payload)
+    },
+    updateCurrentSessionId: (state, action) => {
+      state.currentSessionId = action.payload || null;
     },
     // Creating a placeholder in messages array for ai token stream
     startResponseStream: (state, action) => {
@@ -226,36 +229,37 @@ const chatSlice = createSlice({
         );
         prevUserRequest.status = "rejected";
       })
-      .addCase(loadSessionMessages.pending, (state) => {
-        // state.loadingStage = "loadingSessionMessages";
-        state.error = null;
-      })
-      .addCase(loadSessionMessages.fulfilled, (state, action) => {
-        console.log("chat/loadSessionMessages fulfilled: ", action.payload);
-        const { messages, sessionId } = action.payload
-         const transformedMessages = messages.map(message => {
-          const {id, created_at, ...rest} = message;
-          return {
-            ...rest,
-            messageId: id,
-            timestamp: created_at
-          }
-      });
-        console.log("transformed messages with messageId and timestamp: ", transformedMessages)
+      // .addCase(loadSessionMessages.pending, (state) => {
+      //   // state.loadingStage = "loadingSessionMessages";
+      //   state.error = null;
+      // })
+      // .addCase(loadSessionMessages.fulfilled, (state, action) => {
+      //   console.log("chat/loadSessionMessages fulfilled: ", action.payload);
+      //   const { messages, sessionId } = action.payload
+      //    const transformedMessages = messages.map(message => {
+      //     const {id, created_at, ...rest} = message;
+      //     return {
+      //       ...rest,
+      //       messageId: id,
+      //       timestamp: created_at
+      //     }
+      // });
+      //   console.log("transformed messages with messageId and timestamp: ", transformedMessages)
 
-        state.messages = transformedMessages;
-        state.currentSessionId = sessionId;
-        state.error = null;
-      })
-      .addCase(loadSessionMessages.rejected, (state, action) => {
-        console.log("chat/loadSessionMessages rejected: ", action.payload);
-        state.error = action.payload?.error || "Unknown error";
-      });
+      //   state.messages = transformedMessages;
+      //   state.currentSessionId = sessionId;
+      //   state.error = null;
+      // })
+      // .addCase(loadSessionMessages.rejected, (state, action) => {
+      //   console.log("chat/loadSessionMessages rejected: ", action.payload);
+      //   state.error = action.payload?.error || "Unknown error";
+      // });
   },
 });
 
 export const {
   addUserMessage,
+  updateCurrentSessionId,
   createNewSession,
   startResponseStream,
   addTokensToStream,
