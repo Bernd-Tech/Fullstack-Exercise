@@ -45,7 +45,9 @@ const postMessageController= async (req, res) => {
 
     await insertNewChatMessage(role, userId, currentSessionId, messageId, content, createdAt);
     
-    const recentMessages = await getRecentMessages(currentSessionId, userId);
+    //Most recent messages in reversed order sot that llm receives them in correct chronological order
+    const recentMessages = (await getRecentMessages(currentSessionId, userId)).reverse();
+    console.log("recent messages for ai response: ", recentMessages)
 
     streamResponse("loadingStage", {stage: "Thinking..."})
 

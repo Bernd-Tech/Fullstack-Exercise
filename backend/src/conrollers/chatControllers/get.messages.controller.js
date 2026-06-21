@@ -2,8 +2,6 @@ import { getSessionMessages } from "../../repositories/messages.repository.js";
 
 const getSessionMessagesController = async (req, res) => {
     try {
-
-        console.log("Fetching messages for session:", req);
         const userId = req.user.id;
         const {sessionId} = req.params;
 

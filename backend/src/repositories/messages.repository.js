@@ -27,14 +27,13 @@ export const getRecentMessages = async (sessionId, userId) => {
     .select('role, content')
     .eq('profile_id', userId)
     .eq('session_id', sessionId)
-    .order('created_at', { ascending: true })
-    .limit(10)
+    .order('created_at', { ascending: false })
+    .limit(12)
 
     if (error) {
         throw error;
     }
 
-    // console.log("last 10 chat messages: ", data)
     return data;
 }
 

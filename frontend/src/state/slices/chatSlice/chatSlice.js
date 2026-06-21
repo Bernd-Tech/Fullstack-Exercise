@@ -55,9 +55,9 @@ export const sendMessage = createAsyncThunk(
       const { done, value } = await reader.read();
       if (done) break;
 
-      // console.log("coded streamed value: ", value)
+      console.log("coded streamed value: ", value)
       buffer += decoder.decode(value, { stream: true });
-      // console.log("decoded values in buffer: ", buffer)
+      console.log("decoded values in buffer: ", buffer)
 
       const parts = buffer.split("\n\n");
       buffer = parts.pop();
@@ -199,6 +199,8 @@ const chatSlice = createSlice({
       state.loadingStage = currentStage;
     },
     setError: (state, action) => {
+      const currentStage = action.payload;
+      state.loadingStage = currentStage;
       state.error = action.payload;
     },
     clearMessages: (state) => {
